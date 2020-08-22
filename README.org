@@ -8,14 +8,47 @@
 - Add programming reformatter hooks
 - Treemacs should use =.gitignore= to hide files
 - Add =tmux= pane dump function
+- Add the package for =zoom-mode=
+
+Here is a code block:
+
+#+BEGIN_SRC emacs-lisp
+(message "hello")
+#+END_SRC
+
+#+RESULTS:
+: hello
 
 ** TODO Notes
 
-I already found stuff I was about to create in my own config:
+*** Good
+
+Doom uses =straight.el= under the hood. Packages are not updated on startup -
+you have to run =doom sync= from your CLI to invoke it. They pin every package
+to a hash. I like that. It is better than what I had.
+
+I already found stuff for =tmux= I was about to create in my own config:
 
 - =+tmux/cd-to-here=
 - =+tmux/send-region=
 
-So it was already worth the exploration.
+The exploration has already paid for itself.
 
 I like having =tmux= running in a WM scratchpad.
+
+=magit= seems to work fine (=SPC g g=). I like that it goes into fullscreen.
+
+I like the way it make Emacs look.
+
+I like that navigating Org files is snappy. In my config, cycling with =TAB= is
+somewhat slow.
+
+I like that you can switch themes on the fly without breaking all the colors
+everything.
+
+I like the =doom-one-light= theme.
+
+*** Bad
+
+I don't like how the Python Language Server works out of the box.
+
