@@ -6,5 +6,16 @@
 
 - Add =marklink= function
 - Add programming reformatter hooks
+- Treemacs should use =.gitignore= to hide files
+- Add =tmux= pane dump function
 
-** TODO Whatever
+** TODO Notes
+
+I already found stuff I was about to create in my own config:
+
+- =+tmux/cd-to-here=
+- =+tmux/send-region=
+
+So it was already worth the exploration.
+
+I like having =tmux= running in a WM scratchpad.
