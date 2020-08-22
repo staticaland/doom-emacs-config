@@ -9,6 +9,10 @@
 - Treemacs should use =.gitignore= to hide files
 - Add =tmux= pane dump function
 - Add the package for =zoom-mode=
+- [X] Add =ox-hugo=
+- [ ] Add =org-roam=
+  - I don't understand
+- [ ] Open with =mpv= from =dired=
 
 Here is a code block:
 
@@ -25,7 +29,8 @@ Here is a code block:
 
 Doom uses =straight.el= under the hood. Packages are not updated on startup -
 you have to run =doom sync= from your CLI to invoke it. They pin every package
-to a hash. I like that. It is better than what I had.
+to a hash. I like that. It is better than what I had. =doom sync= even supports
+literate configs.
 
 I already found stuff for =tmux= I was about to create in my own config:
 
@@ -51,7 +56,18 @@ I like the =doom-one-light= theme.
 I like that =magit= commit goes straight into insert mode and I can =C-c C-c=
 without leaving insert mode.
 
+I like all the custom link types included with Org mode.
+
+=(dired +icons)= is nice.
+
+I like the concept of modules and feature flags.
+
 *** Bad
+
+I wish I knew how to create my own modules and features.
+
+I don't understand why =SPC n d= is mapped to =deft=, but =deft= is not
+installed.
 
 I don't like how the Python Language Server works out of the box.
 
@@ -66,6 +82,13 @@ packages.
 
 I don't think I need line numbers.
 
-Definition of **clean**: To follow the same organizational principles that Doom
+Definition of *clean*: To follow the same organizational principles that Doom
 employs. The whole reason for switching to Doom is to adopt a clean architecture
 that improves on what I already have.
+
+
+*** =org-roam=
+
+Lets...
+
+[[file:../org/roam/20200822132852-what.org][What]]
