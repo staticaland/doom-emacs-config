@@ -48,7 +48,24 @@ everything.
 
 I like the =doom-one-light= theme.
 
+I like that =magit= commit goes straight into insert mode and I can =C-c C-c=
+without leaving insert mode.
+
 *** Bad
 
 I don't like how the Python Language Server works out of the box.
 
+I don't like all the keybindings, so I have to figure out how to change them. I
+don't know how to change them and the documentation assumes I understand the
+Doom structure. It should be fine once I look at some configs from other people.
+
+I don't understand how to cleanly add a package.
+
+I don't understand how to cleanly change settings and keybindings for included
+packages.
+
+I don't think I need line numbers.
+
+Definition of **clean**: To follow the same organizational principles that Doom
+employs. The whole reason for switching to Doom is to adopt a clean architecture
+that improves on what I already have.
