@@ -1,3 +1,5 @@
 * Modules
 
 Here I will place my own Doom modules.
+
+https://github.com/hlissner/doom-emacs/blob/develop/docs/getting_started.org#common-mistakes-when-configuring-doom-emacs
