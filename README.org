@@ -1,3 +1,10 @@
-# doom-emacs-config
+* doom-emacs-config
 
-Doom is faster than my personal Emacs config. Maybe it is worth to join the team.
+[[https://github.com/hlissner/doom-emacs][Doom]] is faster than my personal Emacs config. Maybe it is worth to join the team.
+
+** TODO Implement stuff
+
+- Add =marklink= function
+- Add programming reformatter hooks
+
+** TODO Whatever
