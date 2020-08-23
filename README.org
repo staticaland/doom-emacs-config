@@ -4,7 +4,8 @@
 
 ** TODO Implement stuff
 
-- Add =marklink= function
+- [ ] Add =marklink= function
+  - =modules/tools/marklink=
 - Add programming reformatter hooks
 - Treemacs should use =.gitignore= to hide files
 - Add =tmux= pane dump function
@@ -30,12 +31,17 @@ Here is a code block:
 Doom uses =straight.el= under the hood. Packages are not updated on startup -
 you have to run =doom sync= from your CLI to invoke it. They pin every package
 to a hash. I like that. It is better than what I had. =doom sync= even supports
-literate configs.
+literate configs. I like that the pinning is done in =packages.el= of the
+module.
+
+I like that the docs mention [[https://github.com/hlissner/doom-emacs/tree/develop/modules/config/literate#modularizing-your-literate-config-with-include-directives][include directives]].
 
 I already found stuff for =tmux= I was about to create in my own config:
 
 - =+tmux/cd-to-here=
 - =+tmux/send-region=
+
+See [[https://github.com/hlissner/doom-emacs/blob/develop/modules/tools/tmux/autoload/tmux.el][/modules/tools/tmux]].
 
 The exploration has already paid for itself.
 
@@ -62,6 +68,9 @@ I like all the custom link types included with Org mode.
 
 I like the concept of modules and feature flags.
 
+I like =SPC t z= (toggle zen) for =writeroom-mode= but I am not a big fan of the fonts
+being used.
+
 *** Bad
 
 I wish I knew how to create my own modules and features.
@@ -85,10 +94,3 @@ I don't think I need line numbers.
 Definition of *clean*: To follow the same organizational principles that Doom
 employs. The whole reason for switching to Doom is to adopt a clean architecture
 that improves on what I already have.
-
-
-*** =org-roam=
-
-Lets...
-
-[[file:../org/roam/20200822132852-what.org][What]]
