@@ -71,3 +71,14 @@
     (map! :leader
       (:prefix ("f" . "file")
         :desc "Open Treemacs" "t" #'+treemacs/toggle)))
+
+(after! dired
+  (setq dired-dwim-target t)
+  (setq dired-recursive-copies (quote always))
+  (setq dired-recursive-deletes (quote top)))
+
+(use-package! dired-narrow
+  :after dired
+  :config
+    (map! :map dired-mode-map
+      :n  "/" 'dired-narrow-fuzzy))
