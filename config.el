@@ -58,6 +58,13 @@
 
 (setq +workspaces-on-switch-project-behavior t)
 
+(after! which-key
+  (setq which-key-idle-delay 0.5
+        which-key-idle-secondary-delay 0.01
+        which-key-sort-order 'which-key-key-order-alpha))
+
+(setq org-babel-python-command "python3")
+
 (when (string= (system-name) "Anderss-MacBook-Pro.local")
   (setq doom-font (font-spec :family "Menlo" :size 12)
         doom-big-font-increment 8
@@ -85,7 +92,7 @@
     (map! :map dired-mode-map
       :n  "/" 'dired-narrow-fuzzy))
 
-(use-package dired-open
+(use-package! dired-open
   :after dired
   :config
   (setq open-extensions
@@ -105,7 +112,7 @@
   :init
   (osx-trash-setup))
 
-(use-package emacs
+(use-package! emacs
   :config
   (defun const/tmux-capture-pane()
     (interactive)
@@ -118,3 +125,15 @@
     (map! :leader
       (:prefix ("ø" . "utils")
         :desc "tmux buffer" "t" #'const/tmux-capture-pane)))
+
+(add-hook! 'org-mode-hook #'mixed-pitch-mode)
+
+(custom-set-faces!
+  '(outline-1 :weight extra-bold :height 1.25)
+  '(outline-2 :weight bold :height 1.15)
+  '(outline-3 :weight bold :height 1.12)
+  '(outline-4 :weight semi-bold :height 1.09)
+  '(outline-5 :weight semi-bold :height 1.06)
+  '(outline-6 :weight semi-bold :height 1.03)
+  '(outline-8 :weight semi-bold)
+  '(outline-9 :weight semi-bold))
