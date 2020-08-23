@@ -53,6 +53,17 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
+(setq doom-variable-pitch-font (font-spec :family "EtBembo" :size 18))
+(setq doom-themes-treemacs-enable-variable-pitch nil)
+
+(setq +workspaces-on-switch-project-behavior t)
+
+(when (string= (system-name) "Anderss-MacBook-Pro.local")
+  (setq doom-font (font-spec :family "Menlo" :size 12)
+        doom-big-font-increment 8
+        doom-variable-pitch-font (font-spec :family "EtBembo" :size 22))
+  (font-put doom-font :weight 'semi-light))
+
 (use-package! treemacs
   :config
     (treemacs-git-mode 'extended)
