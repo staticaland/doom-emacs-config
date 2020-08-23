@@ -2,18 +2,34 @@
 
 [[https://github.com/hlissner/doom-emacs][Doom]] is faster than my personal Emacs config. Maybe it is worth to join the team.
 
+The =.doom.d= folder is like a private Doom module.
+
+A module can have a =packages.el= and a =config.el=, so: only use =package!= in
+the former and =use-package!= in the latter. =use-package!= is formerly known as
+=def-package!= (which is deprecated).
+
+=package!= is declarative: meant only for telling Doom what this module's
+dependencies are (and optionally, where to find them).
+
+=!map= is a convenience macro for defining keybinds, powered by =general.el=.
+
+** Inspiration
+
+- https://github.com/niklascarlsson/doom-private
+- https://github.com/niklascarlsson/dotfiles
+- https://gitlab.com/justinekizhak/dotfiles/blob/master/emacs/doom.d/config.org
+- https://github.com/Brettm12345/doom-emacs-literate-config/blob/master/config.org#doom-modules
+
 ** TODO Implement stuff
 
-- [ ] Add =marklink= function
-  - =modules/tools/marklink=
-- Add programming reformatter hooks
-- Treemacs should use =.gitignore= to hide files
-- Add =tmux= pane dump function
-- Add the package for =zoom-mode=
+- [X] Add =reformatter.el=
+- [ ] Add reformatter hooks
+- [X] Treemacs should use =.gitignore= to hide files
+- [X] Add =tmux= pane dump function
+- [X] Add the package for =zoom-mode=
 - [X] Add =ox-hugo=
-- [ ] Add =org-roam=
-  - I don't understand
-- [ ] Open with =mpv= from =dired=
+- [X] Add =org-roam=
+- [X] Open with =mpv= from =dired=
 
 Here is a code block:
 

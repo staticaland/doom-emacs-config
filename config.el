@@ -73,6 +73,8 @@
         :desc "Open Treemacs" "t" #'+treemacs/toggle)))
 
 (after! dired
+
+  (setq delete-by-moving-to-trash t)
   (setq dired-dwim-target t)
   (setq dired-recursive-copies (quote always))
   (setq dired-recursive-deletes (quote top)))
@@ -82,3 +84,37 @@
   :config
     (map! :map dired-mode-map
       :n  "/" 'dired-narrow-fuzzy))
+
+(use-package dired-open
+  :after dired
+  :config
+  (setq open-extensions
+      '(("webm" . "mpv")
+        ("avi" . "mpv")
+        ("mp3" . "mpv")
+        ("mp4" . "mpv")
+        ("m4a" . "mpv")
+        ("mkv" . "mpv")
+        ("ogv" . "mpv")
+        ("pdf" . "zathura")))
+   (setq dired-open-extensions open-extensions))
+
+(use-package! osx-trash
+  :after dired
+  :if (eq system-type 'darwin)
+  :init
+  (osx-trash-setup))
+
+(use-package emacs
+  :config
+  (defun const/tmux-capture-pane()
+    (interactive)
+    (with-output-to-temp-buffer "*tmux-capture-pane*"
+      (shell-command "tmux capture-pane -p -S -"
+                     "*tmux-capture-pane*"
+                     "*Messages*")
+	(pop-to-buffer "*tmux-capture-pane*")))
+
+    (map! :leader
+      (:prefix ("ø" . "utils")
+        :desc "tmux buffer" "t" #'const/tmux-capture-pane)))

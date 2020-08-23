@@ -48,3 +48,7 @@
 ;(unpin! pinned-package another-pinned-package)
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
+
+(package! dired-narrow :pin "f49a8bbf95f70671a74a24f7f4de453b2686be46")
+(package! dired-open :pin "f49a8bbf95f70671a74a24f7f4de453b2686be46")
+(package! osx-trash :pin "0f1dc052d0a750b8c75f14530a4897f5d4324b4e")
