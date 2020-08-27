@@ -1,20 +1,63 @@
 * doom-emacs-config
 
-[[https://github.com/hlissner/doom-emacs][Doom]] is faster than my personal Emacs config. Maybe it is worth to join the team.
+[[https://github.com/hlissner/doom-emacs][Doom]] is faster than [[https://www.const.no/init][my personal Emacs config]]. I want to know if it's worth it to
+switch. There's a lot of similarities with my config.
 
-The =.doom.d= folder is like a private Doom module.
+Doom uses =straight.el= and =general.el= under the hood. They are actually
+hiding behind =package!= and =map!=. One improvement over my config is that
+=straight.el= is used outside of Emacs itself - with the =doom install= CLI
+command. I like this a lot - especially since I would never bother to do that
+myself.
+
+As always, =use-package!= is used for configuring packages. However, I am not
+really able to use the =:general= keyword as before so I opted to combine
+=:init= with =map!=.
+
+I like how =!map= hides away the complexities of =general.el= when you want to
+use leader keys. You get sane defaults with a pleasant wrapper.
+
+I am unsure how to best utilize the =after!= function for configuring packages.
+I may have to move things away from =use-package!='s =:config= keyword to
+=after!= instead.
+
+It seems easier to pin packages with Doom. I just use the =package!= with the
+=:pin= keyword. I was never a big fan of how =straight-freeze-versions= and
+=straight-thaw-versions= worked or [[https://github.com/raxod502/straight.el#how-do-i-pin-package-versions-or-use-only-tagged-releases][how pinning packages is described in the
+=straight.el= README]]. I assume Doom does something clever to keep everything
+under control.
+
+
+** What is a module?
+
+A module is something you can tell Doom to load by listing the module name in
+=init.el=.
 
 A module can have a =packages.el= and a =config.el=, so: only use =package!= in
 the former and =use-package!= in the latter. =use-package!= is formerly known as
 =def-package!= (which is deprecated).
+
+The =.doom.d= folder is like a private Doom module.
 
 =package!= is declarative: meant only for telling Doom what this module's
 dependencies are (and optionally, where to find them).
 
 =!map= is a convenience macro for defining keybinds, powered by =general.el=.
 
+The canonical way to reconfigure packages is with =(after! PACKAGE ...)=.
+
 ** Inspiration
 
+- https://github.com/jethrokuan/blog/blob/master/org/migrating_to_doom_emacs.org
+- https://github.com/a13/emacs.d
+  - Uses =use-package= very well
+- [ ] Steal this https://github.com/ianpan870102/.personal-emacs.d/blob/master/init.el#L77
+  - Uses =use-package= very well
+- https://github.com/ianpan870102/yay-evil-emacs
+  - Steal a lot
+- [[https://www.ianjones.us/zaiste-programming-doom-emacs-tutorial][Doom Emacs Zaiste Programming Tutorial]]
+- [[https://github.com/tecosaur/emacs-config][GitHub - tecosaur/emacs-config: My configuration for Doom Emacs]]
+- [[https://github.com/rschmukler/doom.d][GitHub - rschmukler/doom.d: My Emacs Doom Config]]
+- [[https://github.com/ztlevi/doom-config][GitHub - ztlevi/doom-config: Blazing fast Doom Emacs private configuration]]
 - [[https://tecosaur.github.io/emacs-config/config.html][Doom Emacs Configuration]]
 - [[https://github.com/niklascarlsson/doom-private][GitHub - niklascarlsson/doom-private: My private module with tweaks for the Emacs Doom]]
 - [[https://github.com/niklascarlsson/dotfiles][GitHub - niklascarlsson/dotfiles: My dotfiles]]
@@ -93,6 +136,8 @@ I like =SPC t z= (toggle zen) for =writeroom-mode= but I am not a big fan of the
 being used.
 
 *** Bad
+
+Scrolling issues on Mac OS - https://github.com/hlissner/doom-emacs/issues/2217
 
 I wish I knew how to create my own modules and features.
 
