@@ -26,6 +26,16 @@ It seems easier to pin packages with Doom. I just use the =package!= with the
 =straight.el= README]]. I assume Doom does something clever to keep everything
 under control.
 
+It's pretty cool to have a community around your Emacs configuration. There is a
+friendly and active Discord community.
+
+#+BEGIN_QUOTE
+Hop on our [[https://discord.gg/qvGgnVx][Discord server]] and say hi! Help others, hang out or talk to me about
+Emacs, gamedev, programming, physics, pixel art, anime, gaming -- anything you
+like. Nourish this lonely soul.
+#+END_QUOTE
+
+
 
 ** What is a module?
 
