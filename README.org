@@ -10,18 +10,29 @@ command. I like this a lot - especially since I would never bother to do that
 myself.
 
 As always, =use-package!= is used for configuring packages. However, I am not
-really able to use the =:general= keyword as before so I opted to combine
-=:init= with =map!=.
+really able to use the =:general= property as before so I opted to combine
+=:init= with =map!=. Although one might argue that =:map= should not be a part
+of the =use-package!= declaration if you consider [[https://github.com/hlissner/doom-emacs/blob/develop/modules/config/default/%2Bevil-bindings.el#L254][+evil-bindings.el]]. Perhaps you
+should rather create your own =config= module. The downside to that is that you
+could have keybindings to packages that may not be installed.
+
+#+BEGIN_QUOTE
+=use-package!= is a thin wrapper around `use-package' it is required that you
+use this in Doom's modules, but not required to be used in your private config
+#+END_QUOTE
+
+It is important to note that omitting =:defer=, =:hook=, =:commands= or =:after=
+will make your package load immediately. This is bad for Doom's startup time.
 
 I like how =!map= hides away the complexities of =general.el= when you want to
 use leader keys. You get sane defaults with a pleasant wrapper.
 
 I am unsure how to best utilize the =after!= function for configuring packages.
-I may have to move things away from =use-package!='s =:config= keyword to
+I may have to move things away from =use-package!='s =:config= property to
 =after!= instead.
 
 It seems easier to pin packages with Doom. I just use the =package!= with the
-=:pin= keyword. I was never a big fan of how =straight-freeze-versions= and
+=:pin= property. I was never a big fan of how =straight-freeze-versions= and
 =straight-thaw-versions= worked or [[https://github.com/raxod502/straight.el#how-do-i-pin-package-versions-or-use-only-tagged-releases][how pinning packages is described in the
 =straight.el= README]]. I assume Doom does something clever to keep everything
 under control.
@@ -46,7 +57,13 @@ A module can have a =packages.el= and a =config.el=, so: only use =package!= in
 the former and =use-package!= in the latter. =use-package!= is formerly known as
 =def-package!= (which is deprecated).
 
-The =.doom.d= folder is like a private Doom module.
+#+BEGIN_QUOTE
+Doom consists of around 160 modules and growing. A Doom module is a bundle of
+packages, configuration and commands, organized into a unit that can be toggled
+easily by tweaking your =doom!= block (found in =$DOOMDIR/init.el=).
+#+END_QUOTE
+
+You can think of your =$DOOMDIR= kind of like a Doom module.
 
 =package!= is declarative: meant only for telling Doom what this module's
 dependencies are (and optionally, where to find them).
