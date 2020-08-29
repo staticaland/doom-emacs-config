@@ -35,7 +35,9 @@ It seems easier to pin packages with Doom. I just use the =package!= with the
 =:pin= property. I was never a big fan of how =straight-freeze-versions= and
 =straight-thaw-versions= worked or [[https://github.com/raxod502/straight.el#how-do-i-pin-package-versions-or-use-only-tagged-releases][how pinning packages is described in the
 =straight.el= README]]. I assume Doom does something clever to keep everything
-under control.
+under control. To bump a package pin, run =doom/bump-package-at-point= while the
+cursor is on a =package!= expression. Again, something I would never had
+implemented myself.
 
 It's pretty cool to have a community around your Emacs configuration. There is a
 friendly and active Discord community.
@@ -47,6 +49,15 @@ like. Nourish this lonely soul.
 #+END_QUOTE
 
 
+** Discoveries
+
+=aya-create= with =aya-expand= is very useful:
+
+#+BEGIN_SRC js
+count_of_~red = get_total("~red");
+#+END_SRC
+
+=aya-persist-snippet= wil save whatever is currently in =aya-current=.
 
 ** What is a module?
 
