@@ -3,11 +3,26 @@
 [[https://github.com/hlissner/doom-emacs][Doom]] is faster than [[https://www.const.no/init][my personal Emacs config]]. I want to know if it's worth it to
 switch. There's a lot of similarities with my config.
 
+#+BEGIN_QUOTE
+After 30+ years of using Emacs, I'm more than happy to use a distro with a well
+curated set of built-in packages, and a clear set of config mechanisms. Also the
+startup time! I was happy with my handcrafted config when I got <10s, with Doom
+I get ~1.5s and a lot more functionality ready to go. Amazing.
+#+END_QUOTE
+
 Doom uses =straight.el= and =general.el= under the hood. They are actually
 hiding behind =package!= and =map!=. One improvement over my config is that
 =straight.el= is used outside of Emacs itself - with the =doom install= CLI
 command. I like this a lot - especially since I would never bother to do that
 myself.
+
+It seems easier to pin packages with Doom. I just use the =package!= with the
+=:pin= property. I was never a big fan of how =straight-freeze-versions= and
+=straight-thaw-versions= worked or [[https://github.com/raxod502/straight.el#how-do-i-pin-package-versions-or-use-only-tagged-releases][how pinning packages is described in the
+=straight.el= README]]. I assume Doom does something clever to keep everything
+under control. To bump a package pin, run =doom/bump-package-at-point= while the
+cursor is on a =package!= expression. Again, something I would never had
+implemented myself.
 
 As always, =use-package!= is used for configuring packages. However, I am not
 really able to use the =:general= property as before so I opted to combine
@@ -31,13 +46,7 @@ I am unsure how to best utilize the =after!= function for configuring packages.
 I may have to move things away from =use-package!='s =:config= property to
 =after!= instead.
 
-It seems easier to pin packages with Doom. I just use the =package!= with the
-=:pin= property. I was never a big fan of how =straight-freeze-versions= and
-=straight-thaw-versions= worked or [[https://github.com/raxod502/straight.el#how-do-i-pin-package-versions-or-use-only-tagged-releases][how pinning packages is described in the
-=straight.el= README]]. I assume Doom does something clever to keep everything
-under control. To bump a package pin, run =doom/bump-package-at-point= while the
-cursor is on a =package!= expression. Again, something I would never had
-implemented myself.
+The =after!= macro just expands to =eval-after-load=.
 
 It's pretty cool to have a community around your Emacs configuration. There is a
 friendly and active Discord community.
@@ -58,6 +67,12 @@ count_of_~red = get_total("~red");
 #+END_SRC
 
 =aya-persist-snippet= wil save whatever is currently in =aya-current=.
+
+=org-re-reveal= is set up to download the JS files locally. Great!
+
+#+BEGIN_SRC
+#+REVEAL_EXTRA_CSS: url-to-custom-stylesheet.css
+#+END_SRC
 
 ** What is a module?
 
