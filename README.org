@@ -24,12 +24,13 @@ under control. To bump a package pin, run =doom/bump-package-at-point= while the
 cursor is on a =package!= expression. Again, something I'd never implement
 myself.
 
-As always, =use-package!= is used for configuring packages. However, I am not
-really able to use the =:general= property as before so I opted to combine
-=:init= with =map!=. Although one might argue that =:map= should not be a part
-of the =use-package!= declaration if you consider [[https://github.com/hlissner/doom-emacs/blob/develop/modules/config/default/%2Bevil-bindings.el#L254][+evil-bindings.el]]. Perhaps you
-should rather create your own =config= module. The downside to that is that you
-could have keybindings to packages that may not be installed.
+As always, =use-package= is used for configuring packages. Doom has its own
+version (=use-package!=) that will avoid loading disabled packages. However, I
+am not really able to use the =:general= property as before so I opted to
+combine =:init= with =map!=. Although one might argue that =:map= should not be
+a part of the =use-package!= declaration if you consider [[https://github.com/hlissner/doom-emacs/blob/develop/modules/config/default/%2Bevil-bindings.el#L254][+evil-bindings.el]].
+Perhaps you should rather create your own =config= module. The downside to that
+is that you could have keybindings to packages that may not be installed.
 
 #+BEGIN_QUOTE
 =use-package!= is a thin wrapper around `use-package' it is required that you
@@ -57,6 +58,8 @@ Emacs, gamedev, programming, physics, pixel art, anime, gaming -- anything you
 like. Nourish this lonely soul.
 #+END_QUOTE
 
+I have learnt a lot from in a short time by following the discussions.
+
 
 ** Discoveries
 
@@ -68,11 +71,14 @@ count_of_~red = get_total("~red");
 
 =aya-persist-snippet= wil save whatever is currently in =aya-current=.
 
-=org-re-reveal= is set up to download the JS files locally. Great!
+=org-re-reveal= is set up to download the JS files locally. Great! Making
+presentations are a breeze now.
 
 #+BEGIN_SRC
 #+REVEAL_EXTRA_CSS: url-to-custom-stylesheet.css
 #+END_SRC
+
+=git-timemachine= (=g t=) is nice. =C-j= and =C-k= to browse the revisions.
 
 ** What is a module?
 
