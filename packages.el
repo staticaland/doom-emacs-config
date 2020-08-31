@@ -58,3 +58,5 @@
 (package! modus-vivendi-theme :pin "29c21b4a8146ae5d43cb3418480d307616dc2d8b")
 (package! org-bullets :pin "767f55feb58b840a5a04eabfc3fbbf0d257c4792")
 ;; (package! hl-line+ :pin "767f55feb58b840a5a04eabfc3fbbf0d257c4792")
+(package! bicycle :pin "799969a66192b27c6464fc2e0025f4089d70493b")
+(package! outline-minor-faces :pin "cb9c529bb992c6f60b054caf4e993b03c7b3ba9e")

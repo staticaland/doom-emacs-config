@@ -35,6 +35,8 @@
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type nil)
 
+(setq evil-snipe-scope 'visible)
+
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
@@ -53,6 +55,10 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 ;;
+
+
+
+;;;; Config
 
 (setq doom-variable-pitch-font (font-spec :family "EtBembo" :size 18))
 (setq doom-themes-treemacs-enable-variable-pitch nil)
@@ -154,28 +160,7 @@
                      "*Messages*")
 	(pop-to-buffer "*tmux-capture-pane*"))))
 
-
 (add-hook! 'org-mode-hook #'mixed-pitch-mode)
-
-(after! org-mode
-(custom-set-faces!
-  '(outline-1 :weight extra-bold :height 1.25)
-  '(outline-2 :weight bold :height 1.15)
-  '(outline-3 :weight bold :height 1.12)
-  '(outline-4 :weight semi-bold :height 1.09)
-  '(outline-5 :weight semi-bold :height 1.06)
-  '(outline-6 :weight semi-bold :height 1.03)
-  '(outline-8 :weight semi-bold)
-    '(outline-9 :weight semi-bold)))
-
-(after! markdown-mode
-(custom-set-faces!
-  '(markdown-header-face-1 :height 1.25 :weight extra-bold :inherit markdown-header-face)
-  '(markdown-header-face-2 :height 1.15 :weight bold       :inherit markdown-header-face)
-  '(markdown-header-face-3 :height 1.08 :weight bold       :inherit markdown-header-face)
-  '(markdown-header-face-4 :height 1.00 :weight bold       :inherit markdown-header-face)
-  '(markdown-header-face-5 :height 0.90 :weight bold       :inherit markdown-header-face)
-    '(markdown-header-face-6 :height 0.75 :weight extra-bold :inherit markdown-header-face)))
 
 (setq evil-vsplit-window-right t
       evil-split-window-below t)
@@ -234,8 +219,11 @@
         '("⁖"))
   :hook (org-mode . org-bullets-mode))
 
+;; If changing such values, you must reload the theme
 (use-package! modus-operandi-theme
-  :config
+  :defer t
+  :init
+  (setq modus-operandi-theme-scale-headings t)
   (setq modus-operandi-theme-diffs 'desaturated)
   (setq modus-operandi-theme-intense-paren-match t))
 
@@ -245,3 +233,22 @@
 (after! doom-modeline
  (setq doom-modeline-persp-name t
        doom-modeline-persp-icon t))
+
+;;;; Outline
+
+(use-package bicycle
+    :after outline)
+
+(map! :map outline-minor-mode-map
+    :n "<tab>" #'bicycle-cycle
+    :n "<backtab>" #'bicycle-cycle-global)
+
+(use-package prog-mode
+  :config
+  (add-hook 'prog-mode-hook 'outline-minor-mode)
+  (add-hook 'prog-mode-hook 'hs-minor-mode))
+
+
+(use-package outline-minor-faces
+  :hook
+  (outline-minor-mode-hook . outline-minor-faces-add-font-lock-keywords))
