@@ -2,16 +2,32 @@
 
 * Base settings
 
-What Doom wants me to set.
+Make this file run (slightly) faster with lexical binding (see [[https://nullprogram.com/blog/2016/12/22/][this blog post]]
+for more info).
 
-#+BEGIN_SRC
+#+BEGIN_SRC elisp
+;;; config.el -*- lexical-binding: t; -*-
+#+END_SRC
+
+** Personal Information
+
+It's useful to have some basic personal information
+
+#+BEGIN_SRC elisp
 (setq user-full-name "Anders K. Pettersen"
       user-mail-address "john@doe.com")
+#+END_SRC
 
+What Doom wants me to set.
+
+#+BEGIN_SRC elisp
 (setq doom-theme 'modus-operandi)
 
 (setq display-line-numbers-type nil)
+
+(setq doom-theme 'modus-operandi)
 #+END_SRC
+
 
 ** Base typeface configurations
 
@@ -26,6 +42,7 @@ What Doom wants me to set.
   (font-put doom-font :weight 'semi-light))
 #+END_SRC
 
+
 * General movements and motions
 
 Ok.
@@ -36,6 +53,7 @@ Ok.
 (after! evil-snipe
   (setq evil-snipe-scope 'visible))
 #+END_SRC
+
 
 * Directory, buffer, window management
 
@@ -107,6 +125,7 @@ Ok.
     (add-to-list 'treemacs-pre-file-insert-predicates #'treemacs-is-file-git-ignored?))
 #+END_SRC
 
+
 * General interface and interactions
 
 ** Theme
@@ -153,9 +172,12 @@ Ok.
                     'outline-minor-faces-add-font-lock-keywords))
 #+END_SRC
 
+
 * Applications and utilities
 
 ** Tmux
+
+Sometimes I want to dump the current =tmux= pane into Emacs.
 
 #+BEGIN_SRC elisp
 (use-package! emacs
@@ -174,7 +196,10 @@ Ok.
 	(pop-to-buffer "*tmux-capture-pane*"))))
 #+END_SRC
 
+
 ** Elfeed
+
+I use the Doom RSS module and just set a keybinding here.
 
 #+BEGIN_SRC elisp
 (use-package! elfeed
@@ -210,7 +235,27 @@ Ok.
 #+END_SRC
 
 
-* Org
+** Org-mode (personal information manager)
+
+#+BEGIN_SRC elisp
+(use-package! org
+  :commands org-mode
+  :init (setq org-directory "~/org/")
+  :config
+  (map! :leader
+        (:prefix ("f" . "file")
+         :desc "Open init.org" "o" '(lambda () (interactive) (find-file "~/org/org.org"))))
+  (setq org-babel-python-command "python3")
+  (setq org-bullets-bullet-list '(" "))
+  (setq org-cycle-separator-lines 1)
+  (setq org-edit-src-content-indentation 0)
+  (setq org-ellipsis "  ")
+  (setq org-export-initial-scope 'subtree)
+  (setq org-image-actual-width 400)
+  (setq org-src-window-setup 'current-window)
+  (setq org-startup-indented t)
+  (setq org-bullets-bullet-list '("·")))
+#+END_SRC
 
 #+BEGIN_SRC elisp
 (add-hook! 'org-mode-hook #'mixed-pitch-mode)
