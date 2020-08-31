@@ -1,5 +1,7 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
+;;;; Docs
+
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
 
@@ -249,6 +251,7 @@
   (add-hook 'prog-mode-hook 'hs-minor-mode))
 
 
-(use-package outline-minor-faces
-  :hook
-  (outline-minor-mode-hook . outline-minor-faces-add-font-lock-keywords))
+(use-package! outline-minor-faces
+  :after outline
+  :config (add-hook 'outline-minor-mode-hook
+                    'outline-minor-faces-add-font-lock-keywords))
