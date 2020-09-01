@@ -258,5 +258,14 @@ I use the Doom RSS module and just set a keybinding here.
 #+END_SRC
 
 #+BEGIN_SRC elisp
-(add-hook! 'org-mode-hook #'mixed-pitch-mode)
+(after! poetry
+
+  (map! :map python-mode-map
+        :localleader
+        :desc "Activate Poetry tracking mode" "c" #'poetry-tracking-mode
+        :desc "Restart LSP workspace" "r" #'lsp-workspace-restart
+        :desc "Workon/off the Poetry venv" "w" #'poetry-venv-toggle
+        :desc "Poetry menu" "p" #'poetry)
+  (setq poetry-tracking-mode 1)
+  (add-hook 'python-mode #'poetry-tracking-mode))
 #+END_SRC
