@@ -1,4 +1,5 @@
 #+TITLE: Config
+#+HTML_HEAD: <link rel="stylesheet" href="https://sandyuraz.com/styles/org.min.css">
 
 * Base settings
 
@@ -124,12 +125,6 @@ Always create a new workspace when switching to a project.
         ("ogv" . "mpv")
         ("pdf" . "zathura")))
     (setq dired-open-extensions open-extensions))
-
-(use-package! osx-trash
-  :after dired
-  :if (eq system-type 'darwin)
-  :init
-  (osx-trash-setup))
 #+END_SRC
 
 
@@ -161,6 +156,7 @@ Always create a new workspace when switching to a project.
   (setq modus-operandi-theme-intense-paren-match t))
 #+END_SRC
 
+
 ** Window splits
 
 #+BEGIN_SRC elisp
@@ -172,6 +168,7 @@ Always create a new workspace when switching to a project.
   (+ivy/switch-workspace-buffer))
 #+END_SRC
 
+
 ** Outline mode
 
 #+BEGIN_SRC elisp
@@ -181,12 +178,14 @@ Always create a new workspace when switching to a project.
 (map! :map outline-minor-mode-map
     :n "<tab>" #'bicycle-cycle
     :n "<backtab>" #'bicycle-cycle-global)
+#+END_SRC
 
-(use-package prog-mode
-  :config
+TODO: https://emacs.stackexchange.com/questions/60420/emacs-outline-mode-custom-heading-and-space-between-headers
+
+#+BEGIN_SRC elisp
+(after! prog-mode
   (add-hook 'prog-mode-hook 'outline-minor-mode)
   (add-hook 'prog-mode-hook 'hs-minor-mode))
-
 
 (use-package! outline-minor-faces
   :after outline
@@ -300,25 +299,84 @@ I use the Doom RSS module and just set a keybinding here.
 
 ** Org-mode (personal information manager)
 
+Org mode is for keeping notes, maintaining TODO lists, planning projects, and
+authoring documents with a fast and effective plain-text system.
+
+I have these feature flags enabled:
+
+- =+hugo= :: For exporting my blog from Org to Hugo flavoured markdown
+- =+pretty= :: Mainly for pretty headings
+- =+journal= :: For daily journals saved to =~/org/journal= with one file for
+  each day
+- =+roam= :: For Zettelkasten style note taking
+- =+present= :: For making =reveal.js= presentations from Org documents
+- I want to use https://sandyuraz.com/articles/orgmode-css/ (see https://news.ycombinator.com/item?id=23130104)
+
 #+BEGIN_SRC elisp
-(use-package! org
-  :commands org-mode
-  :init (setq org-directory "~/org/")
-  :config
-  (map! :leader
-        (:prefix ("f" . "file")
-         :desc "Open init.org" "o" '(lambda () (interactive) (find-file "~/org/org.org"))))
+(after! org-journal (setq org-journal-file-format "%Y%m%d.org"))
+#+END_SRC
+
+First I set my =org-directory= and bind =SPC f o= to open my main Org-mode file.
+
+#+BEGIN_SRC elisp
+(setq org-directory "~/org/")
+
+(map! :leader
+    (:prefix ("f" . "file")
+     :desc "Open init.org" "o" '(lambda () (interactive) (find-file "~/org/org.org"))))
+#+END_SRC
+
+- Use =mixed-pitch-mode= by default
+- Show at least one line break between headings
+- Never indent SRC blocks
+
+#+BEGIN_SRC elisp
+(after! org
+  ;; (setq org-capture-templates
+  ;; '(("j" "Journal" entry (file+olp+datetree "~/org/journal.org") "* %?\n")))
+  (add-hook! 'org-mode-hook #'mixed-pitch-mode)
   (setq org-babel-python-command "python3")
-  (setq org-bullets-bullet-list '(" "))
   (setq org-cycle-separator-lines 1)
   (setq org-edit-src-content-indentation 0)
-  (setq org-ellipsis "  ")
   (setq org-export-initial-scope 'subtree)
   (setq org-image-actual-width 400)
   (setq org-src-window-setup 'current-window)
-  (setq org-startup-indented t)
-  (setq org-bullets-bullet-list '("·")))
+  (setq org-startup-indented t))
 #+END_SRC
+
+Org-capture templates from Protesilaos Stavrou be serving me well:
+
+#+BEGIN_SRC elisp
+(use-package org-capture
+  :after org
+  :config
+  (setq org-capture-templates
+        '(("b" "Basic task for future review" entry
+           (file+headline "tasks.org" "Basic tasks that need to be reviewed")
+           "* %^{Title}\n:PROPERTIES:\n:CAPTURED: %U\n:END:\n\n%i%l")
+
+          ("w" "Work")
+          ("wt" "Task or assignment" entry
+           (file+headline "work.org" "Tasks and assignments")
+           "* TODO [#A] %^{Title} :@work:\nSCHEDULED: %^t\n:PROPERTIES:\n:CAPTURED: %U\n:END:\n\n%i%?")
+
+          ("wm" "Meeting, event, appointment" entry
+           (file+headline "work.org" "Meetings, events, and appointments")
+           "* MEET [#A] %^{Title} :@work:\nSCHEDULED: %^T\n:PROPERTIES:\n:CAPTURED: %U\n:END:\n\n%i%?")
+
+          ("t" "Task with a due date" entry
+           (file+headline "tasks.org" "Task list with a date")
+           "* %^{Scope of task||TODO|STUDY|MEET} %^{Title} %^g\nSCHEDULED: %^t\n:PROPERTIES:\n:CAPTURED: %U\n:END:\n\n%i%?")
+
+          ("r" "Reply to an email" entry
+           (file+headline "tasks.org" "Mail correspondence")
+           "* TODO [#B] %:subject :mail:\nSCHEDULED: %t\n:PROPERTIES:\n:CONTEXT: %a\n:END:\n\n%i%?"))))
+#+END_SRC
+
+
+* Languages
+
+** Python
 
 #+BEGIN_SRC elisp
 (after! poetry
