@@ -1,62 +1,22 @@
 ;; -*- no-byte-compile: t; -*-
 ;;; $DOOMDIR/packages.el
 
-;; To install a package with Doom you must declare them here and run 'doom sync'
-;; on the command line, then restart Emacs for the changes to take effect -- or
-;; use 'M-x doom/reload'.
-
-
-;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
-;(package! some-package)
-
-;; To install a package directly from a remote git repo, you must specify a
-;; `:recipe'. You'll find documentation on what `:recipe' accepts here:
-;; https://github.com/raxod502/straight.el#the-recipe-format
-;(package! another-package
-;  :recipe (:host github :repo "username/repo"))
-
-;; If the package you are trying to install does not contain a PACKAGENAME.el
-;; file, or is located in a subdirectory of the repo, you'll need to specify
-;; `:files' in the `:recipe':
-;(package! this-package
-;  :recipe (:host github :repo "username/repo"
-;           :files ("some-file.el" "src/lisp/*.el")))
-
-;; If you'd like to disable a package included with Doom, you can do so here
-;; with the `:disable' property:
-;(package! builtin-package :disable t)
-
-;; You can override the recipe of a built in package without having to specify
-;; all the properties for `:recipe'. These will inherit the rest of its recipe
-;; from Doom or MELPA/ELPA/Emacsmirror:
-;(package! builtin-package :recipe (:nonrecursive t))
-;(package! builtin-package-2 :recipe (:repo "myfork/package"))
-
-;; Specify a `:branch' to install a package from a particular branch or tag.
-;; This is required for some packages whose default branch isn't 'master' (which
-;; our package manager can't deal with; see raxod502/straight.el#279)
-;(package! builtin-package :recipe (:branch "develop"))
-
-;; Use `:pin' to specify a particular commit to install.
-;(package! builtin-package :pin "1a2b3c4d5e")
-
-
-;; Doom's packages are pinned to a specific commit and updated from release to
-;; release. The `unpin!' macro allows you to unpin single packages...
-;(unpin! pinned-package)
-;; ...or multiple packages
-;(unpin! pinned-package another-pinned-package)
-;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
-;(unpin! t)
-
 (package! dired-narrow :pin "f49a8bbf95f70671a74a24f7f4de453b2686be46")
 (package! dired-open :pin "f49a8bbf95f70671a74a24f7f4de453b2686be46")
-(package! osx-trash :pin "0f1dc052d0a750b8c75f14530a4897f5d4324b4e")
 (package! keycast :pin "038475c178e90c7bad64d113db26d42cad60e149")
 (package! info-colors :pin "47ee73cc19b1049eef32c9f3e264ea7ef2aaf8a5")
 (package! modus-operandi-theme :pin "29c21b4a8146ae5d43cb3418480d307616dc2d8b")
 (package! modus-vivendi-theme :pin "29c21b4a8146ae5d43cb3418480d307616dc2d8b")
-(package! org-bullets :pin "767f55feb58b840a5a04eabfc3fbbf0d257c4792")
-;; (package! hl-line+ :pin "767f55feb58b840a5a04eabfc3fbbf0d257c4792")
 (package! bicycle :pin "799969a66192b27c6464fc2e0025f4089d70493b")
 (package! outline-minor-faces :pin "cb9c529bb992c6f60b054caf4e993b03c7b3ba9e")
+
+(package! orgcss
+  :recipe (:host github :repo "gongzhitaao/orgcss"
+           :files ("src/css/*.css"))
+  :pin "e7d24040fe6715bfdd5965f9acbc393fe612cef5")
+
+(package! org-html-themes
+  :recipe (:host github :repo "fniessen/org-html-themes"
+           :files ("styles" "setup"))
+  :pin "7e4e2ec56069dae3b40e2afdc0174bec368609d8")
+(package! doct :pin "0a91f6b7fbb2e7971a4624a74ac74123cc514a4b")
