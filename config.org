@@ -54,6 +54,24 @@ Ok.
   (setq evil-snipe-scope 'visible))
 #+END_SRC
 
+Try it here with =f= followed by =;= and =,= to traverse matches:
+
+#+BEGIN_QUOTE
+Alice took up the fan and gloves, and, as the hall was very hot, she kept
+fanning herself all the time she went on talking: `Dear, dear! How queer
+everything is to-day! And yesterday things went on just as usual. I wonder if
+I've been changed in the night? Let me think: was I the same when I got up this
+morning? I almost think I can remember feeling a little different. But if I'm
+not the same, the next question is, Who in the world am I? Ah, that's the great
+puzzle!' And she began thinking over all the children she knew that were of the
+same age as herself, to see if she could have been changed for any of them.
+#+END_QUOTE
+
+I think =avy-goto-char-2= is better though (=g s s=). Speaking of jumping
+around, =SPC s s= is a fine command for invoking Swiper. Most of the times I am
+looking for a file in a project, I should probably use =SPC s p= instead of
+using =SPC p f=.
+
 
 * Directory, buffer, window management
 
