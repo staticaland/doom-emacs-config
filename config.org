@@ -79,6 +79,10 @@ using =SPC p f=.
 
 #+BEGIN_SRC elisp
 (after! dired
+
+  (add-hook! 'dired-mode-hook 'dired-hide-details-mode)
+  (add-hook! 'dired-mode-hook 'hl-line-mode)
+
   (if (executable-find "gls")
       (progn
         (setq insert-directory-program "gls")
@@ -87,19 +91,13 @@ using =SPC p f=.
 
   (setq ls-lisp-dirs-first t)
 
+  (setq dired-listing-switches "-lat") ; sort by date (new first)
+  (put 'dired-find-alternate-file 'disabled nil)
+
   (setq delete-by-moving-to-trash t)
   (setq dired-dwim-target t)
   (setq dired-recursive-copies (quote always))
   (setq dired-recursive-deletes (quote top)))
-
-(use-package dired
-  :commands dired
-  :ensure nil
-  :hook ((dired-mode . dired-hide-details-mode)
-         (dired-mode . hl-line-mode))
-  :config
-  (setq dired-listing-switches "-lat") ; sort by date (new first)
-  (put 'dired-find-alternate-file 'disabled nil))
 
 (use-package! dired-narrow
   :after dired
