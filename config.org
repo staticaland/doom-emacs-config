@@ -75,6 +75,12 @@ using =SPC p f=.
 
 * Directory, buffer, window management
 
+Always create a new workspace when switching to a project.
+
+#+BEGIN_SRC elisp
+(setq +workspaces-on-switch-project-behavior t)
+#+END_SRC
+
 ** Dired
 
 #+BEGIN_SRC elisp
