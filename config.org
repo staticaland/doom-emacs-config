@@ -344,7 +344,21 @@ First I set my =org-directory= and bind =SPC f o= to open my main Org-mode file.
   (setq org-startup-indented t))
 #+END_SRC
 
-Org-capture templates from Protesilaos Stavrou be serving me well:
+Org-capture templates from Protesilaos Stavrou be serving me well.
+
+A quoted list of lists:
+
+1. The key
+2. The description
+3. The type of entry (a symbol)
+   - =entry= :: An Org mode node, with a headline. Will be filed as the child of the target
+     entry or as a top-level entry. The target file should be an Org file.
+4. The target
+   - Like =file+headline=
+5. The template
+
+If you say =file+headline= you would give it a filename and a headline to put
+the template under.
 
 #+BEGIN_SRC elisp
 (use-package org-capture
