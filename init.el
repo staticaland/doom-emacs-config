@@ -80,10 +80,15 @@
        (go +lsp)         ; the hipster dialect
        json              ; At least it ain't XML
        markdown          ; writing docs for people to ignore
-       (org +hugo +roam +present)
+       (org +pretty +journal +hugo +roam +present)
        (python +poetry +lsp)
        sh                ; she sells {ba,z,fi}sh shells on the C xor
        yaml              ; JSON, but readable
+
+;;;; OS
+
+       :os
+       macos
 
 ;;;; Email
 
@@ -97,4 +102,5 @@
 ;;;; Config
 
        :config
-       (default +bindings +smartparens))
+       (default +bindings +smartparens)
+       literate)
