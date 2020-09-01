@@ -192,6 +192,47 @@ Always create a new workspace when switching to a project.
   :after outline
   :config (add-hook 'outline-minor-mode-hook
                     'outline-minor-faces-add-font-lock-keywords))
+
+(add-hook 'outline-minor-mode-hook
+          (defun contrib/outline-overview ()
+            "Show only outline headings."
+            (outline-show-all)
+            (outline-hide-body)))
+
+(defun python-mode-outline-hook ()
+  (setq outline-level 'python-outline-level)
+
+  (setq outline-regexp
+    (rx (or
+         ;; Commented outline heading
+         (group
+          (* space)  ; 0 or more spaces
+          (one-or-more (syntax comment-start))
+          (one-or-more space)
+          ;; Heading level
+          (group (repeat 1 8 "\*"))  ; Outline stars
+          (one-or-more space))
+
+         ;; Python keyword heading
+         (group
+          ;; Heading level
+          (group (* space)) ; 0 or more spaces
+          bow
+          ;; Keywords
+          (or "class" "def" "else" "elif" "except" "for" "if" "try" "while")
+          eow)))))
+
+(add-hook 'python-mode-hook
+        (defun contrib/outline-python ()
+            "Fold only definitions in Python."
+            (setq outline-regexp
+                  (rx (or
+                       ;; Definitions
+                       (group (group (* space)) bow (or "class" "def") eow)
+
+                       ;; Decorators
+                       (group (group (* space)) "@"))))
+            (contrib/outline-overview)))
 #+END_SRC
 
 
