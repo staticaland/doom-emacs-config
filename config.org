@@ -26,7 +26,7 @@ What Doom wants me to set.
 
 (setq display-line-numbers-type nil)
 
-(setq doom-theme 'modus-operandi)
+(setq doom-theme 'doom-one)
 #+END_SRC
 
 
@@ -37,7 +37,7 @@ What Doom wants me to set.
 (setq doom-themes-treemacs-enable-variable-pitch nil)
 
 (when (string= (system-name) "Anderss-MacBook-Pro.local")
-  (setq doom-font (font-spec :family "Menlo" :size 15)
+  (setq doom-font (font-spec :family "Menlo" :size 12)
         doom-big-font-increment 8
         doom-variable-pitch-font (font-spec :family "EtBembo" :size 22))
   (font-put doom-font :weight 'semi-light))
@@ -78,11 +78,20 @@ using =SPC p f=.
 
 Always create a new workspace when switching to a project.
 
+** Projectile project management
+
 #+BEGIN_SRC elisp
-(setq +workspaces-on-switch-project-behavior t)
+(after! projectile
+  (setq +workspaces-on-switch-project-behavior t)
+
+  (setq projectile-ignored-projects '("~/" "/tmp" "~/.emacs.d/.local/straight/repos/"))
+  (defun projectile-ignored-project-function (filepath)
+      "Return t if FILEPATH is within any of `projectile-ignored-projects'"
+      (or (mapcar (lambda (p) (s-starts-with-p p filepath)) projectile-ignored-projects))))
 #+END_SRC
 
-** Dired
+
+** Dired file explorer
 
 #+BEGIN_SRC elisp
 (after! dired
@@ -128,7 +137,7 @@ Always create a new workspace when switching to a project.
 #+END_SRC
 
 
-** Treemacs
+** Treemacs file tree
 
 #+BEGIN_SRC elisp
 (use-package! treemacs
@@ -172,7 +181,7 @@ Always create a new workspace when switching to a project.
 ** Outline mode
 
 #+BEGIN_SRC elisp
-(use-package bicycle
+(use-package! bicycle
     :after outline)
 
 (map! :map outline-minor-mode-map
@@ -237,6 +246,14 @@ TODO: https://emacs.stackexchange.com/questions/60420/emacs-outline-mode-custom-
 
 * Applications and utilities
 
+** Gnus
+
+#+BEGIN_SRC elisp
+(after! gnus
+  (setq gnus-select-method '(nntp "news.gwene.org")))
+#+END_SRC
+
+
 ** Tmux
 
 Sometimes I want to dump the current =tmux= pane into Emacs.
@@ -261,7 +278,9 @@ Sometimes I want to dump the current =tmux= pane into Emacs.
 
 ** Elfeed
 
-I use the Doom RSS module and just set a keybinding here.
+I use the Doom RSS module and just set some keybinds here. I opt for =SPC m r=
+for =elfeed-update= which is a pleasing left, right, left key sequence. Yes, I
+press =SPC= with my left thumb.
 
 #+BEGIN_SRC elisp
 (use-package! elfeed
@@ -270,6 +289,11 @@ I use the Doom RSS module and just set a keybinding here.
   (map! :leader
     (:prefix ("o" . "open")
       :desc "Open elfeed" "e" #'=rss)))
+
+(after! elfeed
+  (map! :map elfeed-search-mode-map
+        :localleader
+        :desc "Elfeed update" "r" #'elfeed-update))
 #+END_SRC
 
 
@@ -332,8 +356,6 @@ First I set my =org-directory= and bind =SPC f o= to open my main Org-mode file.
 
 #+BEGIN_SRC elisp
 (after! org
-  ;; (setq org-capture-templates
-  ;; '(("j" "Journal" entry (file+olp+datetree "~/org/journal.org") "* %?\n")))
   (add-hook! 'org-mode-hook #'mixed-pitch-mode)
   (setq org-babel-python-command "python3")
   (setq org-cycle-separator-lines 1)
@@ -361,30 +383,56 @@ If you say =file+headline= you would give it a filename and a headline to put
 the template under.
 
 #+BEGIN_SRC elisp
-(use-package org-capture
-  :after org
-  :config
+(after! org-capture
   (setq org-capture-templates
         '(("b" "Basic task for future review" entry
            (file+headline "tasks.org" "Basic tasks that need to be reviewed")
-           "* %^{Title}\n:PROPERTIES:\n:CAPTURED: %U\n:END:\n\n%i%l")
+           "* %^{Title}\n:PROPERTIES:\n:CAPTURED: %U\n:END:\n\n%i%l"
+           :empty-lines 1)
 
           ("w" "Work")
           ("wt" "Task or assignment" entry
            (file+headline "work.org" "Tasks and assignments")
-           "* TODO [#A] %^{Title} :@work:\nSCHEDULED: %^t\n:PROPERTIES:\n:CAPTURED: %U\n:END:\n\n%i%?")
+           "\n\n* TODO [#A] %^{Title} :@work:\nSCHEDULED: %^t\n:PROPERTIES:\n:CAPTURED: %U\n:END:\n\n%i%?"
+           :empty-lines 1)
 
           ("wm" "Meeting, event, appointment" entry
            (file+headline "work.org" "Meetings, events, and appointments")
-           "* MEET [#A] %^{Title} :@work:\nSCHEDULED: %^T\n:PROPERTIES:\n:CAPTURED: %U\n:END:\n\n%i%?")
+           "\n\n* MEET [#A] %^{Title} :@work:\nSCHEDULED: %^T\n:PROPERTIES:\n:CAPTURED: %U\n:END:\n\n%i%?"
+           :empty-lines 1)
 
           ("t" "Task with a due date" entry
            (file+headline "tasks.org" "Task list with a date")
-           "* %^{Scope of task||TODO|STUDY|MEET} %^{Title} %^g\nSCHEDULED: %^t\n:PROPERTIES:\n:CAPTURED: %U\n:END:\n\n%i%?")
+           "\n\n* %^{Scope of task||TODO|STUDY|MEET} %^{Title} %^g\nSCHEDULED: %^t\n:PROPERTIES:\n:CAPTURED: %U\n:END:\n\n%i%?"
+           :empty-lines 1)
+
+          ("j" "Journal" entry
+           (file+olp+datetree "journal.org")
+           "* %?\n"
+           :empty-lines 1)
 
           ("r" "Reply to an email" entry
            (file+headline "tasks.org" "Mail correspondence")
-           "* TODO [#B] %:subject :mail:\nSCHEDULED: %t\n:PROPERTIES:\n:CONTEXT: %a\n:END:\n\n%i%?"))))
+           "\n\n* TODO [#B] %:subject :mail:\nSCHEDULED: %t\n:PROPERTIES:\n:CONTEXT: %a\n:END:\n\n%i%?"
+           :empty-lines 1)))
+
+  (defun org-hugo-new-subtree-post-capture-template ()
+      (let* ((title (read-from-minibuffer "Post Title: "))
+           (fname (org-hugo-slug title)))
+      (mapconcat #'identity
+                 `(
+                   ,(concat "* TODO " title)
+                   ":PROPERTIES:"
+                   ,(concat ":EXPORT_FILE_NAME: " fname)
+                   ":END:"
+                   "%?\n")
+                 "\n")))
+
+  (add-to-list 'org-capture-templates
+               '("h" "Hugo blog post" entry
+                 (file "~/Projects/org-blog/blog.org")
+                 (function org-hugo-new-subtree-post-capture-template)
+                 :empty-lines 1)))
 #+END_SRC
 
 
@@ -392,15 +440,30 @@ the template under.
 
 ** Python
 
-#+BEGIN_SRC elisp
-(after! poetry
+I don't understand why setting the right virtual environment is not a common use
+case for people using =lsp-mode=. Anyway, I use =poetry= and enable
+=poetry-tracking-mode= which will set the correct environment right before
+starting =lsp-mode=.
 
+I also add some Poetry commands to the local leader of =python-mode=. It's nice
+to be in control of the LSP beast.
+
+There's some other ways to set the virtual environment:
+
+- =poetry-venv-toggle=
+- =pyvenv-activate=
+
+You must run =lsp-workspace-restart= for changes to take effect.
+
+#+BEGIN_SRC elisp
+(add-hook! 'python-mode-hook 'poetry-tracking-mode)
+
+(after! poetry
+  (setq poetry-tracking-strategy 'projectile)
   (map! :map python-mode-map
         :localleader
         :desc "Activate Poetry tracking mode" "c" #'poetry-tracking-mode
         :desc "Restart LSP workspace" "r" #'lsp-workspace-restart
         :desc "Workon/off the Poetry venv" "w" #'poetry-venv-toggle
-        :desc "Poetry menu" "p" #'poetry)
-  (setq poetry-tracking-mode 1)
-  (add-hook 'python-mode #'poetry-tracking-mode))
+        :desc "Poetry menu" "p" #'poetry))
 #+END_SRC
