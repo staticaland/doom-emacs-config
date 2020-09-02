@@ -443,7 +443,7 @@ the template under.
 I don't understand why setting the right virtual environment is not a common use
 case for people using =lsp-mode=. Anyway, I use =poetry= and enable
 =poetry-tracking-mode= which will set the correct environment right before
-starting =lsp-mode=.
+starting =lsp-mode=. The function goes at the front of the hook list.
 
 I also add some Poetry commands to the local leader of =python-mode=. It's nice
 to be in control of the LSP beast.
