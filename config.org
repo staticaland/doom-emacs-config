@@ -205,15 +205,11 @@ I learned about =outline-minor-mode= from [[https://www.youtube.com/watch?v=UHk3
 #+END_SRC
 
 In Python, PEP8 style guidelines recommend two lines between functions (see
-[[https://www.python.org/dev/peps/pep-0008/#blank-lines][blank lines]])
-
-#+BEGIN_QUOTE
-Surround top-level function and class definitions with two blank lines
-#+END_QUOTE
+[[https://www.python.org/dev/peps/pep-0008/#blank-lines][blank lines]]).
 
 I agree that this makes the code easier to navigate (with the eyes). Therefore
-it makes little sense for =outline=minor-faces= to remove this spacing. I hope
-to find some way to force padding between outline headings.
+it makes little sense for =outline-minor-mode= to remove this spacing. I hope to
+find some way to force two blank lines between outline headings.
 
 #+BEGIN_SRC elisp
 (after! prog-mode
