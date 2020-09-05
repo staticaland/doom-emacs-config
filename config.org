@@ -1,7 +1,16 @@
 #+TITLE: Config
 #+HTML_HEAD: <link rel="stylesheet" href="https://sandyuraz.com/styles/org.min.css">
+#+hugo_base_dir: ~/Projects/org-hugo-book
+#+hugo_section: docs
 
-* Base settings
+
+* Doom Emacs config
+:PROPERTIES:
+:EXPORT_HUGO_SECTION: docs
+:EXPORT_FILE_NAME: init
+:END:
+
+** Base settings
 
 Make this file run (slightly) faster with lexical binding (see [[https://nullprogram.com/blog/2016/12/22/][this blog post]]
 for more info).
@@ -10,7 +19,7 @@ for more info).
 ;;; config.el -*- lexical-binding: t; -*-
 #+END_SRC
 
-** Personal Information
+*** Personal Information
 
 It's useful to have some basic personal information
 
@@ -30,25 +39,25 @@ What Doom wants me to set.
 #+END_SRC
 
 
-** Base typeface configurations
+*** Base typeface configurations
 
 #+BEGIN_SRC elisp
-(setq doom-variable-pitch-font (font-spec :family "EtBembo" :size 18))
+(setq doom-variable-pitch-font (font-spec :family "EtBembo"))
 (setq doom-themes-treemacs-enable-variable-pitch nil)
 
 (when (string= (system-name) "Anderss-MacBook-Pro.local")
-  (setq doom-font (font-spec :family "Menlo" :size 12)
+  (setq doom-font (font-spec :family "Menlo" :height 160)
         doom-big-font-increment 8
-        doom-variable-pitch-font (font-spec :family "EtBembo" :size 22))
+        doom-variable-pitch-font (font-spec :family "EtBembo"))
   (font-put doom-font :weight 'semi-light))
 #+END_SRC
 
 
-* General movements and motions
+** General movements and motions
 
-Ok.
+*** Evil-snipe
 
-** Evil-snipe
+[[https://www.youtube.com/watch?v=ywRExNOyybY][Zaiste Programming has a nice video about Evil-snipe]].
 
 #+BEGIN_SRC elisp
 (after! evil-snipe
@@ -74,11 +83,15 @@ looking for a file in a project, I should probably use =SPC s p= instead of
 using =SPC p f=.
 
 
-* Directory, buffer, window management
+** Directory, buffer, window management
 
-Always create a new workspace when switching to a project.
+*** Projectile project management
 
-** Projectile project management
+I want to always create a new (or matching existing) project when switching to a
+project.
+
+I also want to ignore the package repositories cloned by =straight.el=. Having a
+lot of projects seem to slow down Emacs.
 
 #+BEGIN_SRC elisp
 (after! projectile
@@ -91,7 +104,7 @@ Always create a new workspace when switching to a project.
 #+END_SRC
 
 
-** Dired file explorer
+*** Dired file explorer
 
 #+BEGIN_SRC elisp
 (after! dired
@@ -137,7 +150,7 @@ Always create a new workspace when switching to a project.
 #+END_SRC
 
 
-** Treemacs file tree
+*** Treemacs file tree
 
 #+BEGIN_SRC elisp
 (use-package! treemacs
@@ -152,9 +165,9 @@ Always create a new workspace when switching to a project.
 #+END_SRC
 
 
-* General interface and interactions
+** General interface and interactions
 
-** Theme
+*** Theme
 
 #+BEGIN_SRC elisp
 (use-package! modus-operandi-theme
@@ -166,7 +179,7 @@ Always create a new workspace when switching to a project.
 #+END_SRC
 
 
-** Window splits
+*** Window splits
 
 #+BEGIN_SRC elisp
 (setq evil-vsplit-window-right t)
@@ -178,7 +191,9 @@ Always create a new workspace when switching to a project.
 #+END_SRC
 
 
-** Outline mode
+*** Outline mode
+
+I learned about =outline-minor-mode= from [[https://www.youtube.com/watch?v=UHk3FbieW0w][Emacs: outline-minor-mode and imenu]].
 
 #+BEGIN_SRC elisp
 (use-package! bicycle
@@ -189,7 +204,16 @@ Always create a new workspace when switching to a project.
     :n "<backtab>" #'bicycle-cycle-global)
 #+END_SRC
 
-TODO: https://emacs.stackexchange.com/questions/60420/emacs-outline-mode-custom-heading-and-space-between-headers
+In Python, PEP8 style guidelines recommend two lines between functions (see
+[[https://www.python.org/dev/peps/pep-0008/#blank-lines][blank lines]])
+
+#+BEGIN_QUOTE
+Surround top-level function and class definitions with two blank lines
+#+END_QUOTE
+
+I agree that this makes the code easier to navigate (with the eyes). Therefore
+it makes little sense for =outline=minor-faces= to remove this spacing. I hope
+to find some way to force padding between outline headings.
 
 #+BEGIN_SRC elisp
 (after! prog-mode
@@ -207,29 +231,6 @@ TODO: https://emacs.stackexchange.com/questions/60420/emacs-outline-mode-custom-
             (outline-show-all)
             (outline-hide-body)))
 
-(defun python-mode-outline-hook ()
-  (setq outline-level 'python-outline-level)
-
-  (setq outline-regexp
-    (rx (or
-         ;; Commented outline heading
-         (group
-          (* space)  ; 0 or more spaces
-          (one-or-more (syntax comment-start))
-          (one-or-more space)
-          ;; Heading level
-          (group (repeat 1 8 "\*"))  ; Outline stars
-          (one-or-more space))
-
-         ;; Python keyword heading
-         (group
-          ;; Heading level
-          (group (* space)) ; 0 or more spaces
-          bow
-          ;; Keywords
-          (or "class" "def" "else" "elif" "except" "for" "if" "try" "while")
-          eow)))))
-
 (add-hook 'python-mode-hook
         (defun contrib/outline-python ()
             "Fold only definitions in Python."
@@ -244,9 +245,9 @@ TODO: https://emacs.stackexchange.com/questions/60420/emacs-outline-mode-custom-
 #+END_SRC
 
 
-* Applications and utilities
+** Applications and utilities
 
-** Gnus
+*** Gnus
 
 #+BEGIN_SRC elisp
 (after! gnus
@@ -254,7 +255,7 @@ TODO: https://emacs.stackexchange.com/questions/60420/emacs-outline-mode-custom-
 #+END_SRC
 
 
-** Tmux
+*** Tmux
 
 Sometimes I want to dump the current =tmux= pane into Emacs.
 
@@ -276,7 +277,7 @@ Sometimes I want to dump the current =tmux= pane into Emacs.
 #+END_SRC
 
 
-** Elfeed
+*** Elfeed
 
 I use the Doom RSS module and just set some keybinds here. I opt for =SPC m r=
 for =elfeed-update= which is a pleasing left, right, left key sequence. Yes, I
@@ -297,7 +298,7 @@ press =SPC= with my left thumb.
 #+END_SRC
 
 
-** Keycast
+*** Keycast
 
 #+BEGIN_SRC elisp
 (use-package! keycast
@@ -321,7 +322,7 @@ press =SPC= with my left thumb.
 #+END_SRC
 
 
-** Org-mode (personal information manager)
+*** Org-mode (personal information manager)
 
 Org mode is for keeping notes, maintaining TODO lists, planning projects, and
 authoring documents with a fast and effective plain-text system.
@@ -436,9 +437,9 @@ the template under.
 #+END_SRC
 
 
-* Languages
+** Languages
 
-** Python
+*** Python
 
 I don't understand why setting the right virtual environment is not a common use
 case for people using =lsp-mode=. Anyway, I use =poetry= and enable
@@ -467,3 +468,11 @@ You must run =lsp-workspace-restart= for changes to take effect.
         :desc "Workon/off the Poetry venv" "w" #'poetry-venv-toggle
         :desc "Poetry menu" "p" #'poetry))
 #+END_SRC
+
+Actually, the logic for choosing a virtual environment depends on which language
+server you use. Consider =lsp-pyright-locate-venv= in [[https://github.com/emacs-lsp/lsp-pyright/blob/master/lsp-pyright.el#L152-L158][lsp-pyright.el]]. Now what
+is the point of that?
+
+The Spacemacs Python layer seems very nice - https://github.com/syl20bnr/spacemacs/tree/develop/layers/%2Blang/python
+
+https://www.youtube.com/watch?v=r-BHx7VNX5s
