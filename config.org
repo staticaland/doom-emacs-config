@@ -42,18 +42,26 @@ What Doom wants me to set.
 *** Base typeface configurations
 
 #+BEGIN_SRC elisp
-(setq doom-variable-pitch-font (font-spec :family "EtBembo"))
 (setq doom-themes-treemacs-enable-variable-pitch nil)
 
 (when (string= (system-name) "Anderss-MacBook-Pro.local")
-  (setq doom-font (font-spec :family "Menlo" :height 160)
-        doom-big-font-increment 8
-        doom-variable-pitch-font (font-spec :family "EtBembo"))
+  (setq doom-font (font-spec :family "Menlo" :height 160))
+  (setq doom-serif-font (font-spec :family "Menlo" :height 1.0))
+  (setq doom-variable-pitch-font (font-spec :family "EtBembo" :height 1.0))
+    (setq doom-big-font-increment 4)
   (font-put doom-font :weight 'semi-light))
 #+END_SRC
 
 
 ** General movements and motions
+
+*** Evil
+
+#+BEGIN_SRC elisp
+(use-package evil
+  :init
+  (setq evil-want-Y-yank-to-eol t))
+#+END_SRC
 
 *** Evil-snipe
 
@@ -166,6 +174,15 @@ lot of projects seem to slow down Emacs.
 
 
 ** General interface and interactions
+
+*** Font locks and faces
+
+Working with faces...
+
+#+BEGIN_SRC elisp :tangle no :results silent
+(set-face-attribute 'cursor nil :background "red")
+#+END_SRC
+
 
 *** Theme
 
