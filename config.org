@@ -1,8 +1,4 @@
 #+TITLE: Config
-#+HTML_HEAD: <link rel="stylesheet" href="https://sandyuraz.com/styles/org.min.css">
-#+hugo_base_dir: ~/Projects/org-hugo-book
-#+hugo_section: docs
-
 
 * Doom Emacs config
 :PROPERTIES:
@@ -18,6 +14,7 @@ for more info).
 #+BEGIN_SRC elisp
 ;;; config.el -*- lexical-binding: t; -*-
 #+END_SRC
+
 
 *** Personal Information
 
@@ -45,7 +42,7 @@ What Doom wants me to set.
 (setq doom-themes-treemacs-enable-variable-pitch nil)
 
 (when (string= (system-name) "Anderss-MacBook-Pro.local")
-  (setq doom-font (font-spec :family "Menlo" :height 160))
+  (setq doom-font (font-spec :family "Menlo"))
   (setq doom-serif-font (font-spec :family "Menlo" :height 1.0))
   (setq doom-variable-pitch-font (font-spec :family "EtBembo" :height 1.0))
     (setq doom-big-font-increment 4)
@@ -62,6 +59,7 @@ What Doom wants me to set.
   :init
   (setq evil-want-Y-yank-to-eol t))
 #+END_SRC
+
 
 *** Evil-snipe
 
@@ -257,6 +255,18 @@ find some way to force two blank lines between outline headings.
                        ;; Decorators
                        (group (group (* space)) "@"))))
             (contrib/outline-overview)))
+#+END_SRC
+
+
+*** Olivetti mode
+
+Olivetti is a Italian manufacturer of typewriters. The goal of this package is
+to recreate the feeling of writing on a typewriter.
+
+#+BEGIN_SRC elisp
+(use-package! olivetti
+  :config (setq olivetti-body-width 0.618)
+  :commands olivetti-mode)
 #+END_SRC
 
 
