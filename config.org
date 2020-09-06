@@ -212,6 +212,8 @@ it makes little sense for =outline-minor-mode= to remove this spacing. I hope to
 find some way to force two blank lines between outline headings.
 
 #+BEGIN_SRC elisp
+(setq outline-blank-line t)
+
 (after! prog-mode
   (add-hook 'prog-mode-hook 'outline-minor-mode)
   (add-hook 'prog-mode-hook 'hs-minor-mode))
@@ -233,7 +235,7 @@ find some way to force two blank lines between outline headings.
             (setq outline-regexp
                   (rx (or
                        ;; Definitions
-                       (group (group (* space)) bow (or "class" "def") eow)
+                       (group (group (* space)) bow (or "class" "def" "async") eow)
 
                        ;; Decorators
                        (group (group (* space)) "@"))))
