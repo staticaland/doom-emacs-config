@@ -31,8 +31,6 @@ What Doom wants me to set.
 (setq doom-theme 'modus-operandi)
 
 (setq display-line-numbers-type nil)
-
-(setq doom-theme 'doom-one)
 #+END_SRC
 
 
@@ -225,11 +223,17 @@ eyes). Therefore it makes little sense for =outline-minor-mode= to remove this
 spacing. By setting =outline-blank-line= to non-nil I get at least one line of
 space between the headings. I do not know how to add more space.
 
+I set up some hooks for =outline-mode=. The one for =org-src-mode-hook= toggles
+=outline-minor-mode= off in practice. I should probably clean up this later.
+
 #+BEGIN_SRC elisp
-(setq outline-blank-line t)
+(use-package! outline
+  :config
+  (setq outline-blank-line t))
 
 (after! prog-mode
   (add-hook 'prog-mode-hook 'outline-minor-mode)
+  (add-hook 'org-src-mode-hook 'outline-minor-mode)
   (add-hook 'prog-mode-hook 'hs-minor-mode))
 
 (use-package! outline-minor-faces
@@ -264,11 +268,12 @@ to recreate the feeling of writing on a typewriter.
 
 #+BEGIN_SRC elisp
 (use-package! olivetti
-  :config (setq olivetti-body-width 0.618)
+  :init
+  (setq-default olivetti-body-width 0.618)
   :commands olivetti-mode)
 #+END_SRC
 
-About =olivetti-body-width=...
+About the value chosen for =olivetti-body-width=:
 
 #+BEGIN_QUOTE
 The first known decimal approximation of the (inverse) golden ratio was stated
@@ -276,6 +281,14 @@ as "about 0.6180340" in 1597 by Michael Maestlin of the University of Tübingen
 in a letter to Kepler, his former student.
 #+END_QUOTE
 
+About the use of =setq-default=:
+
+#+BEGIN_QUOTE
+You can set any Lisp variable with setq, but with certain variables setq won't
+do what you probably want in the .emacs file. Some variables automatically
+become buffer-local when set with setq; what you want in .emacs is to set the
+default value, using setq-default.
+#+END_QUOTE
 
 
 ** Applications and utilities
@@ -385,12 +398,16 @@ First I set my =org-directory= and bind =SPC f o= to open my main Org-mode file.
 #+END_SRC
 
 - Use =mixed-pitch-mode= by default
+- Use =olivetti-mode= by default
 - Show at least one line break between headings
 - Never indent SRC blocks
 
 #+BEGIN_SRC elisp
 (after! org
+  (setq org-ellipsis " ▾ ")
+  (setq org-superstar-headline-bullets-list '("⁖"))
   (add-hook! 'org-mode-hook #'mixed-pitch-mode)
+  (add-hook! 'org-mode-hook #'olivetti-mode)
   (setq org-babel-python-command "python3")
   (setq org-cycle-separator-lines 1)
   (setq org-edit-src-content-indentation 0)
