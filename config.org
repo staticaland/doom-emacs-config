@@ -268,6 +268,15 @@ to recreate the feeling of writing on a typewriter.
   :commands olivetti-mode)
 #+END_SRC
 
+About =olivetti-body-width=...
+
+#+BEGIN_QUOTE
+The first known decimal approximation of the (inverse) golden ratio was stated
+as "about 0.6180340" in 1597 by Michael Maestlin of the University of Tübingen
+in a letter to Kepler, his former student.
+#+END_QUOTE
+
+
 
 ** Applications and utilities
 
