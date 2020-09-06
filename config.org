@@ -220,11 +220,10 @@ I learned about =outline-minor-mode= from [[https://www.youtube.com/watch?v=UHk3
 #+END_SRC
 
 In Python, PEP8 style guidelines recommend two lines between functions (see
-[[https://www.python.org/dev/peps/pep-0008/#blank-lines][blank lines]]).
-
-I agree that this makes the code easier to navigate (with the eyes). Therefore
-it makes little sense for =outline-minor-mode= to remove this spacing. I hope to
-find some way to force two blank lines between outline headings.
+[[https://www.python.org/dev/peps/pep-0008/#blank-lines][blank lines]]). I agree that this makes the code easier to navigate (with the
+eyes). Therefore it makes little sense for =outline-minor-mode= to remove this
+spacing. By setting =outline-blank-line= to non-nil I get at least one line of
+space between the headings. I do not know how to add more space.
 
 #+BEGIN_SRC elisp
 (setq outline-blank-line t)
