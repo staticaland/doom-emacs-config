@@ -342,6 +342,25 @@ or else the number of characters matched by `outline-regexp'."
       (- (match-end 0) (match-beginning 0))))
 #+END_SRC
 
+A great tip for =rx= is to place the cursor at the last parenthesis and do =C-x
+C-e= (=eval-last-sexp=) to see what regex is being produced. To get Perl
+Compatible Regular Expressions you can do =counsel--elisp-to-pcre= on the regex
+string. Now you can explore it with [[https://regex101.com][regex101.com]].
+
+#+BEGIN_SRC elisp :tangle no
+(counsel--elisp-to-pcre (rx
+ (or "resource" "data" "provider" "module" "variable" "output")
+ (one-or-more (not "{"))
+ "{"
+ line-end))
+#+END_SRC
+
+#+RESULTS:
+: (?:data|module|output|provider|(?:resourc|variabl)e)[^{]+{$
+
+Apologies for the endless rambling. Here I configure =outline-minor-mode= for
+Terraform.
+
 #+BEGIN_SRC elisp
 (defun terraform-mode-outline-hook ()
   (make-local-variable 'outline-regexp)
