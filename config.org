@@ -226,6 +226,34 @@ space between the headings. I do not know how to add more space.
 I set up some hooks for =outline-mode=. The one for =org-src-mode-hook= toggles
 =outline-minor-mode= off in practice. I should probably clean up this later.
 
+I think =outline-mode= is particularily useful for Terraform code. A language
+that has few character based visual cues has the potential for even greater
+benefits.
+
+Some resources:
+
+- https://old.reddit.com/r/emacs/comments/e2u5n9/code_folding_with_outlineminormode/
+- https://www.modernemacs.com/post/outline-ivy/
+- https://github.com/ekaschalk/.spacemacs.d/tree/master/layers/display/local/pretty-outlines
+- https://www.gnu.org/software/emacs/manual/html_node/emacs/Outline-Format.html
+- https://github.com/emacsorphanage/terraform-mode/issues/20
+
+About the heading levels:
+
+#+BEGIN_QUOTE
+The length of the matching text determines the level of the heading; longer
+matches make a more deeply nested level. Thus, for example, if a text formatter
+has commands ‘@chapter’, ‘@section’ and ‘@subsection’ to divide the document
+into chapters and sections, you could make those lines count as heading lines by
+setting outline-regexp to ‘"@chap\\|@\\(sub\\)*section"’. Note the trick: the
+two words ‘chapter’ and ‘section’ are equally long, but by defining the regexp
+to match only ‘chap’ we ensure that the length of the text matched on a chapter
+heading is shorter, so that Outline mode will know that sections are contained
+in chapters. This works as long as no other command starts with ‘@chap’.
+#+END_QUOTE
+
+Let's set up =outline=.
+
 #+BEGIN_SRC elisp
 (use-package! outline
   :config
@@ -233,8 +261,7 @@ I set up some hooks for =outline-mode=. The one for =org-src-mode-hook= toggles
 
 (after! prog-mode
   (add-hook 'prog-mode-hook 'outline-minor-mode)
-  (add-hook 'org-src-mode-hook 'outline-minor-mode)
-  (add-hook 'prog-mode-hook 'hs-minor-mode))
+  (add-hook 'org-src-mode-hook 'outline-minor-mode))
 
 (use-package! outline-minor-faces
   :after outline
@@ -260,11 +287,52 @@ I set up some hooks for =outline-mode=. The one for =org-src-mode-hook= toggles
             (contrib/outline-overview)))
 #+END_SRC
 
+For =terraform= below, the =outline-regexp= variable is made from the
+=imenu-generic-expression= that is included in =terraform-mode=. [[https://github.com/emacsorphanage/terraform-mode/blob/master/terraform-mode.el#L99][See
+terraform-mode.el]].
+
+The produced regular expression looks like this:
+
+#+BEGIN_SRC fundamental :tangle no
+"\\(resource\\)\\|\\(data\\)\\|\\(provider\\)\\|\\(module\\)\\|\\(variable\\)\\|\\(output\\)[[:blank:]].*{[[:blank:]]*$"
+#+END_SRC
+
+=outline-mode= uses the function assigned to =outline-level= to determine the
+heading level. Usually, this function tries to look at the length of the regex
+match to determine the level. For =terraform-mode= I have decided to use a
+function that always returns level 1. If you do not do this, you may find that
+some blocks get nested in a way that doesn't make sense.
+
+#+BEGIN_SRC elisp
+(defun my-terraform-mode-hook ()
+  (make-local-variable 'outline-regexp)
+  (setq outline-regexp
+		(concat
+		 (mapconcat (lambda (item)
+					  (and (car item) (format "\\(%s\\)" (regexp-quote (car item))))
+					  )
+					imenu-generic-expression
+					"\\|")
+		 "[[:blank:]].*{[[:blank:]]*$")
+		)
+  (setq outline-heading-alist
+		(mapcar (lambda (item)
+				  (cons (car item) 2)
+				  )
+				imenu-generic-expression)
+		)
+  (defun terraform-outline-levels () 1)
+  (setq outline-level 'terraform-outline-levels)
+  (outline-minor-mode 1))
+
+(add-hook 'terraform-mode-hook 'my-terraform-mode-hook)
+#+END_SRC
+
 
 *** Olivetti mode
 
-Olivetti is a Italian manufacturer of typewriters. The goal of this package is
-to recreate the feeling of writing on a typewriter.
+Olivetti is a Italian manufacturer of typewriters, so I suppose the goal of
+=olivetti= is to capture the feeling of typing on a typewriter.
 
 #+BEGIN_SRC elisp
 (use-package! olivetti
