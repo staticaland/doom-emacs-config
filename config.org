@@ -211,7 +211,7 @@ Working with faces...
 #+END_SRC
 
 
-*** Outline mode
+*** Outline
 
 I first learned about =outline-minor-mode= from [[https://www.youtube.com/watch?v=UHk3FbieW0w][Emacs: outline-minor-mode and
 imenu]].
@@ -221,10 +221,6 @@ In Python, PEP8 style guidelines recommend two lines between functions (see
 eyes). Therefore it makes little sense for =outline-minor-mode= to remove this
 spacing. By setting =outline-blank-line= to non-nil I get at least one line of
 space between the headings. I do not know how to add more space.
-
-I also set up some hooks for =outline-mode=. The one for =org-src-mode-hook=
-toggles =outline-minor-mode= off in practice. I should probably clean up this
-later.
 
 #+BEGIN_SRC elisp
 (use-package! outline
@@ -237,6 +233,17 @@ later.
                     'outline-minor-faces-add-font-lock-keywords))
 #+END_SRC
 
+Related concepts:
+
+- Code readability
+- https://en.wikipedia.org/wiki/The_Magical_Number_Seven,_Plus_or_Minus_Two
+
+#+BEGIN_QUOTE
+The number of objects an average human can hold in short-term memory is 7 ± 2
+#+END_QUOTE
+
+**** Bicycle
+
 Bicycle provides commands for cycling the visibility of outline sections and
 code blocks.
 
@@ -248,6 +255,8 @@ code blocks.
     :n "<tab>" #'bicycle-cycle
     :n "<backtab>" #'bicycle-cycle-global)
 #+END_SRC
+
+**** Outline for Python code
 
 Here I set up a =outline-regexp= for =python-mode=. I am not really sure how
 =outline-level= works with this code - but it seems to work.
@@ -297,6 +306,8 @@ integer based on your calculation of choice. You can also set
         ("@appendixsubsec" . 4) ("@appendixsubsubsec" . 5) ..))
 #+END_SRC
 
+**** Outline for Terraform
+
 For =terraform-mode= I have decided to use a function that always returns
 level 1. If you do not do this, you may find that some blocks get nested in a
 way that doesn't make sense.
@@ -329,7 +340,9 @@ The regular expression for Terraform looks like this:
 #+RESULTS:
 : (?:data|module|output|provider|(?:resourc|variabl)e)[^{]+{$
 
-From the manual:
+**** Addendum
+
+From the Outline manual we can get some hints about how heading levels work.
 
 #+BEGIN_QUOTE
 The length of the matching text determines the level of the heading; longer
