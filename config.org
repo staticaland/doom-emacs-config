@@ -36,14 +36,21 @@ What Doom wants me to set.
 
 *** Base typeface configurations
 
+- https://en.wikipedia.org/wiki/Pitch_(typewriter)
+- https://en.wikipedia.org/wiki/Serif
+
+Variable pitch means that the distance between characters can vary, as opposed
+to fixed pitch. The small features on the ends of strokes in some fonts are
+known as serifs. It is typically what is used for printed text.
+
 #+BEGIN_SRC elisp
 (setq doom-themes-treemacs-enable-variable-pitch nil)
 
 (when (string= (system-name) "Anderss-MacBook-Pro.local")
+  (setq doom-big-font-increment 4)
   (setq doom-font (font-spec :family "Menlo"))
-  (setq doom-serif-font (font-spec :family "Menlo" :height 1.0))
+  (setq doom-serif-font (font-spec :family "EtBembo" :height 1.0))
   (setq doom-variable-pitch-font (font-spec :family "EtBembo" :height 1.0))
-    (setq doom-big-font-increment 4)
   (font-put doom-font :weight 'semi-light))
 #+END_SRC
 
@@ -297,35 +304,57 @@ The produced regular expression looks like this:
 "\\(resource\\)\\|\\(data\\)\\|\\(provider\\)\\|\\(module\\)\\|\\(variable\\)\\|\\(output\\)[[:blank:]].*{[[:blank:]]*$"
 #+END_SRC
 
+Or in a more readable format:
+
+#+BEGIN_SRC fundamental :tangle no
+(resource|data|provider|module|variable|output)[[:blank:]].*{[[:blank:]]*$
+#+END_SRC
+
 =outline-mode= uses the function assigned to =outline-level= to determine the
 heading level. Usually, this function tries to look at the length of the regex
 match to determine the level. For =terraform-mode= I have decided to use a
 function that always returns level 1. If you do not do this, you may find that
 some blocks get nested in a way that doesn't make sense.
 
+The regex from =outline-regexp= matched something so it must be a heading, but
+we don't know what level it is. What to do about it? Well, let's take a look at
+the matching text with the function set by =outline-level=. Now you can imagine
+that the matched text is the input for the function and you can return a number
+to decide on the level. The default function looks at how many characters the
+match is and sets the level based on that.
+
+- Some text matched =outline-regexp= so it must be a heading
+- The matched regex is passed to the =outline-level= function
+  - The default function assigns level based on the character length
+
+#+BEGIN_SRC elisp :tangle no
+;; This used to count columns rather than characters, but that made ^L
+;; appear to be at level 2 instead of 1.  Columns would be better for
+;; tab handling, but the default regexp doesn't use tabs, and anyone
+;; who changes the regexp can also redefine the outline-level variable
+;; as appropriate.
+(defun outline-level ()
+  "Return the depth to which a statement is nested in the outline.
+Point must be at the beginning of a header line.
+This is actually either the level specified in `outline-heading-alist'
+or else the number of characters matched by `outline-regexp'."
+  (or (cdr (assoc (match-string 0) outline-heading-alist))
+      (- (match-end 0) (match-beginning 0))))
+#+END_SRC
+
 #+BEGIN_SRC elisp
-(defun my-terraform-mode-hook ()
+(defun terraform-mode-outline-hook ()
   (make-local-variable 'outline-regexp)
-  (setq outline-regexp
-		(concat
-		 (mapconcat (lambda (item)
-					  (and (car item) (format "\\(%s\\)" (regexp-quote (car item))))
-					  )
-					imenu-generic-expression
-					"\\|")
-		 "[[:blank:]].*{[[:blank:]]*$")
-		)
-  (setq outline-heading-alist
-		(mapcar (lambda (item)
-				  (cons (car item) 2)
-				  )
-				imenu-generic-expression)
-		)
-  (defun terraform-outline-levels () 1)
-  (setq outline-level 'terraform-outline-levels)
+  (setq outline-regexp (rx
+                        (or "resource" "data" "provider" "module" "variable" "output")
+                        (one-or-more (not "{"))
+                        "{"
+                        line-end))
+  (defun terraform-outline-level () 1)
+  (setq outline-level 'terraform-outline-level)
   (outline-minor-mode 1))
 
-(add-hook 'terraform-mode-hook 'my-terraform-mode-hook)
+(add-hook 'terraform-mode-hook 'terraform-mode-outline-hook)
 #+END_SRC
 
 
@@ -591,6 +620,5 @@ Actually, the logic for choosing a virtual environment depends on which language
 server you use. Consider =lsp-pyright-locate-venv= in [[https://github.com/emacs-lsp/lsp-pyright/blob/master/lsp-pyright.el#L152-L158][lsp-pyright.el]]. Now what
 is the point of that?
 
-The Spacemacs Python layer seems very nice - https://github.com/syl20bnr/spacemacs/tree/develop/layers/%2Blang/python
-
-https://www.youtube.com/watch?v=r-BHx7VNX5s
+The Spacemacs Python layer seems very nice - [[https://github.com/syl20bnr/spacemacs/tree/develop/layers/%2Blang/python][take a look at the Spacemacs Python
+layer]] and [[https://www.youtube.com/watch?v=r-BHx7VNX5s][Python Development in Spacemacs - YouTube]].
