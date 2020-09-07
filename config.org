@@ -223,12 +223,6 @@ spacing. By setting =outline-blank-line= to non-nil I get at least one line of
 space between the headings. I do not know how to add more space.
 
 #+BEGIN_SRC elisp
-(use-package! pretty-outlines
-  :config
-  (setq pretty-outlines-ellipsis " ▾ ")
-  (setq pretty-outlines-bullets-bullet-list '("⁖"))
-  :hook (outline-minor-mode . pretty-outlines-set-display-table))
-
 (use-package outshine)
 
 (use-package! outline
@@ -248,11 +242,23 @@ space between the headings. I do not know how to add more space.
 Related concepts:
 
 - Code readability
-- https://en.wikipedia.org/wiki/The_Magical_Number_Seven,_Plus_or_Minus_Two
+- [[https://en.wikipedia.org/wiki/The_Magical_Number_Seven,_Plus_or_Minus_Two][The Magical Number Seven, Plus or Minus Two - Wikipedia]]
 
 #+BEGIN_QUOTE
 The number of objects an average human can hold in short-term memory is 7 ± 2
 #+END_QUOTE
+
+Finally, =pretty-outlines= for prettier ellipses. I did not get the pretty
+bullets working.
+
+#+BEGIN_SRC elisp
+(use-package! pretty-outlines
+  :config
+  (setq pretty-outlines-ellipsis " ▾ ")
+  ;; (setq pretty-outlines-bullets-bullet-list '("⁖"))
+  :hook (outline-minor-mode . pretty-outlines-set-display-table))
+#+END_SRC
+
 
 **** Bicycle
 
