@@ -223,6 +223,14 @@ spacing. By setting =outline-blank-line= to non-nil I get at least one line of
 space between the headings. I do not know how to add more space.
 
 #+BEGIN_SRC elisp
+(use-package! pretty-outlines
+  :config
+  (setq pretty-outlines-ellipsis " ▾ ")
+  (setq pretty-outlines-bullets-bullet-list '("⁖"))
+  :hook (outline-minor-mode . pretty-outlines-set-display-table))
+
+(use-package outshine)
+
 (use-package! outline
   :config
   (setq outline-blank-line t))
@@ -231,6 +239,10 @@ space between the headings. I do not know how to add more space.
   :after outline
   :config (add-hook 'outline-minor-mode-hook
                     'outline-minor-faces-add-font-lock-keywords))
+
+(use-package backline
+  :after outline
+  :config (advice-add 'outline-flag-region :after 'backline-update))
 #+END_SRC
 
 Related concepts:
@@ -291,7 +303,7 @@ probably worth checking out.
 =outline-mode= needs some way to know what a heading looks like. It uses
 =outline-regexp= for this. At this point it does not know the level of the
 heading. The default behaviour is either to look at the length of the
-=outline-regexp= match, or a association in =outline-heading-alist=. You can
+=outline-regexp= match, or an association in =outline-heading-alist=. You can
 override the logic by setting =outline-level= to a function that returns a
 integer based on your calculation of choice. You can also set
 =outline-heading-alist= to whatever you'd like. For example:
@@ -307,6 +319,9 @@ integer based on your calculation of choice. You can also set
 #+END_SRC
 
 **** Outline for Terraform
+
+Terraform is a declarative configuratiion language for cloud resources - you
+write down what you want and Terraform performs the correct API calls.
 
 For =terraform-mode= I have decided to use a function that always returns
 level 1. If you do not do this, you may find that some blocks get nested in a
@@ -341,6 +356,8 @@ The regular expression for Terraform looks like this:
 : (?:data|module|output|provider|(?:resourc|variabl)e)[^{]+{$
 
 **** Addendum
+
+Du har PTSD fra skolen. Det er lov å ikke forstå i starten, det er meningen. Jeg føler meg sånn hver dag.
 
 From the Outline manual we can get some hints about how heading levels work.
 
