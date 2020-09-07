@@ -231,10 +231,6 @@ later.
   :config
   (setq outline-blank-line t))
 
-(after! prog-mode
-  (add-hook 'prog-mode-hook 'outline-minor-mode)
-  (add-hook 'org-src-mode-hook 'outline-minor-mode))
-
 (use-package! outline-minor-faces
   :after outline
   :config (add-hook 'outline-minor-mode-hook
@@ -269,24 +265,37 @@ probably worth checking out.
             (outline-show-all)
             (outline-hide-body)))
 
-(add-hook 'python-mode-hook
-        (defun contrib/outline-python ()
-            "Fold only definitions in Python."
-            (setq outline-regexp
-                  (rx (or
-                       ;; Definitions
-                       (group (group (* space)) bow (or "class" "def" "async") eow)
+(defun python-mode-outline-hook ()
+  "Fold only definitions in Python."
+  (setq outline-regexp
+        (rx (or
+             ;; Definitions
+             (group (group (* space)) bow (or "class" "def" "async") eow)
 
-                       ;; Decorators
-                       (group (group (* space)) "@"))))
-            (contrib/outline-overview)))
+             ;; Decorators
+             (group (group (* space)) "@"))))
+  (outline-minor-mode))
+
+(add-hook 'python-mode-hook 'python-mode-outline-hook)
 #+END_SRC
 
 =outline-mode= needs some way to know what a heading looks like. It uses
 =outline-regexp= for this. At this point it does not know the level of the
-heading. The default behaviour is to look at the length of the =outline-regexp=
-match. You can override the logic by setting =outline-level= to a function that
-returns a integer based on your calculation of choice.
+heading. The default behaviour is either to look at the length of the
+=outline-regexp= match, or a association in =outline-heading-alist=. You can
+override the logic by setting =outline-level= to a function that returns a
+integer based on your calculation of choice. You can also set
+=outline-heading-alist= to whatever you'd like. For example:
+
+#+BEGIN_SRC elisp :tangle no
+(setq outline-heading-alist
+      '(("@chapter" . 2) ("@section" . 3) ("@subsection" . 4)
+        ("@subsubsection" . 5)
+        ("@unnumbered" . 2) ("@unnumberedsec" . 3)
+        ("@unnumberedsubsec" . 4)  ("@unnumberedsubsubsec" . 5)
+        ("@appendix" . 2) ("@appendixsec" . 3)...
+        ("@appendixsubsec" . 4) ("@appendixsubsubsec" . 5) ..))
+#+END_SRC
 
 For =terraform-mode= I have decided to use a function that always returns
 level 1. If you do not do this, you may find that some blocks get nested in a
@@ -302,7 +311,7 @@ way that doesn't make sense.
                         line-end))
   (defun terraform-outline-level () 1)
   (setq outline-level 'terraform-outline-level)
-  (outline-minor-mode 1))
+  (outline-minor-mode))
 
 (add-hook 'terraform-mode-hook 'terraform-mode-outline-hook)
 #+END_SRC
@@ -353,11 +362,11 @@ or else the number of characters matched by `outline-regexp'."
 
 Some additional resources:
 
-- https://old.reddit.com/r/emacs/comments/e2u5n9/code_folding_with_outlineminormode/
-- https://www.modernemacs.com/post/outline-ivy/
-- https://github.com/ekaschalk/.spacemacs.d/tree/master/layers/display/local/pretty-outlines
-- https://www.gnu.org/software/emacs/manual/html_node/emacs/Outline-Format.html
-- https://github.com/emacsorphanage/terraform-mode/issues/20
+- [[https://old.reddit.com/r/emacs/comments/e2u5n9/code_folding_with_outlineminormode/][Reddit - Code folding with outline-minor-mode]]
+- [[https://www.modernemacs.com/post/outline-ivy/][Managing code with Outlines | Modern Emacs]]
+- [[https://github.com/ekaschalk/.spacemacs.d/tree/master/layers/display/local/pretty-outlines][Spacemacs - pretty-outlines layer]]
+- [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Outline-Format.html][Outline Format - GNU Emacs Manual]]
+- [[https://github.com/emacsorphanage/terraform-mode/issues/20][GitHub - terraform-mode - Provide folding of blocks]]
 
 
 *** Olivetti mode
