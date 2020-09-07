@@ -347,7 +347,7 @@ C-e= (=eval-last-sexp=) to see what regex is being produced. To get Perl
 Compatible Regular Expressions you can do =counsel--elisp-to-pcre= on the regex
 string. Now you can explore it with [[https://regex101.com][regex101.com]].
 
-#+BEGIN_SRC elisp :tangle no
+#+BEGIN_SRC elisp :tangle no :exports both
 (counsel--elisp-to-pcre (rx
  (or "resource" "data" "provider" "module" "variable" "output")
  (one-or-more (not "{"))
