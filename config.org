@@ -213,16 +213,8 @@ Working with faces...
 
 *** Outline mode
 
-I learned about =outline-minor-mode= from [[https://www.youtube.com/watch?v=UHk3FbieW0w][Emacs: outline-minor-mode and imenu]].
-
-#+BEGIN_SRC elisp
-(use-package! bicycle
-    :after outline)
-
-(map! :map outline-minor-mode-map
-    :n "<tab>" #'bicycle-cycle
-    :n "<backtab>" #'bicycle-cycle-global)
-#+END_SRC
+I first learned about =outline-minor-mode= from [[https://www.youtube.com/watch?v=UHk3FbieW0w][Emacs: outline-minor-mode and
+imenu]].
 
 In Python, PEP8 style guidelines recommend two lines between functions (see
 [[https://www.python.org/dev/peps/pep-0008/#blank-lines][blank lines]]). I agree that this makes the code easier to navigate (with the
@@ -230,36 +222,9 @@ eyes). Therefore it makes little sense for =outline-minor-mode= to remove this
 spacing. By setting =outline-blank-line= to non-nil I get at least one line of
 space between the headings. I do not know how to add more space.
 
-I set up some hooks for =outline-mode=. The one for =org-src-mode-hook= toggles
-=outline-minor-mode= off in practice. I should probably clean up this later.
-
-I think =outline-mode= is particularily useful for Terraform code. A language
-that has few character based visual cues has the potential for even greater
-benefits.
-
-Some resources:
-
-- https://old.reddit.com/r/emacs/comments/e2u5n9/code_folding_with_outlineminormode/
-- https://www.modernemacs.com/post/outline-ivy/
-- https://github.com/ekaschalk/.spacemacs.d/tree/master/layers/display/local/pretty-outlines
-- https://www.gnu.org/software/emacs/manual/html_node/emacs/Outline-Format.html
-- https://github.com/emacsorphanage/terraform-mode/issues/20
-
-About the heading levels:
-
-#+BEGIN_QUOTE
-The length of the matching text determines the level of the heading; longer
-matches make a more deeply nested level. Thus, for example, if a text formatter
-has commands ‘@chapter’, ‘@section’ and ‘@subsection’ to divide the document
-into chapters and sections, you could make those lines count as heading lines by
-setting outline-regexp to ‘"@chap\\|@\\(sub\\)*section"’. Note the trick: the
-two words ‘chapter’ and ‘section’ are equally long, but by defining the regexp
-to match only ‘chap’ we ensure that the length of the text matched on a chapter
-heading is shorter, so that Outline mode will know that sections are contained
-in chapters. This works as long as no other command starts with ‘@chap’.
-#+END_QUOTE
-
-Let's set up =outline=.
+I also set up some hooks for =outline-mode=. The one for =org-src-mode-hook=
+toggles =outline-minor-mode= off in practice. I should probably clean up this
+later.
 
 #+BEGIN_SRC elisp
 (use-package! outline
@@ -274,7 +239,30 @@ Let's set up =outline=.
   :after outline
   :config (add-hook 'outline-minor-mode-hook
                     'outline-minor-faces-add-font-lock-keywords))
+#+END_SRC
 
+Bicycle provides commands for cycling the visibility of outline sections and
+code blocks.
+
+#+BEGIN_SRC elisp
+(use-package! bicycle
+    :after outline)
+
+(map! :map outline-minor-mode-map
+    :n "<tab>" #'bicycle-cycle
+    :n "<backtab>" #'bicycle-cycle-global)
+#+END_SRC
+
+Here I set up a =outline-regexp= for =python-mode=. I am not really sure how
+=outline-level= works with this code - but it seems to work.
+
+A great tip for =rx= is to place the cursor at the last parenthesis and do =C-x
+C-e= (=eval-last-sexp=) to see what regex is being produced. To get Perl
+Compatible Regular Expressions you can do =counsel--elisp-to-pcre= on the regex
+string. Now you can explore it with [[https://regex101.com][regex101.com]]. In the same vein, [[https://github.com/joddie/pcre2el][pcre2el]] is
+probably worth checking out.
+
+#+BEGIN_SRC elisp
 (add-hook 'outline-minor-mode-hook
           (defun contrib/outline-overview ()
             "Show only outline headings."
@@ -294,38 +282,59 @@ Let's set up =outline=.
             (contrib/outline-overview)))
 #+END_SRC
 
-For =terraform= below, the =outline-regexp= variable is made from the
-=imenu-generic-expression= that is included in =terraform-mode=. [[https://github.com/emacsorphanage/terraform-mode/blob/master/terraform-mode.el#L99][See
-terraform-mode.el]].
+=outline-mode= needs some way to know what a heading looks like. It uses
+=outline-regexp= for this. At this point it does not know the level of the
+heading. The default behaviour is to look at the length of the =outline-regexp=
+match. You can override the logic by setting =outline-level= to a function that
+returns a integer based on your calculation of choice.
 
-The produced regular expression looks like this:
+For =terraform-mode= I have decided to use a function that always returns
+level 1. If you do not do this, you may find that some blocks get nested in a
+way that doesn't make sense.
 
-#+BEGIN_SRC fundamental :tangle no
-"\\(resource\\)\\|\\(data\\)\\|\\(provider\\)\\|\\(module\\)\\|\\(variable\\)\\|\\(output\\)[[:blank:]].*{[[:blank:]]*$"
+#+BEGIN_SRC elisp
+(defun terraform-mode-outline-hook ()
+  (make-local-variable 'outline-regexp)
+  (setq outline-regexp (rx
+                        (or "resource" "data" "provider" "module" "variable" "output")
+                        (one-or-more (not "{"))
+                        "{"
+                        line-end))
+  (defun terraform-outline-level () 1)
+  (setq outline-level 'terraform-outline-level)
+  (outline-minor-mode 1))
+
+(add-hook 'terraform-mode-hook 'terraform-mode-outline-hook)
 #+END_SRC
 
-Or in a more readable format:
+The regular expression for Terraform looks like this:
 
-#+BEGIN_SRC fundamental :tangle no
-(resource|data|provider|module|variable|output)[[:blank:]].*{[[:blank:]]*$
+#+BEGIN_SRC elisp :tangle no :exports both
+(counsel--elisp-to-pcre (rx
+ (or "resource" "data" "provider" "module" "variable" "output")
+ (one-or-more (not "{"))
+ "{"
+ line-end))
 #+END_SRC
 
-=outline-mode= uses the function assigned to =outline-level= to determine the
-heading level. Usually, this function tries to look at the length of the regex
-match to determine the level. For =terraform-mode= I have decided to use a
-function that always returns level 1. If you do not do this, you may find that
-some blocks get nested in a way that doesn't make sense.
+#+RESULTS:
+: (?:data|module|output|provider|(?:resourc|variabl)e)[^{]+{$
 
-The regex from =outline-regexp= matched something so it must be a heading, but
-we don't know what level it is. What to do about it? Well, let's take a look at
-the matching text with the function set by =outline-level=. Now you can imagine
-that the matched text is the input for the function and you can return a number
-to decide on the level. The default function looks at how many characters the
-match is and sets the level based on that.
+From the manual:
 
-- Some text matched =outline-regexp= so it must be a heading
-- The matched regex is passed to the =outline-level= function
-  - The default function assigns level based on the character length
+#+BEGIN_QUOTE
+The length of the matching text determines the level of the heading; longer
+matches make a more deeply nested level. Thus, for example, if a text formatter
+has commands ‘@chapter’, ‘@section’ and ‘@subsection’ to divide the document
+into chapters and sections, you could make those lines count as heading lines by
+setting outline-regexp to ‘"@chap\\|@\\(sub\\)*section"’. Note the trick: the
+two words ‘chapter’ and ‘section’ are equally long, but by defining the regexp
+to match only ‘chap’ we ensure that the length of the text matched on a chapter
+heading is shorter, so that Outline mode will know that sections are contained
+in chapters. This works as long as no other command starts with ‘@chap’.
+#+END_QUOTE
+
+Here is the default =outline-level= function:
 
 #+BEGIN_SRC elisp :tangle no
 ;; This used to count columns rather than characters, but that made ^L
@@ -342,39 +351,13 @@ or else the number of characters matched by `outline-regexp'."
       (- (match-end 0) (match-beginning 0))))
 #+END_SRC
 
-A great tip for =rx= is to place the cursor at the last parenthesis and do =C-x
-C-e= (=eval-last-sexp=) to see what regex is being produced. To get Perl
-Compatible Regular Expressions you can do =counsel--elisp-to-pcre= on the regex
-string. Now you can explore it with [[https://regex101.com][regex101.com]].
+Some additional resources:
 
-#+BEGIN_SRC elisp :tangle no :exports both
-(counsel--elisp-to-pcre (rx
- (or "resource" "data" "provider" "module" "variable" "output")
- (one-or-more (not "{"))
- "{"
- line-end))
-#+END_SRC
-
-#+RESULTS:
-: (?:data|module|output|provider|(?:resourc|variabl)e)[^{]+{$
-
-Apologies for the endless rambling. Here I configure =outline-minor-mode= for
-Terraform.
-
-#+BEGIN_SRC elisp
-(defun terraform-mode-outline-hook ()
-  (make-local-variable 'outline-regexp)
-  (setq outline-regexp (rx
-                        (or "resource" "data" "provider" "module" "variable" "output")
-                        (one-or-more (not "{"))
-                        "{"
-                        line-end))
-  (defun terraform-outline-level () 1)
-  (setq outline-level 'terraform-outline-level)
-  (outline-minor-mode 1))
-
-(add-hook 'terraform-mode-hook 'terraform-mode-outline-hook)
-#+END_SRC
+- https://old.reddit.com/r/emacs/comments/e2u5n9/code_folding_with_outlineminormode/
+- https://www.modernemacs.com/post/outline-ivy/
+- https://github.com/ekaschalk/.spacemacs.d/tree/master/layers/display/local/pretty-outlines
+- https://www.gnu.org/software/emacs/manual/html_node/emacs/Outline-Format.html
+- https://github.com/emacsorphanage/terraform-mode/issues/20
 
 
 *** Olivetti mode
