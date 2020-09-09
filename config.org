@@ -48,7 +48,7 @@ known as serifs. It is typically what is used for printed text.
 
 (when (string= (system-name) "Anderss-MacBook-Pro.local")
   (setq doom-big-font-increment 4)
-  (setq doom-font (font-spec :family "Menlo"))
+  (setq doom-font (font-spec :family "Menlo" :height 18))
   (setq doom-serif-font (font-spec :family "EtBembo" :height 1.0))
   (setq doom-variable-pitch-font (font-spec :family "EtBembo" :height 1.0))
   (font-put doom-font :weight 'semi-light))
@@ -211,6 +211,10 @@ Working with faces...
 #+END_SRC
 
 
+*** The Mode Line
+
+I use the =+light= Doom mode line.
+
 *** Outline
 
 I first learned about =outline-minor-mode= from [[https://www.youtube.com/watch?v=UHk3FbieW0w][Emacs: outline-minor-mode and
@@ -249,12 +253,29 @@ The number of objects an average human can hold in short-term memory is 7 ± 2
 #+END_QUOTE
 
 Finally, =pretty-outlines= for prettier ellipses. I did not get the pretty
-bullets working.
+bullets working. Some variants I have tried:
+
+| Symbol | Description                                      |
+|--------+--------------------------------------------------|
+| +      | Plus                                             |
+| •      | Bullet                                           |
+| …      | Horizontal ellipsis                              |
+| ↴      | Rightwards arrow with corner downwards           |
+| ⋯      | Midline horizontal ellipsis                      |
+| ▾      | Black down-pointing small triangle               |
+| ▿      | White down-pointing small triangle               |
+| ◦      | White bullet                                     |
+| ⤵      | Arrow pointing rightwards then curving downwards |
+| ⤷      | Arrow pointing downwards then curving rightwards |
+| ⤸      | Right-side arc clockwise arrow                   |
+| ⬎      | Rightwards arrow with tip downwards              |
+|       | Lightning                                        |
+
 
 #+BEGIN_SRC elisp
 (use-package! pretty-outlines
   :config
-  (setq pretty-outlines-ellipsis " ▾ ")
+  (setq pretty-outlines-ellipsis " ↴")
   ;; (setq pretty-outlines-bullets-bullet-list '("⁖"))
   :hook (outline-minor-mode . pretty-outlines-set-display-table))
 #+END_SRC
@@ -273,6 +294,7 @@ code blocks.
     :n "<tab>" #'bicycle-cycle
     :n "<backtab>" #'bicycle-cycle-global)
 #+END_SRC
+
 
 **** Outline for Python code
 
@@ -361,54 +383,25 @@ The regular expression for Terraform looks like this:
 #+RESULTS:
 : (?:data|module|output|provider|(?:resourc|variabl)e)[^{]+{$
 
-**** Addendum
+**** Outline for Cloud Custodian policy files
 
-Du har PTSD fra skolen. Det er lov å ikke forstå i starten, det er meningen. Jeg føler meg sånn hver dag.
+Low effort solution that gets the job done.
 
-From the Outline manual we can get some hints about how heading levels work.
+#+BEGIN_SRC elisp
+(defun c7n-outline-hook ()
+  (setq outline-heading-alist '(("policies:" . 1)
+                                ("- name:" . 2)))
+  (setq outline-regexp (rx (or "policies:" "- name:")))
+  (outline-minor-mode))
 
-#+BEGIN_QUOTE
-The length of the matching text determines the level of the heading; longer
-matches make a more deeply nested level. Thus, for example, if a text formatter
-has commands ‘@chapter’, ‘@section’ and ‘@subsection’ to divide the document
-into chapters and sections, you could make those lines count as heading lines by
-setting outline-regexp to ‘"@chap\\|@\\(sub\\)*section"’. Note the trick: the
-two words ‘chapter’ and ‘section’ are equally long, but by defining the regexp
-to match only ‘chap’ we ensure that the length of the text matched on a chapter
-heading is shorter, so that Outline mode will know that sections are contained
-in chapters. This works as long as no other command starts with ‘@chap’.
-#+END_QUOTE
-
-Here is the default =outline-level= function:
-
-#+BEGIN_SRC elisp :tangle no
-;; This used to count columns rather than characters, but that made ^L
-;; appear to be at level 2 instead of 1.  Columns would be better for
-;; tab handling, but the default regexp doesn't use tabs, and anyone
-;; who changes the regexp can also redefine the outline-level variable
-;; as appropriate.
-(defun outline-level ()
-  "Return the depth to which a statement is nested in the outline.
-Point must be at the beginning of a header line.
-This is actually either the level specified in `outline-heading-alist'
-or else the number of characters matched by `outline-regexp'."
-  (or (cdr (assoc (match-string 0) outline-heading-alist))
-      (- (match-end 0) (match-beginning 0))))
+(add-hook 'yaml-mode-hook 'c7n-outline-hook)
 #+END_SRC
-
-Some additional resources:
-
-- [[https://old.reddit.com/r/emacs/comments/e2u5n9/code_folding_with_outlineminormode/][Reddit - Code folding with outline-minor-mode]]
-- [[https://www.modernemacs.com/post/outline-ivy/][Managing code with Outlines | Modern Emacs]]
-- [[https://github.com/ekaschalk/.spacemacs.d/tree/master/layers/display/local/pretty-outlines][Spacemacs - pretty-outlines layer]]
-- [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Outline-Format.html][Outline Format - GNU Emacs Manual]]
-- [[https://github.com/emacsorphanage/terraform-mode/issues/20][GitHub - terraform-mode - Provide folding of blocks]]
 
 
 *** Olivetti mode
 
 Olivetti is a Italian manufacturer of typewriters, so I suppose the goal of
-=olivetti= is to capture the feeling of typing on a typewriter.
+=olivetti= is to capture the feeling of typing on one.
 
 #+BEGIN_SRC elisp
 (use-package! olivetti
@@ -435,7 +428,53 @@ default value, using setq-default.
 #+END_QUOTE
 
 
+*** Occur mode
+
+#+BEGIN_SRC elisp
+(use-package! replace
+  :init
+    (map! :map occur-mode-map
+      :n  "e" 'occur-edit-mode)
+
+  (add-hook 'occur-hook
+          '(lambda ()
+             (switch-to-buffer-other-window "*Occur*"))))
+#+END_SRC
+
 ** Applications and utilities
+
+*** Characters
+
+#+BEGIN_SRC elisp
+(use-package emacs
+  :config
+  ;; Got those numbers from `string-to-char'
+  (defconst contrib/insert-pair-alist
+    '(("' Single quote" . (39 39))           ; ' '
+      ("\" Double quotes" . (34 34))         ; " "
+      ("` Elisp quote" . (96 39))            ; ` '
+      ("‘ Single apostrophe" . (8216 8217))  ; ‘ ’
+      ("“ Double apostrophes" . (8220 8221)) ; “ ”
+      ("( Parentheses" . (40 41))            ; ( )
+      ("{ Curly brackets" . (123 125))       ; { }
+      ("[ Square brackets" . (91 93))        ; [ ]
+      ("< Angled brackets" . (60 62))        ; < >
+      ("« Εισαγωγικά Gr quote" . (171 187))  ; « »
+      ("= Equals signs" . (61 61))           ; = =
+      ("* Asterisks" . (42 42))              ; * *
+      ("_ underscores" . (95 95)))           ; _ _
+    "Alist of pairs for use with `prot/insert-pair-completion'.")
+
+  (defun contrib/insert-pair-completion (&optional arg)
+    "Insert pair from `contrib/insert-pair-alist'."
+    (interactive "P")
+    (let* ((data contrib/insert-pair-alist)
+           (chars (mapcar #'car data))
+           (choice (completing-read "Select character: " chars nil t))
+           (left (cadr (assoc choice data)))
+           (right (caddr (assoc choice data))))
+      (insert-pair arg left right))))
+#+END_SRC
 
 *** Gnus
 
@@ -511,6 +550,26 @@ press =SPC= with my left thumb.
                   :weight bold)))
 #+END_SRC
 
+*** Regular expressions: re-builder
+
+#+BEGIN_SRC elisp
+(use-package re-builder
+  :config
+  (setq reb-re-syntax 'string))
+#+END_SRC
+
+*** Emoji cheat sheet
+
+#+BEGIN_SRC elisp
+(use-package emoji-cheat-sheet-plus
+  :commands emoji-cheat-sheet-plus-insert)
+#+END_SRC
+
+#+BEGIN_SRC elisp
+(use-package ivy-emoji
+  :commands ivy-emoji)
+#+END_SRC
+
 
 *** Org-mode (personal information manager)
 
@@ -560,6 +619,9 @@ First I set my =org-directory= and bind =SPC f o= to open my main Org-mode file.
   (setq org-src-window-setup 'current-window)
   (setq org-startup-indented t))
 #+END_SRC
+
+#+RESULTS:
+: t
 
 Org-capture templates from Protesilaos Stavrou be serving me well.
 
