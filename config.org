@@ -441,6 +441,7 @@ default value, using setq-default.
              (switch-to-buffer-other-window "*Occur*"))))
 #+END_SRC
 
+
 ** Applications and utilities
 
 *** Characters
@@ -451,6 +452,7 @@ default value, using setq-default.
   ;; Got those numbers from `string-to-char'
   (defconst contrib/insert-pair-alist
     '(("' Single quote" . (39 39))           ; ' '
+      ("« Εισαγωγικά Gr quote" . (171 187))  ; « »
       ("\" Double quotes" . (34 34))         ; " "
       ("` Elisp quote" . (96 39))            ; ` '
       ("‘ Single apostrophe" . (8216 8217))  ; ‘ ’
@@ -459,7 +461,6 @@ default value, using setq-default.
       ("{ Curly brackets" . (123 125))       ; { }
       ("[ Square brackets" . (91 93))        ; [ ]
       ("< Angled brackets" . (60 62))        ; < >
-      ("« Εισαγωγικά Gr quote" . (171 187))  ; « »
       ("= Equals signs" . (61 61))           ; = =
       ("* Asterisks" . (42 42))              ; * *
       ("_ underscores" . (95 95)))           ; _ _
@@ -475,6 +476,7 @@ default value, using setq-default.
            (right (caddr (assoc choice data))))
       (insert-pair arg left right))))
 #+END_SRC
+
 
 *** Gnus
 
@@ -550,6 +552,7 @@ press =SPC= with my left thumb.
                   :weight bold)))
 #+END_SRC
 
+
 *** Regular expressions: re-builder
 
 #+BEGIN_SRC elisp
@@ -557,6 +560,7 @@ press =SPC= with my left thumb.
   :config
   (setq reb-re-syntax 'string))
 #+END_SRC
+
 
 *** Emoji cheat sheet
 
@@ -693,9 +697,9 @@ the template under.
 #+END_SRC
 
 
-** Languages
+** Languages 💬
 
-*** Python
+*** Python 🐍
 
 I don't understand why setting the right virtual environment is not a common use
 case for people using =lsp-mode=. Anyway, I use =poetry= and enable
