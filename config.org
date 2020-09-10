@@ -46,12 +46,18 @@ known as serifs. It is typically what is used for printed text.
 #+BEGIN_SRC elisp
 (setq doom-themes-treemacs-enable-variable-pitch nil)
 
-(when (string= (system-name) "Anderss-MacBook-Pro.local")
+(when (eq system-type 'darwin)
+  (setq doom-font (font-spec :family "Menlo" :size 18))
+  (setq doom-big-font (font-spec :family "Menlo" :size 36))
   (setq doom-big-font-increment 4)
-  (setq doom-font (font-spec :family "Menlo" :height 18))
   (setq doom-serif-font (font-spec :family "EtBembo" :height 1.0))
   (setq doom-variable-pitch-font (font-spec :family "EtBembo" :height 1.0))
   (font-put doom-font :weight 'semi-light))
+#+END_SRC
+
+#+BEGIN_SRC elisp
+(when (eq system-type 'gnu/linux)
+  (setq x-select-enable-clipboard t))
 #+END_SRC
 
 
