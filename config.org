@@ -55,9 +55,11 @@ known as serifs. It is typically what is used for printed text.
   (font-put doom-font :weight 'semi-light))
 #+END_SRC
 
+On Linux, I just go with the defaults for now.
+
 #+BEGIN_SRC elisp
 (when (eq system-type 'gnu/linux)
-  (setq x-select-enable-clipboard t))
+  (set-fontset-font t 'symbol "Noto Color Emoji" nil 'append))
 #+END_SRC
 
 
