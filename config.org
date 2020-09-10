@@ -316,9 +316,12 @@ probably worth checking out.
 #+BEGIN_SRC elisp
 (add-hook 'outline-minor-mode-hook
           (defun contrib/outline-overview ()
-            "Show only outline headings."
-            (outline-show-all)
-            (outline-hide-body)))
+              (outline-show-all)
+              (outline-hide-body)))
+
+(add-hook 'org-src-mode-hook
+          (defun const/show-all-outlines-in-org-src ()
+            (outline-show-all)))
 
 (defun python-mode-outline-hook ()
   "Fold only definitions in Python."
