@@ -205,6 +205,23 @@ Working with faces...
 #+END_SRC
 
 
+*** Focus
+
+Dim the font color of text in surrounding sections. I like to use this on
+chaotic Terraform code.
+
+#+begin_src elisp
+(use-package focus
+  :hook terraform-mode
+  :config
+  ;; Modes inheriting prog-mode will focus on functions.
+  (add-to-list 'focus-mode-to-thing '(prog-mode . defun))
+  ;; Modes inheriting text-mode will focus on sentences.
+  (add-to-list 'focus-mode-to-thing '(text-mode . sentence))
+  ;; Terraform
+  (add-to-list 'focus-mode-to-thing '(terraform-mode . paragraph)))
+#+end_src
+
 *** Window splits
 
 #+BEGIN_SRC elisp
