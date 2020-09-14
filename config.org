@@ -294,18 +294,30 @@ code blocks.
 
 #+BEGIN_SRC elisp
 (use-package! bicycle
-    :after outline)
-
-(map! :map outline-minor-mode-map
-    :n "<tab>" #'bicycle-cycle
-    :n "<backtab>" #'bicycle-cycle-global)
+  :config
+  (map! :map outline-minor-mode-map
+        :n "<tab>" #'bicycle-cycle
+        :n "<backtab>" #'bicycle-cycle-global))
 #+END_SRC
 
+By running =M-x macrostep-expand= over the =map!= call you will get this:
+
+#+BEGIN_SRC elisp :tangle no
+(general-define-key :states 'normal :keymaps
+		    '(outline-minor-mode-map)
+		    "<tab>"
+		    (function bicycle-cycle)
+		    "<backtab>"
+		    (function bicycle-cycle-global))
+#+END_SRC
+
+Proving that the =map!= macro is syntactic sugar for =general.el= (see
+[[https://github.com/joddie/macrostep][macrostep]]). Also see [[https://github.com/hlissner/doom-emacs/blob/develop/docs/contributing.org#doom-naming-conventions][Doom naming conventions]] for rationale behind the use of the
+exclamation point.
 
 **** Outline for Python code
 
-Here I set up a =outline-regexp= for =python-mode=. I am not really sure how
-=outline-level= works with this code - but it seems to work.
+Here I set up a =outline-regexp= for =python-mode=.
 
 A great tip for =rx= is to place the cursor at the last parenthesis and do =C-x
 C-e= (=eval-last-sexp=) to see what regex is being produced. To get Perl
@@ -325,7 +337,7 @@ probably worth checking out.
 
 (defun python-mode-outline-hook ()
   "Fold only definitions in Python."
-  (setq outline-regexp
+  (setq-local outline-regexp
         (rx (or
              ;; Definitions
              (group (group (* space)) bow (or "class" "def" "async") eow)
@@ -355,6 +367,24 @@ integer based on your calculation of choice. You can also set
         ("@appendixsubsec" . 4) ("@appendixsubsubsec" . 5) ..))
 #+END_SRC
 
+I have used this for my Cloud Custodian config below.
+
+Since the Python regex accounts for whitespace at the beginning of the line, the
+level will be set accordingly.
+
+If Outline should cover 100% of Python, it would need more work. If you define a
+variable after a function, the variable would be nested under the function, even
+though it is not a part of the function:
+
+#+BEGIN_SRC python :tangle no
+def something():
+    print("hello")
+
+some_variable = "hi"
+#+END_SRC
+
+However, I find the benefits outweigh the drawbacks.
+
 **** Outline for Terraform
 
 Terraform is a declarative configuratiion language for cloud resources - you
@@ -366,15 +396,15 @@ way that doesn't make sense.
 
 #+BEGIN_SRC elisp
 (defun terraform-mode-outline-hook ()
-  (make-local-variable 'outline-regexp)
-  (setq outline-regexp (rx
+  (setq-local outline-regexp (rx
                         (or "resource" "data" "provider" "module" "variable" "output")
                         (one-or-more (not "{"))
                         "{"
                         line-end))
   (defun terraform-outline-level () 1)
-  (setq outline-level 'terraform-outline-level)
-  (outline-minor-mode))
+  (setq-local outline-level 'terraform-outline-level)
+  (outline-minor-mode t))
+
 
 (add-hook 'terraform-mode-hook 'terraform-mode-outline-hook)
 #+END_SRC
@@ -392,18 +422,43 @@ The regular expression for Terraform looks like this:
 #+RESULTS:
 : (?:data|module|output|provider|(?:resourc|variabl)e)[^{]+{$
 
+Or:
+
+#+BEGIN_SRC elisp
+(rxt-elisp-to-pcre (rx
+ (or "resource" "data" "provider" "module" "variable" "output")
+ (one-or-more (not "{"))
+ "{"
+ line-end))
+#+END_SRC
+
+#+RESULTS:
+: (?:data|module|output|provider|(?:resourc|variabl)e)[^{]+\{$
+
 **** Outline for Cloud Custodian policy files
 
 Low effort solution that gets the job done.
 
 #+BEGIN_SRC elisp
 (defun c7n-outline-hook ()
-  (setq outline-heading-alist '(("policies:" . 1)
+  (setq-local outline-heading-alist '(("policies:" . 1)
                                 ("- name:" . 2)))
-  (setq outline-regexp (rx (or "policies:" "- name:")))
+  (setq-local outline-regexp (rx (or "policies:" "- name:")))
   (outline-minor-mode))
 
 (add-hook 'yaml-mode-hook 'c7n-outline-hook)
+#+END_SRC
+
+**** Outline for Terragrunt (HCL) files
+
+Another low effort solution that gets the job done.
+
+#+BEGIN_SRC elisp
+(defun terragrunt-outline-hook ()
+  (setq-local outline-regexp "^in")
+  (outline-minor-mode))
+
+(add-hook 'hcl-mode-hook 'terragrunt-outline-hook)
 #+END_SRC
 
 
