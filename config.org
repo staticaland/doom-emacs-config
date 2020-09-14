@@ -25,12 +25,19 @@ It's useful to have some basic personal information
       user-mail-address "john@doe.com")
 #+END_SRC
 
-What Doom wants me to set.
+Line numbers...
+
+#+BEGIN_SRC elisp
+(setq display-line-numbers-type nil)
+#+END_SRC
+
+
+*** Modus themes
+
+I prefer light themes when working and writing.
 
 #+BEGIN_SRC elisp
 (setq doom-theme 'modus-operandi)
-
-(setq display-line-numbers-type nil)
 #+END_SRC
 
 
@@ -47,11 +54,11 @@ known as serifs. It is typically what is used for printed text.
 (setq doom-themes-treemacs-enable-variable-pitch nil)
 
 (when (eq system-type 'darwin)
-  (setq doom-font (font-spec :family "Menlo" :size 18))
+  (setq doom-font (font-spec :family "Menlo" :size 14))
   (setq doom-big-font (font-spec :family "Menlo" :size 36))
   (setq doom-big-font-increment 4)
-  (setq doom-serif-font (font-spec :family "EtBembo" :height 1.0))
-  (setq doom-variable-pitch-font (font-spec :family "EtBembo" :height 1.0))
+  (setq doom-serif-font (font-spec :family "EtBembo"))
+  (setq doom-variable-pitch-font (font-spec :family "EtBembo"))
   (font-put doom-font :weight 'semi-light))
 #+END_SRC
 
@@ -207,6 +214,23 @@ Working with faces...
 #+END_SRC
 
 
+*** Focus
+
+Dim the font color of text in surrounding sections. I like to use this on
+chaotic Terraform code.
+
+#+begin_src elisp
+(use-package focus
+  :hook terraform-mode
+  :config
+  ;; Modes inheriting prog-mode will focus on functions.
+  (add-to-list 'focus-mode-to-thing '(prog-mode . defun))
+  ;; Modes inheriting text-mode will focus on sentences.
+  (add-to-list 'focus-mode-to-thing '(text-mode . sentence))
+  ;; Terraform
+  (add-to-list 'focus-mode-to-thing '(terraform-mode . paragraph)))
+#+end_src
+
 *** Window splits
 
 #+BEGIN_SRC elisp
@@ -227,6 +251,24 @@ I use the =+light= Doom mode line.
 
 I first learned about =outline-minor-mode= from [[https://www.youtube.com/watch?v=UHk3FbieW0w][Emacs: outline-minor-mode and
 imenu]].
+
+=imenu= is a very simple package that builds index of interesting positions in
+the current buffer and presents them as a menu. You pick the item and the point
+moves there. There is a built-in interface and also one in sallet, helm or
+counsel.
+
+In Doom, it is bound to =SPC s i= by default (=counsel-imenu=).
+
+The most common way to add items to the index is by modifying
+=imenu-generic-expression= which is a list of lists of the form =(GROUP-NAME
+REGEX MATCH-GROUP)=. Then imenu searches for the =REGEX= and adds the
+corresponding =MATCH-GROUP= and its match position to the index. This is done by
+=imenu-default-create-index-function= which is the default value of
+=imenu-create-index-function=.
+
+https://tychoish.com/post/imenu-for-markdown-and-writing/
+
+The form is =(nil "regex" 1)=.
 
 In Python, PEP8 style guidelines recommend two lines between functions (see
 [[https://www.python.org/dev/peps/pep-0008/#blank-lines][blank lines]]). I agree that this makes the code easier to navigate (with the
@@ -279,6 +321,7 @@ bullets working. Some variants I have tried:
 | ⬎      | Rightwards arrow with tip downwards              |
 |       | Lightning                                        |
 
+https://github.com/integral-dw/org-superstar-mode#where-do-i-find-utf8-bullets-to-use
 
 #+BEGIN_SRC elisp
 (use-package! pretty-outlines
@@ -296,18 +339,30 @@ code blocks.
 
 #+BEGIN_SRC elisp
 (use-package! bicycle
-    :after outline)
-
-(map! :map outline-minor-mode-map
-    :n "<tab>" #'bicycle-cycle
-    :n "<backtab>" #'bicycle-cycle-global)
+  :config
+  (map! :map outline-minor-mode-map
+        :n "<tab>" #'bicycle-cycle
+        :n "<backtab>" #'bicycle-cycle-global))
 #+END_SRC
 
+By running =M-x macrostep-expand= over the =map!= call you will get this:
+
+#+BEGIN_SRC elisp :tangle no
+(general-define-key :states 'normal :keymaps
+		    '(outline-minor-mode-map)
+		    "<tab>"
+		    (function bicycle-cycle)
+		    "<backtab>"
+		    (function bicycle-cycle-global))
+#+END_SRC
+
+Proving that the =map!= macro is syntactic sugar for =general.el= (see
+[[https://github.com/joddie/macrostep][macrostep]]). Also see [[https://github.com/hlissner/doom-emacs/blob/develop/docs/contributing.org#doom-naming-conventions][Doom naming conventions]] for rationale behind the use of the
+exclamation point.
 
 **** Outline for Python code
 
-Here I set up a =outline-regexp= for =python-mode=. I am not really sure how
-=outline-level= works with this code - but it seems to work.
+Here I set up a =outline-regexp= for =python-mode=.
 
 A great tip for =rx= is to place the cursor at the last parenthesis and do =C-x
 C-e= (=eval-last-sexp=) to see what regex is being produced. To get Perl
@@ -327,7 +382,7 @@ probably worth checking out.
 
 (defun python-mode-outline-hook ()
   "Fold only definitions in Python."
-  (setq outline-regexp
+  (setq-local outline-regexp
         (rx (or
              ;; Definitions
              (group (group (* space)) bow (or "class" "def" "async") eow)
@@ -357,6 +412,24 @@ integer based on your calculation of choice. You can also set
         ("@appendixsubsec" . 4) ("@appendixsubsubsec" . 5) ..))
 #+END_SRC
 
+I have used this for my Cloud Custodian config below.
+
+Since the Python regex accounts for whitespace at the beginning of the line, the
+level will be set accordingly.
+
+If Outline should cover 100% of Python, it would need more work. If you define a
+variable after a function, the variable would be nested under the function, even
+though it is not a part of the function:
+
+#+BEGIN_SRC python :tangle no
+def something():
+    print("hello")
+
+some_variable = "hi"
+#+END_SRC
+
+However, I find the benefits outweigh the drawbacks.
+
 **** Outline for Terraform
 
 Terraform is a declarative configuratiion language for cloud resources - you
@@ -368,15 +441,15 @@ way that doesn't make sense.
 
 #+BEGIN_SRC elisp
 (defun terraform-mode-outline-hook ()
-  (make-local-variable 'outline-regexp)
-  (setq outline-regexp (rx
+  (setq-local outline-regexp (rx
                         (or "resource" "data" "provider" "module" "variable" "output")
                         (one-or-more (not "{"))
                         "{"
                         line-end))
   (defun terraform-outline-level () 1)
-  (setq outline-level 'terraform-outline-level)
-  (outline-minor-mode))
+  (setq-local outline-level 'terraform-outline-level)
+  (outline-minor-mode t))
+
 
 (add-hook 'terraform-mode-hook 'terraform-mode-outline-hook)
 #+END_SRC
@@ -394,18 +467,43 @@ The regular expression for Terraform looks like this:
 #+RESULTS:
 : (?:data|module|output|provider|(?:resourc|variabl)e)[^{]+{$
 
+Or:
+
+#+BEGIN_SRC elisp
+(rxt-elisp-to-pcre (rx
+ (or "resource" "data" "provider" "module" "variable" "output")
+ (one-or-more (not "{"))
+ "{"
+ line-end))
+#+END_SRC
+
+#+RESULTS:
+: (?:data|module|output|provider|(?:resourc|variabl)e)[^{]+\{$
+
 **** Outline for Cloud Custodian policy files
 
 Low effort solution that gets the job done.
 
 #+BEGIN_SRC elisp
 (defun c7n-outline-hook ()
-  (setq outline-heading-alist '(("policies:" . 1)
+  (setq-local outline-heading-alist '(("policies:" . 1)
                                 ("- name:" . 2)))
-  (setq outline-regexp (rx (or "policies:" "- name:")))
+  (setq-local outline-regexp (rx (or "policies:" "- name:")))
   (outline-minor-mode))
 
 (add-hook 'yaml-mode-hook 'c7n-outline-hook)
+#+END_SRC
+
+**** Outline for Terragrunt (HCL) files
+
+Another low effort solution that gets the job done.
+
+#+BEGIN_SRC elisp
+(defun terragrunt-outline-hook ()
+  (setq-local outline-regexp "^in")
+  (outline-minor-mode))
+
+(add-hook 'hcl-mode-hook 'terragrunt-outline-hook)
 #+END_SRC
 
 
@@ -439,6 +537,8 @@ default value, using setq-default.
 #+END_QUOTE
 
 
+** Applications and utilities
+
 *** Occur mode
 
 #+BEGIN_SRC elisp
@@ -452,8 +552,6 @@ default value, using setq-default.
              (switch-to-buffer-other-window "*Occur*"))))
 #+END_SRC
 
-
-** Applications and utilities
 
 *** Characters
 
@@ -526,7 +624,7 @@ Sometimes I want to dump the current =tmux= pane into Emacs.
 #+END_SRC
 
 
-*** Elfeed
+*** Elfeed 🗞️
 
 I use the Doom RSS module and just set some keybinds here. I opt for =SPC m r=
 for =elfeed-update= which is a pleasing left, right, left key sequence. Yes, I
@@ -544,10 +642,14 @@ press =SPC= with my left thumb.
   (map! :map elfeed-search-mode-map
         :localleader
         :desc "Elfeed update" "r" #'elfeed-update))
+
+(use-package elfeed-web
+    :defer t
+    :commands elfeed-web-stop)
 #+END_SRC
 
 
-*** Keycast
+*** Keycast ⌨️
 
 #+BEGIN_SRC elisp
 (use-package! keycast
@@ -571,12 +673,24 @@ press =SPC= with my left thumb.
 #+END_SRC
 
 
-*** Regular expressions: re-builder
+*** Regular expressions: re-builder 🐕
+
+Rex the dog...
 
 #+BEGIN_SRC elisp
 (use-package re-builder
   :config
   (setq reb-re-syntax 'string))
+#+END_SRC
+
+Visual regex:
+
+#+BEGIN_SRC elisp
+(use-package visual-regexp
+  :commands vr/query-replace
+  :config
+  (setq vr/default-replace-preview nil)
+  (setq vr/match-separator-use-custom-face t))
 #+END_SRC
 
 
@@ -593,7 +707,7 @@ press =SPC= with my left thumb.
 #+END_SRC
 
 
-*** Org-mode (personal information manager)
+*** Org-mode (personal information manager) 📔
 
 Org mode is for keeping notes, maintaining TODO lists, planning projects, and
 authoring documents with a fast and effective plain-text system.
@@ -629,6 +743,7 @@ First I set my =org-directory= and bind =SPC f o= to open my main Org-mode file.
 
 #+BEGIN_SRC elisp
 (after! org
+    (setq org-imenu-depth 7)
   (setq org-ellipsis " ▾ ")
   (setq org-superstar-headline-bullets-list '("⁖"))
   (add-hook! 'org-mode-hook #'mixed-pitch-mode)
@@ -641,9 +756,6 @@ First I set my =org-directory= and bind =SPC f o= to open my main Org-mode file.
   (setq org-src-window-setup 'current-window)
   (setq org-startup-indented t))
 #+END_SRC
-
-#+RESULTS:
-: t
 
 Org-capture templates from Protesilaos Stavrou be serving me well.
 
@@ -753,3 +865,30 @@ is the point of that?
 
 The Spacemacs Python layer seems very nice - [[https://github.com/syl20bnr/spacemacs/tree/develop/layers/%2Blang/python][take a look at the Spacemacs Python
 layer]] and [[https://www.youtube.com/watch?v=r-BHx7VNX5s][Python Development in Spacemacs - YouTube]].
+
+
+** Keybindings
+
+In this section I will plan out my keybinding strategy. The current one looks like this:
+
+#+BEGIN_SRC elisp :tangle no
+(after! elfeed
+  (map! :map elfeed-search-mode-map
+        :localleader
+        :desc "Elfeed update" "r" #'elfeed-update))
+#+END_SRC
+
+[[https://github.com/hlissner/doom-emacs/issues/814][Inspired by issue 814]].
+
+[[https://www.masteringemacs.org/article/mastering-key-bindings-emacs][Mastering Key Bindings in Emacs - Mastering Emacs ]]
+
+=general-override-mode-map= is a minor mode map that will take precedence over
+all maps. The alias is =:override=.
+
+https://github.com/noctuid/general.el#override-keymaps-and-buffer-local-keybindings
+
+https://github.com/hlissner/doom-emacs/issues?q=override+label%3Are%3Akeybinds
+
+#+BEGIN_QUOTE
+Hi! Thanks for the PR but I cannot accept it. It is redundant with hideshow which the :editor fold module configures, and will handle folding lisp blocks, while outline-minor-mode is relegated to handling comment headings, and vimish-fold for arbitrary folds.
+#+END_QUOTE

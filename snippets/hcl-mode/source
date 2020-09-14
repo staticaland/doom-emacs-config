@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: Terragrunt GitHub source
+# key: trigger-key
+# condition: t
+# --
+
+source = "git::https://github.com/${1:user}/${2:repo}.git?ref=master"
