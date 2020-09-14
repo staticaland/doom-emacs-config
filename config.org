@@ -25,12 +25,19 @@ It's useful to have some basic personal information
       user-mail-address "john@doe.com")
 #+END_SRC
 
-What Doom wants me to set.
+Line numbers...
+
+#+BEGIN_SRC elisp
+(setq display-line-numbers-type nil)
+#+END_SRC
+
+
+*** Modus themes
+
+I prefer light themes when working and writing.
 
 #+BEGIN_SRC elisp
 (setq doom-theme 'modus-operandi)
-
-(setq display-line-numbers-type nil)
 #+END_SRC
 
 
@@ -243,6 +250,24 @@ I use the =+light= Doom mode line.
 I first learned about =outline-minor-mode= from [[https://www.youtube.com/watch?v=UHk3FbieW0w][Emacs: outline-minor-mode and
 imenu]].
 
+=imenu= is a very simple package that builds index of interesting positions in
+the current buffer and presents them as a menu. You pick the item and the point
+moves there. There is a built-in interface and also one in sallet, helm or
+counsel.
+
+In Doom, it is bound to =SPC s i= by default (=counsel-imenu=).
+
+The most common way to add items to the index is by modifying
+=imenu-generic-expression= which is a list of lists of the form =(GROUP-NAME
+REGEX MATCH-GROUP)=. Then imenu searches for the =REGEX= and adds the
+corresponding =MATCH-GROUP= and its match position to the index. This is done by
+=imenu-default-create-index-function= which is the default value of
+=imenu-create-index-function=.
+
+https://tychoish.com/post/imenu-for-markdown-and-writing/
+
+The form is =(nil "regex" 1)=.
+
 In Python, PEP8 style guidelines recommend two lines between functions (see
 [[https://www.python.org/dev/peps/pep-0008/#blank-lines][blank lines]]). I agree that this makes the code easier to navigate (with the
 eyes). Therefore it makes little sense for =outline-minor-mode= to remove this
@@ -294,6 +319,7 @@ bullets working. Some variants I have tried:
 | ⬎      | Rightwards arrow with tip downwards              |
 |       | Lightning                                        |
 
+https://github.com/integral-dw/org-superstar-mode#where-do-i-find-utf8-bullets-to-use
 
 #+BEGIN_SRC elisp
 (use-package! pretty-outlines
@@ -509,6 +535,8 @@ default value, using setq-default.
 #+END_QUOTE
 
 
+** Applications and utilities
+
 *** Occur mode
 
 #+BEGIN_SRC elisp
@@ -522,8 +550,6 @@ default value, using setq-default.
              (switch-to-buffer-other-window "*Occur*"))))
 #+END_SRC
 
-
-** Applications and utilities
 
 *** Characters
 
@@ -589,7 +615,7 @@ Sometimes I want to dump the current =tmux= pane into Emacs.
 #+END_SRC
 
 
-*** Elfeed
+*** Elfeed 🗞️
 
 I use the Doom RSS module and just set some keybinds here. I opt for =SPC m r=
 for =elfeed-update= which is a pleasing left, right, left key sequence. Yes, I
@@ -607,10 +633,14 @@ press =SPC= with my left thumb.
   (map! :map elfeed-search-mode-map
         :localleader
         :desc "Elfeed update" "r" #'elfeed-update))
+
+(use-package elfeed-web
+    :defer t
+    :commands elfeed-web-stop)
 #+END_SRC
 
 
-*** Keycast
+*** Keycast ⌨️
 
 #+BEGIN_SRC elisp
 (use-package! keycast
@@ -634,12 +664,24 @@ press =SPC= with my left thumb.
 #+END_SRC
 
 
-*** Regular expressions: re-builder
+*** Regular expressions: re-builder 🐕
+
+Rex the dog...
 
 #+BEGIN_SRC elisp
 (use-package re-builder
   :config
   (setq reb-re-syntax 'string))
+#+END_SRC
+
+Visual regex:
+
+#+BEGIN_SRC elisp
+(use-package visual-regexp
+  :commands vr/query-replace
+  :config
+  (setq vr/default-replace-preview nil)
+  (setq vr/match-separator-use-custom-face t))
 #+END_SRC
 
 
@@ -656,7 +698,7 @@ press =SPC= with my left thumb.
 #+END_SRC
 
 
-*** Org-mode (personal information manager)
+*** Org-mode (personal information manager) 📔
 
 Org mode is for keeping notes, maintaining TODO lists, planning projects, and
 authoring documents with a fast and effective plain-text system.
@@ -692,6 +734,7 @@ First I set my =org-directory= and bind =SPC f o= to open my main Org-mode file.
 
 #+BEGIN_SRC elisp
 (after! org
+    (setq org-imenu-depth 7)
   (setq org-ellipsis " ▾ ")
   (setq org-superstar-headline-bullets-list '("⁖"))
   (add-hook! 'org-mode-hook #'mixed-pitch-mode)
@@ -704,9 +747,6 @@ First I set my =org-directory= and bind =SPC f o= to open my main Org-mode file.
   (setq org-src-window-setup 'current-window)
   (setq org-startup-indented t))
 #+END_SRC
-
-#+RESULTS:
-: t
 
 Org-capture templates from Protesilaos Stavrou be serving me well.
 
@@ -816,3 +856,30 @@ is the point of that?
 
 The Spacemacs Python layer seems very nice - [[https://github.com/syl20bnr/spacemacs/tree/develop/layers/%2Blang/python][take a look at the Spacemacs Python
 layer]] and [[https://www.youtube.com/watch?v=r-BHx7VNX5s][Python Development in Spacemacs - YouTube]].
+
+
+** Keybindings
+
+In this section I will plan out my keybinding strategy. The current one looks like this:
+
+#+BEGIN_SRC elisp :tangle no
+(after! elfeed
+  (map! :map elfeed-search-mode-map
+        :localleader
+        :desc "Elfeed update" "r" #'elfeed-update))
+#+END_SRC
+
+[[https://github.com/hlissner/doom-emacs/issues/814][Inspired by issue 814]].
+
+[[https://www.masteringemacs.org/article/mastering-key-bindings-emacs][Mastering Key Bindings in Emacs - Mastering Emacs ]]
+
+=general-override-mode-map= is a minor mode map that will take precedence over
+all maps. The alias is =:override=.
+
+https://github.com/noctuid/general.el#override-keymaps-and-buffer-local-keybindings
+
+https://github.com/hlissner/doom-emacs/issues?q=override+label%3Are%3Akeybinds
+
+#+BEGIN_QUOTE
+Hi! Thanks for the PR but I cannot accept it. It is redundant with hideshow which the :editor fold module configures, and will handle folding lisp blocks, while outline-minor-mode is relegated to handling comment headings, and vimish-fold for arbitrary folds.
+#+END_QUOTE
