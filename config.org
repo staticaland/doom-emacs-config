@@ -519,6 +519,13 @@ Sometimes I want to dump the current =tmux= pane into Emacs.
 #+END_SRC
 
 
+#+BEGIN_SRC elisp
+(map! :leader
+      (:prefix ("f" . "file")
+       :desc "tmux cd to here" "T" #'+tmux/cd-to-here))
+#+END_SRC
+
+
 *** Elfeed
 
 I use the Doom RSS module and just set some keybinds here. I opt for =SPC m r=
