@@ -47,11 +47,11 @@ known as serifs. It is typically what is used for printed text.
 (setq doom-themes-treemacs-enable-variable-pitch nil)
 
 (when (eq system-type 'darwin)
-  (setq doom-font (font-spec :family "Menlo" :size 18))
+  (setq doom-font (font-spec :family "Menlo" :size 14))
   (setq doom-big-font (font-spec :family "Menlo" :size 36))
   (setq doom-big-font-increment 4)
-  (setq doom-serif-font (font-spec :family "EtBembo" :height 1.0))
-  (setq doom-variable-pitch-font (font-spec :family "EtBembo" :height 1.0))
+  (setq doom-serif-font (font-spec :family "EtBembo"))
+  (setq doom-variable-pitch-font (font-spec :family "EtBembo"))
   (font-put doom-font :weight 'semi-light))
 #+END_SRC
 
