@@ -32,6 +32,11 @@
 
 (package! visual-regexp :pin "3e3ed81a3cbadef1f1f4cb16f9112a58641d70ca")
 
+(package! yasnippet-terraform
+    :recipe (:host github :repo "staticaland/yasnippet-terraform"
+		:files ("terraform-mode"))
+    :pin "ca87c64214839d7dc006d2b5ef54f494ca890a05")
+
 ;;;; OS specific
 
 (when (eq system-type 'darwin)

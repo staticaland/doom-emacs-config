@@ -231,6 +231,7 @@ chaotic Terraform code.
   (add-to-list 'focus-mode-to-thing '(terraform-mode . paragraph)))
 #+end_src
 
+
 *** Window splits
 
 #+BEGIN_SRC elisp
@@ -828,6 +829,21 @@ the template under.
 
 
 ** Languages 💬
+
+*** Terraform
+
+Snippets.
+
+#+BEGIN_SRC elisp
+(after! yasnippet
+  (add-to-list 'yas-snippet-dirs
+               (concat
+                (file-name-as-directory straight-base-dir)
+                (file-name-as-directory "straight")
+                (file-name-as-directory "build")
+                (file-name-as-directory "yasnippet-terraform/terraform-mode"))))
+#+END_SRC
+
 
 *** Python 🐍
 
