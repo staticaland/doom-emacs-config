@@ -16,17 +16,21 @@ I get ~1.5s and a lot more functionality ready to go. Amazing.
 
 When you own a car, you get a sense of freedom. Even though you theoretically
 could travel everywhere without one, you don't. Why? To me, Emacs is like a car
-while VSCode is like a bus. It limits you on a subconscious level that is hard
-to even notice.
+while something like VSCode is like a bus. It limits you on a subconscious level
+that is hard to even notice.
 
 Some people really enjoy riding a good car and is motivated by the thrill.
 Seeing the task at hand getting done extremely fast is inherently motivating.
 Doom Emacs happens to be the best car I know. Especially when you ride hours
 every day. It's like using Iron Man's powered exoskeleton.
 
-I do not buy excuses for using poor tools. I [[https://www.johndcook.com/blog/2015/12/22/automate-to-save-mental-energy-not-time/][automate to save mental energy, not
-time]]. Luke Smith also talks about these concepts in «[[https://www.youtube.com/watch?v=2xl56IJGKwY][Are You Just TOO SMART to
-Learn Anything?]]». To quote John D. Cook:
+I sense there's two types of developers. Some focus on creating /products/. The
+others love seeing machines do the work that humans shouldn't have to do.
+
+I do not buy excuses for using poor tools. The only thing it reveals to me is a
+blindness to limitations. I [[https://www.johndcook.com/blog/2015/12/22/automate-to-save-mental-energy-not-time/][automate to save mental energy, not time]]. Luke Smith
+also talks about these concepts in «[[https://www.youtube.com/watch?v=2xl56IJGKwY][Are You Just TOO SMART to Learn Anything?]]».
+To quote John D. Cook:
 
 #+BEGIN_QUOTE
 I suspect the time I’ve put into learning some features of Emacs, for example,
