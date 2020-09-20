@@ -1,7 +1,11 @@
 * doom-emacs-config
 
-[[https://github.com/hlissner/doom-emacs][Doom]] is faster than [[https://www.const.no/init][my personal Emacs config]]. I want to know if it's worth it to
-switch. There's a lot of similarities with my config.
+Main takeaways:
+
+- Doom is very well organized and is easy to reason about (easier than
+  Spacenacs)
+- Doom hides away unneeded complexity for the most common use-cases
+- I prefer Doom over my previous handcrafted config
 
 #+BEGIN_QUOTE
 After 30+ years of using Emacs, I'm more than happy to use a distro with a well
@@ -9,6 +13,37 @@ curated set of built-in packages, and a clear set of config mechanisms. Also the
 startup time! I was happy with my handcrafted config when I got <10s, with Doom
 I get ~1.5s and a lot more functionality ready to go. Amazing.
 #+END_QUOTE
+
+When you own a car, you get a sense of freedom. Even though you theoretically
+could travel everywhere without one, you don't. Why? To me, Emacs is like a car
+while VSCode is like a bus. It limits you on a subconscious level that is hard
+to even notice.
+
+Some people really enjoy riding a good car and is motivated by the thrill.
+Seeing the task at hand getting done extremely fast is inherently motivating.
+Doom Emacs happens to be the best car I know. Especially when you ride hours
+every day. It's like using Iron Man's powered exoskeleton.
+
+I do not buy excuses for using poor tools. I [[https://www.johndcook.com/blog/2015/12/22/automate-to-save-mental-energy-not-time/][automate to save mental energy, not
+time]]. Luke Smith also talks about these concepts in «[[https://www.youtube.com/watch?v=2xl56IJGKwY][Are You Just TOO SMART to
+Learn Anything?]]». To quote John D. Cook:
+
+#+BEGIN_QUOTE
+I suspect the time I’ve put into learning some features of Emacs, for example,
+will not pay for itself in terms of time invested versus time saved. But I’ve
+invested leisure time to save time when I’m working hard, not to save keystrokes
+but to save mental energy for the project at hand.
+#+END_QUOTE
+
+Besides, you have [[https://en.wikipedia.org/wiki/The_Magical_Number_Seven,_Plus_or_Minus_Two][The Magical Number Seven, Plus or Minus Two]]:
+
+#+BEGIN_QUOTE
+The number of objects an average human can hold in short-term memory is 7 ± 2
+#+END_QUOTE
+
+I optimize to keep this in check.
+
+Anyway, back to Doom. Doom's configuration framework is well thought out!
 
 Doom uses =straight.el= and =general.el= under the hood. They are actually
 hiding behind =package!= and =map!=. One improvement over my config is that
@@ -33,7 +68,7 @@ Perhaps you should rather create your own =config= module. The downside to that
 is that you could have keybindings to packages that may not be installed.
 
 #+BEGIN_QUOTE
-=use-package!= is a thin wrapper around `use-package' it is required that you
+=use-package!= is a thin wrapper around =use-package= it is required that you
 use this in Doom's modules, but not required to be used in your private config
 #+END_QUOTE
 
@@ -58,8 +93,7 @@ Emacs, gamedev, programming, physics, pixel art, anime, gaming -- anything you
 like. Nourish this lonely soul.
 #+END_QUOTE
 
-I have learnt a lot from in a short time by following the discussions.
-
+I have learnt a lot from in a short time by following the discourse.
 
 ** Discoveries
 
