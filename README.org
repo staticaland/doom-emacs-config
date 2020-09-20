@@ -3,7 +3,7 @@
 Main takeaways:
 
 - Doom is very well organized and is easy to reason about (easier than
-  Spacenacs)
+  Spacemacs)
 - Doom hides away unneeded complexity for the most common use-cases
 - I prefer Doom over my previous handcrafted config
 
