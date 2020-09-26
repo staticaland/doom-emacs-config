@@ -186,7 +186,8 @@ lot of projects seem to slow down Emacs.
       (:prefix ("f" . "file")
         :desc "Open Treemacs" "t" #'+treemacs/toggle))
   :config
-    (treemacs-git-mode 'extended)
+  (treemacs-git-mode 'extended)
+  (setq treemacs-is-never-other-window nil)
     (add-to-list 'treemacs-pre-file-insert-predicates #'treemacs-is-file-git-ignored?))
 #+END_SRC
 
