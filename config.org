@@ -830,6 +830,15 @@ the template under.
 
 ** Languages 💬
 
+*** Flycheck
+
+#+BEGIN_SRC elisp
+(after! flycheck
+  (add-to-list 'flycheck-checkers 'terraform-tflint)
+  (add-to-list 'flycheck-checkers 'terraform))
+#+END_SRC
+
+
 *** Terraform
 
 Snippets.
