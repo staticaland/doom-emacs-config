@@ -828,6 +828,27 @@ the template under.
                  :empty-lines 1)))
 #+END_SRC
 
+The org-roam capture template:
+
+#+begin_src elisp
+(use-package! org-roam
+  :config
+  (push 'company-capf company-backends)
+  (setq org-roam-completion-everywhere t)
+  (setq org-roam-capture-templates
+        '(("d" "default" plain (function org-roam-capture--get-point)
+        "%?"
+        :file-name "${slug}"
+        :head "#+title: ${title}\n"
+        :unnarrowed t))))
+#+end_src
+
+#+begin_src elisp
+(use-package company
+  :config
+  (setq company-idle-delay 0.2)
+  (setq company-minimum-prefix-length 3))
+#+end_src
 
 ** Languages 💬
 
