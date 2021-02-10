@@ -47,6 +47,20 @@ The number of objects an average human can hold in short-term memory is 7 ± 2
 
 I optimize to keep this in check.
 
+#+begin_quote
+Studies on highly successful people have proven again and again that success is
+not the result of strong willpower and the ability to overcome resistance, but
+rather the result of smart working environments that avoid resistance in the
+first place.
+
+Instead of struggling with adverse dynamics, highly productive people deflect
+resistance, very much like judo champions. This is not just about having the
+right mindset, it is also about having the right workflow. It is the way Luhmann
+and his slip-box worked together that allowed him to move freely and flexibly
+between different tasks and levels of thinking. It is about having the right
+tools and knowing how to use them – and very few understand that you need both.
+#+end_quote
+
 Anyway, back to Doom. Doom's configuration framework is well thought out!
 
 Doom uses =straight.el= and =general.el= under the hood. They are actually
