@@ -206,12 +206,16 @@ Working with faces...
 *** Theme
 
 #+BEGIN_SRC elisp
-(use-package! modus-operandi-theme
-  :defer t
+(use-package! modus-themes
   :init
-  (setq modus-operandi-theme-scale-headings t)
-  (setq modus-operandi-theme-diffs 'desaturated)
-  (setq modus-operandi-theme-intense-paren-match t))
+  (setq modus-themes-scale-headings t)
+  (setq modus-themes-org-blocks 'grayscale)
+  (setq modus-themes-diffs 'desaturated)
+  (setq modus-themes-paren-match 'intense)
+  :config
+  ;; Load the theme of your choice:
+  (modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
+  :bind ("<f5>" . modus-themes-toggle))
 #+END_SRC
 
 
