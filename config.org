@@ -1,13 +1,17 @@
-#+title: Config
+#+HUGO_BASE_DIR: ./
+#+HUGO_SECTION: ./
 
-* General
+* Doom Emacs config
+
+** General
 
 #+begin_src elisp
 (setq user-full-name "Anders K. Pettersen"
       user-mail-address "staticaland@users.noreply.github.com")
 #+end_src
 
-* Projectile
+
+** Projectile
 
 #+BEGIN_SRC elisp
 (after! projectile
@@ -19,21 +23,24 @@
       (or (mapcar (lambda (p) (s-starts-with-p p filepath)) projectile-ignored-projects))))
 #+END_SRC
 
-* CUE
+
+** CUE
 
 #+begin_src elisp
 (add-hook! cue-mode
   (cuefmt-on-save-mode))
 #+end_src
 
-* Go
+
+** Go
 
 #+begin_src elisp
 (add-hook! go-mode
   (gofmt-on-save-mode))
 #+end_src
 
-* Terraform
+
+** Terraform
 
 #+begin_src elisp
 (add-hook! terraform-mode
@@ -41,7 +48,7 @@
 #+end_src
 
 
-* Org
+** Org
 
 #+begin_src elisp
 (after! org
@@ -63,13 +70,14 @@
 #+end_src
 
 
-* YAML
+** YAML
 
 #+begin_src elisp
 (setq lsp-yaml-schemas '(:kubernetes "/*-k8s.yaml"))
 #+end_src
 
-* Treemacs file tree
+
+** Treemacs file tree
 
 #+begin_src elisp
 (use-package! treemacs
@@ -84,7 +92,8 @@
     (add-to-list 'treemacs-pre-file-insert-predicates #'treemacs-is-file-git-ignored?))
 #+end_src
 
-* Outline
+
+** Outline
 
 #+begin_src elisp
 (use-package! outline
@@ -92,7 +101,8 @@
   (setq outline-blank-line t))
 #+end_src
 
-* Occur
+
+** Occur
 
 #+begin_src elisp
 (use-package! replace
@@ -105,14 +115,16 @@
              (switch-to-buffer-other-window "*Occur*"))))
 #+end_src
 
-* JSON schema
+
+** JSON schema
 
 #+begin_src elisp :tangle no
 (setq lsp-yaml-schemas (make-hash-table))
 (puthash "https://ecs-intellisense.s3-us-west-2.amazonaws.com/task-definition/schema.json" ["*ecs-task-def.json" "task-definition.json"] lsp-yaml-schemas)
 #+end_src
 
-* Modes
+
+** Modes
 
 #+begin_src elisp
 (use-package web-mode
@@ -125,7 +137,8 @@
   (prettier-on-save-mode))
 #+end_src
 
-* Various
+
+** Various
 
 #+begin_src elisp
 (defun comment-delete (arg)

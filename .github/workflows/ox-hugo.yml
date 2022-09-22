@@ -1,0 +1,44 @@
+name: Emacs
+
+on:
+
+  workflow_dispatch: {}
+
+
+
+env:
+  HUGO_VERSION: 0.88.1
+  EMACS_VERSION: 28.1
+
+jobs:
+
+  build-deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      with:
+        submodules: true
+
+    - name: Clone Org-mode exporter
+      run: git clone https://github.com/kaushalmodi/ox-hugo.git ox-hugo
+
+    - name: Setup emacs
+      uses: purcell/setup-emacs@master
+      with:
+        version: ${{ env.EMACS_VERSION }}
+
+    - name: Export Org file to Markdown
+      run: emacs ./config.org --batch -L ./ox-hugo -l ox-hugo.el --eval='(org-hugo-export-wim-to-md t)' --kill
+
+    - name: Setup Hugo
+      uses: peaceiris/actions-hugo@v2
+      with:
+        hugo-version: ${{ env.HUGO_VERSION }}
+        extended: true
+
+    - name: Build
+      run: ls -la && tree
