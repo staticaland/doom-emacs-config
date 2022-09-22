@@ -29,7 +29,7 @@ jobs:
         version: ${{ env.EMACS_VERSION }}
 
     - name: Install ox-hugo
-      run: emacs --eval "(progn (package-initialize)(package-install 'ox-hugo))"
+      run: emacs --batch --eval="(progn (package-initialize)(package-install 'ox-hugo))"
 
     - name: Export Org file to Markdown
       run: emacs ./config.org --batch --eval='(org-hugo-export-wim-to-md t)' --kill
