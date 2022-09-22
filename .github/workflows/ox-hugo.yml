@@ -23,16 +23,16 @@ jobs:
       with:
         submodules: true
 
-    - name: Clone Org-mode exporter
-      run: git clone https://github.com/kaushalmodi/ox-hugo.git ox-hugo
-
     - name: Setup emacs
       uses: purcell/setup-emacs@master
       with:
         version: ${{ env.EMACS_VERSION }}
 
+    - name: Install ox-hugo
+      run: emacs --eval "(progn (package-initialize)(package-install 'ox-hugo))"
+
     - name: Export Org file to Markdown
-      run: emacs ./config.org --batch -L ./ox-hugo -l ox-hugo.el --eval='(org-hugo-export-wim-to-md t)' --kill
+      run: emacs ./config.org --batch --eval='(org-hugo-export-wim-to-md t)' --kill
 
     - name: Setup Hugo
       uses: peaceiris/actions-hugo@v2
