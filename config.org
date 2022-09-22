@@ -2,6 +2,10 @@
 #+HUGO_SECTION: ./
 
 * Doom Emacs config
+:PROPERTIES:
+:EXPORT_FILE_NAME: config
+:END:
+
 
 ** General
 
