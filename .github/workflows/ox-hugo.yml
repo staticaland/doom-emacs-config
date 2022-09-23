@@ -7,21 +7,28 @@ on:
 
 
 env:
-  HUGO_VERSION: 0.88.1
+  HUGO_VERSION: 0.101.0
+  HUGO_ENV: production
   EMACS_VERSION: 28.1
 
 jobs:
 
-  build-deploy:
+  build:
 
     runs-on: ubuntu-latest
 
     steps:
 
-    - name: Checkout repository
-      uses: actions/checkout@v2
+    - name: Checkout
+      uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
       with:
-        submodules: true
+        submodules: recursive
+
+    - name: Setup Hugo
+      uses: peaceiris/actions-hugo@v2
+      with:
+        hugo-version: ${{ env.HUGO_VERSION }}
+        extended: true
 
     - name: Setup emacs
       uses: purcell/setup-emacs@master
@@ -37,11 +44,35 @@ jobs:
     - name: Export Org file to Markdown
       run: emacs ./config.org --batch -L tomelr -L ox-hugo -l ox-hugo.el --eval='(org-hugo-export-wim-to-md t)' --kill
 
-    - name: Setup Hugo
-      uses: peaceiris/actions-hugo@v2
-      with:
-        hugo-version: ${{ env.HUGO_VERSION }}
-        extended: true
+    - id: pages
+      name: Setup Pages
+      uses: actions/configure-pages@45efe609374726fd94570f0e5a4c32f41675e823
 
-    - name: Build
-      run: ls -la && tree
+    - name: Build with Hugo
+      run: |
+        hugo \
+          --minify \
+          --baseURL "${{ steps.pages.outputs.base_url }}"
+      working-directory: ./docs
+
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@a597aecd27af1cf14095ccaa29169358e3d91e28
+      with:
+        path: ./docs/public
+
+  deploy:
+    name: Deploy to GitHub Pages
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@c2379ec5e719a934ec613038d081879b58c9d7df
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
