@@ -1,11 +1,18 @@
-#+HUGO_BASE_DIR: ./
+#+HUGO_BASE_DIR: ./docs
 #+HUGO_SECTION: ./
+
+* Hugo
+
+- If =HUGO_SECTION= is =blog= then the file will be placed in
+  =<HUGO_BASE_DIR>/content/blog=.
+- If =HUGO_SECTION= is =./= then the file will be placed in
+- If =HUGO_SECTION= is unset then the file will be placed in
+  =<HUGO_BASE_DIR>/content/posts/=.
 
 * Doom Emacs config
 :PROPERTIES:
-:EXPORT_FILE_NAME: config
+:EXPORT_FILE_NAME: index
 :END:
-
 
 ** General
 

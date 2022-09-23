@@ -1,0 +1,8 @@
+languageCode = 'en-us'
+title = 'Doom Emacs config'
+
+theme = "hugo-book"
+
+[markup]
+  [markup.highlight]
+    style = 'tango'
