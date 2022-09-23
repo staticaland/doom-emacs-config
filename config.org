@@ -81,13 +81,6 @@
 #+end_src
 
 
-** YAML
-
-#+begin_src elisp
-(setq lsp-yaml-schemas '(:kubernetes "/*-k8s.yaml"))
-#+end_src
-
-
 ** Treemacs file tree
 
 #+begin_src elisp
