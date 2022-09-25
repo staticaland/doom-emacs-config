@@ -73,6 +73,8 @@ Projectile is my favourite way to work with projects.
 
 ** CUE
 
+[[https://cuelang.org/][CUE]].
+
 #+begin_src elisp
 (add-hook! cue-mode
   (cuefmt-on-save-mode))
@@ -80,6 +82,8 @@ Projectile is my favourite way to work with projects.
 
 
 ** Go
+
+[[https://go.dev/][Go]].
 
 #+begin_src elisp
 (add-hook! go-mode
@@ -89,6 +93,8 @@ Projectile is my favourite way to work with projects.
 
 ** Terraform
 
+[[https://www.terraform.io/][Terraform]].
+
 #+begin_src elisp
 (add-hook! terraform-mode
   (terraform-format-on-save-mode))
@@ -96,6 +102,8 @@ Projectile is my favourite way to work with projects.
 
 
 ** Org
+
+[[https://orgmode.org/][Org Mode]].
 
 #+begin_src elisp
 (after! org
@@ -110,6 +118,9 @@ Projectile is my favourite way to work with projects.
   (setq org-src-window-setup 'current-window)
   (setq org-startup-indented t))
 #+end_src
+
+Add =ox-gfm= to make it possible to export Org Mode documents to GitHub
+Flavoured Markdown.
 
 #+begin_src elisp
 (use-package! ox-gfm

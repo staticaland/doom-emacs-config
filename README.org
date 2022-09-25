@@ -1,3 +1,3 @@
 * doom-emacs-config
 
-[[https://staticaland.github.io/doom-emacs-config/][My Doom Emacs config can be viewed on GitHub Pages]].
+[[https://staticaland.github.io/doom-emacs-config/][My Doom Emacs config can be viewed on GitHub Pages]]. It is rendered by Hugo through ox-hugo.
