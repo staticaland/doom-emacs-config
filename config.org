@@ -45,7 +45,7 @@ Projectile is my favourite way to work with projects.
 #+END_SRC
 
 
-*** Dired file explorer
+** Dired file explorer
 
 #+BEGIN_SRC elisp
 (after! dired
