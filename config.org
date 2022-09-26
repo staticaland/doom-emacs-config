@@ -15,6 +15,12 @@
 :EXPORT_FILE_NAME: index
 :END:
 
+** Doom Emacs
+
+This is my [[https://github.com/doomemacs/doomemacs][Doom Emacs]] configuration.
+
+** Lexical binding
+
 Make this file run (slightly) faster with lexical binding (see [[https://nullprogram.com/blog/2016/12/22/][this blog post]]
 for more info).
 
@@ -177,6 +183,8 @@ Flavoured Markdown.
 
 
 ** Modes
+
+I used this while making [[https://pkg.go.dev/html/template][Go HTTP templates]] while reading [[https://lets-go.alexedwards.net/][Let's Go]].
 
 #+begin_src elisp
 (use-package web-mode
