@@ -17,7 +17,7 @@
 
 ** Doom Emacs
 
-This is my [[https://github.com/doomemacs/doomemacs][Doom Emacs]] configuration.
+This is my [[https://github.com/doomemacs/doomemacs][Doom Emacs]] configuration ([[https://github.com/staticaland/doom-emacs-config][source]]).
 
 ** Lexical binding
 
