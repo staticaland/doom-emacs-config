@@ -3,6 +3,9 @@ title = 'Doom Emacs config'
 
 theme = "hugo-book"
 
+[params]
+  BookRepo = 'https://github.com/staticaland/doom-emacs-config'
+
 [markup]
   [markup.highlight]
     style = 'tango'
