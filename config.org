@@ -187,7 +187,7 @@ Flavoured Markdown.
 I used this while making [[https://pkg.go.dev/html/template][Go HTTP templates]] while reading [[https://lets-go.alexedwards.net/][Let's Go]].
 
 #+begin_src elisp
-(use-package web-mode
+(use-package! web-mode
   :mode (("\\.html$" . web-mode)
          ("\\.tmpl\\'" . web-mode)))
 #+end_src
