@@ -198,6 +198,114 @@ I used this while making [[https://pkg.go.dev/html/template][Go HTTP templates]]
 #+end_src
 
 
+** Gptel
+
+#+begin_src elisp
+(use-package! auth-source
+  :no-require t
+  :config (setq! auth-sources '("~/.authinfo")))
+#+end_src
+
+#+begin_src elisp
+(use-package! gptel
+  :defer t
+  :init
+  ;; Pre-configured chat configurations
+  (defvar gptel-chat-configs
+    '(("terraform" . ((name . "*GPTel-Terraform*")
+                      (model . gpt-4o)
+                      (system-message . "You are an expert Terraform developer focusing on AWS infrastructure. Provide idiomatic Terraform code with clear explanations. Include best practices for infrastructure as code, AWS-specific optimizations, and security considerations. Use modern Terraform syntax and AWS provider features.")
+                      (temperature . 0.7)))
+      ("golang" . ((name . "*GPTel-Golang*")
+                   (model . gpt-4o)
+                   (system-message . "You are an expert Go developer. Provide idiomatic Go code that follows the language's best practices and conventions. Focus on writing clean, efficient, and well-documented code. Include proper error handling, concurrent programming patterns when relevant, and follow the official Go style guide.")
+                   (temperature . 0.7)))
+      ("python" . ((name . "*GPTel-Python*")
+                   (model . gpt-4o)
+                   (system-message . "You are an expert Python developer. Write Pythonic code following PEP-8 guidelines. Focus on clean, readable, and maintainable solutions. Use modern Python features and best practices. Include type hints, docstrings, and appropriate error handling.")
+                   (temperature . 0.7)))))
+
+  (defun gptel-create-chat (config-key)
+    "Create or switch to a pre-configured gptel chat buffer.
+CONFIG-KEY is a string matching a key in `gptel-chat-configs'."
+    (interactive
+     (list (completing-read "Select chat configuration: "
+                           (mapcar #'car gptel-chat-configs))))
+    (if-let* ((config (alist-get config-key gptel-chat-configs nil nil #'equal))
+              (buffer-name (alist-get 'name config))
+              (model (alist-get 'model config))
+              (system-message (alist-get 'system-message config))
+              (temperature (alist-get 'temperature config)))
+        (progn
+          (with-current-buffer (gptel buffer-name)
+            (setq-local gptel-model model
+                        gptel--system-message system-message
+                        gptel-temperature temperature)
+            (current-buffer))
+          ;; Switch to the buffer using Doom's display function
+          (pop-to-buffer buffer-name)
+          (message "Created %s chat buffer with %s model" config-key model))
+      (user-error "No configuration found for %s" config-key)))
+
+  (map! :leader
+        (:prefix ("j" . "ai")
+         :desc "Open chat" "c" #'gptel
+         :desc "Add file/buffer to context" "a" #'gptel-add
+         :desc "Open menu" "m" #'gptel-menu
+         :desc "Submit prompt" "j" #'gptel-send
+         :desc "Submit prompt with prefix arg" "s" (cmd! (gptel-send t))
+         (:prefix ("o" . "open specialized chat")
+          :desc "Terraform Chat" "t" (cmd! (gptel-create-chat "terraform"))
+          :desc "Golang Chat" "g" (cmd! (gptel-create-chat "golang"))
+          :desc "Python Chat" "p" (cmd! (gptel-create-chat "python")))))
+
+  :config
+  (setq! gptel-default-mode 'org-mode)
+  (setq! gptel-prompt-prefix-alist
+         '((markdown-mode . "**Prompt**: ")
+           (org-mode . "*Prompt*: ")
+           (text-mode . "Prompt: ")))
+  (setq! gptel-model 'gpt-4o)
+  (setq! gptel-log-level nil)
+
+  (add-hook! 'gptel-mode-hook
+    (when (eq major-mode 'org-mode)
+      (+org-pretty-mode 1)))
+
+  (map! :map gptel-mode-map
+        "C-c C-c" #'gptel-send))
+#+end_src
+
+
+** Aider
+
+#+begin_src elisp
+(use-package! aider
+  :after doom auth-source
+  :config
+  (let ((openai-key (auth-source-pick-first-password :host "api.openai.com" :user "apikey"))
+        (anthropic-key (auth-source-pick-first-password :host "api.anthropic.com" :user "apikey")))
+    (when openai-key
+      (setenv "OPENAI_API_KEY" openai-key))
+    (when anthropic-key
+      (setenv "ANTHROPIC_API_KEY" anthropic-key)))
+  (setq! aider-args '("--sonnet")))
+#+end_src
+
+
+** Copilot
+
+#+begin_src elisp
+(use-package! copilot
+  :hook (prog-mode . copilot-mode)
+  :bind (:map copilot-completion-map
+              ("<tab>" . 'copilot-accept-completion)
+              ("TAB" . 'copilot-accept-completion)
+              ("C-TAB" . 'copilot-accept-completion-by-word)
+              ("C-<tab>" . 'copilot-accept-completion-by-word)))
+#+end_src
+
+
 ** Various
 
 There is nothing here yet.
