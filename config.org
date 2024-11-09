@@ -45,9 +45,10 @@ Projectile is my favourite way to work with projects.
   (setq +workspaces-on-switch-project-behavior t)
 
   (setq projectile-ignored-projects '("~/" "/tmp" "~/.emacs.d/.local/straight/repos/"))
+
   (defun projectile-ignored-project-function (filepath)
-      "Return t if FILEPATH is within any of `projectile-ignored-projects'"
-      (or (mapcar (lambda (p) (s-starts-with-p p filepath)) projectile-ignored-projects))))
+    "Return t if FILEPATH is within any of `projectile-ignored-projects'"
+    (cl-some (lambda (p) (s-starts-with-p p filepath)) projectile-ignored-projects)))
 #+END_SRC
 
 
@@ -55,21 +56,17 @@ Projectile is my favourite way to work with projects.
 
 #+BEGIN_SRC elisp
 (after! dired
+  (setq ls-lisp-dirs-first t)
+
+  (setq dired-listing-switches
+        (if (executable-find "gls")
+            "-lFaGh1vt --group-directories-first"  ; gls version with all features
+            "-lathlF"))                            ; standard ls version with all features
 
   (add-hook! 'dired-mode-hook 'dired-hide-details-mode)
   (add-hook! 'dired-mode-hook 'hl-line-mode)
 
-  (if (executable-find "gls")
-      (progn
-        (setq insert-directory-program "gls")
-        (setq dired-listing-switches "-lFaGh1v --group-directories-first"))
-    (setq dired-listing-switches "-ahlF"))
-
-  (setq ls-lisp-dirs-first t)
-
-  (setq dired-listing-switches "-lat") ; sort by date (new first)
   (put 'dired-find-alternate-file 'disabled nil)
-
   (setq delete-by-moving-to-trash t)
   (setq dired-dwim-target t)
   (setq dired-recursive-copies (quote always))
