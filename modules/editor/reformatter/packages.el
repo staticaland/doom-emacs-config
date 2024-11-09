@@ -1,4 +1,4 @@
 ;; -*- no-byte-compile: t; -*-
 ;;; editor/reformatter/packages.el
 
-(package! reformatter :pin "84cff54b0873fcca6fc0314d7584284e86708e8d")
+(package! reformatter :pin "8962e1dd0c949997413380ea1f8d8a25ada5f624")
