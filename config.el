@@ -159,15 +159,19 @@ CONFIG-KEY is a string matching a key in `gptel-chat-configs'."
 (use-package! aider
   :after doom auth-source
   :config
+  ;; Securely retrieve API keys from auth-source
   (let ((openai-key (auth-source-pick-first-password :host "api.openai.com" :user "apikey"))
         (anthropic-key (auth-source-pick-first-password :host "api.anthropic.com" :user "apikey")))
+    ;; Set environment variables for API access
     (when openai-key
       (setenv "OPENAI_API_KEY" openai-key))
     (when anthropic-key
       (setenv "ANTHROPIC_API_KEY" anthropic-key)))
+  
+  ;; Use the Sonnet model for improved code generation
   (setq! aider-args '("--sonnet"))
 
-  ;; Disable company-mode in aider buffers
+  ;; Disable company-mode in aider buffers to prevent interference
   (add-hook! 'comint-mode-hook
     (defun +aider-disable-company-h ()
       (when (string-match-p "\\*aider:" (buffer-name))

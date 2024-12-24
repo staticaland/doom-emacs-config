@@ -286,7 +286,7 @@ CONFIG-KEY is a string matching a key in `gptel-chat-configs'."
 
 ** Aider
 
-Aider is an AI pair programming tool. Key configurations:
+Key configurations:
 
 - Securely retrieve API keys from auth-source
 - Set environment variables for OpenAI and Anthropic
