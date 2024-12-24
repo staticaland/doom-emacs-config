@@ -165,7 +165,13 @@ CONFIG-KEY is a string matching a key in `gptel-chat-configs'."
       (setenv "OPENAI_API_KEY" openai-key))
     (when anthropic-key
       (setenv "ANTHROPIC_API_KEY" anthropic-key)))
-  (setq! aider-args '("--sonnet")))
+  (setq! aider-args '("--sonnet"))
+
+  ;; Disable company-mode in aider buffers
+  (add-hook! 'comint-mode-hook
+    (defun +aider-disable-company-h ()
+      (when (string-match-p "\\*aider:" (buffer-name))
+        (company-mode -1)))))
 
 (use-package! copilot
   :hook (prog-mode . copilot-mode)
@@ -174,3 +180,6 @@ CONFIG-KEY is a string matching a key in `gptel-chat-configs'."
               ("TAB" . 'copilot-accept-completion)
               ("C-TAB" . 'copilot-accept-completion-by-word)
               ("C-<tab>" . 'copilot-accept-completion-by-word)))
+
+(after! makefile-mode
+  (setq-hook! 'makefile-mode-hook indent-tabs-mode t))
