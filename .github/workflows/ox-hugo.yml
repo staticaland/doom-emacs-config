@@ -58,11 +58,11 @@ jobs:
 
 
     - name: Build with Hugo
+      working-directory: ./docs
       run: |
         hugo \
           --minify \
           --baseURL "${{ steps.pages.outputs.base_url }}"
-      working-directory: ./docs
 
 
     - name: Upload artifact
