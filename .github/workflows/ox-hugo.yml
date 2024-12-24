@@ -56,7 +56,7 @@ jobs:
       working-directory: ./docs
 
     - name: Upload artifact
-      uses: actions/upload-pages-artifact@a597aecd27af1cf14095ccaa29169358e3d91e28
+      uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa
       with:
         path: ./docs/public
 
