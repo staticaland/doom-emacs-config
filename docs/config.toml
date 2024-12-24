@@ -1,11 +1,15 @@
 languageCode = 'en-us'
 title = 'Doom Emacs config'
 
-theme = "hugo-book"
-
 [params]
   BookRepo = 'https://github.com/staticaland/doom-emacs-config'
 
 [markup]
   [markup.highlight]
     style = 'tango'
+
+[module]
+[[module.imports]]
+path = 'github.com/alex-shpak/hugo-book'
+
+theme = "hugo-book"
