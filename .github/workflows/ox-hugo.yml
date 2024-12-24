@@ -9,9 +9,9 @@ on:
       - 'config.org'
 
 env:
-  HUGO_VERSION: 0.101.0
+  HUGO_VERSION: 0.140.1
   HUGO_ENV: production
-  EMACS_VERSION: 28.1
+  EMACS_VERSION: 29.2
 
 permissions:
   contents: read
