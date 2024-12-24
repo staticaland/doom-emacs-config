@@ -38,7 +38,7 @@ for more info).
 
 ** Projectile
 
-Projectile enhances project management in Emacs. Key configurations:
+Key configurations:
 
 - Enable workspace switching when changing projects
 - Define ignored projects
@@ -58,7 +58,7 @@ Projectile enhances project management in Emacs. Key configurations:
 
 ** Dired file explorer
 
-Dired enhances file management in Emacs. Key configurations:
+Key configurations:
 
 - Set directory listing options
 - Enable detail hiding and line highlighting
