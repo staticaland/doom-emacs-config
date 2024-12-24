@@ -2,6 +2,11 @@ name: Emacs
 
 on:
   workflow_dispatch: {}
+  push:
+    branches:
+      - master
+    paths:
+      - 'config.org'
 
 env:
   HUGO_VERSION: 0.101.0
