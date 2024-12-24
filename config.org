@@ -293,6 +293,8 @@ Aider is an AI pair programming tool. Key configurations:
 - Configure Aider to use the Sonnet model
 - Disable company-mode in Aider buffers for better interaction
 
+Comint-mode is a general purpose mode for command interpreters. It's used by Aider for its interactive buffer, providing features like command history and input editing.
+
 #+begin_src elisp
 (use-package! aider
   :after doom auth-source
