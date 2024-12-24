@@ -58,6 +58,12 @@ Projectile enhances project management in Emacs. Key configurations:
 
 ** Dired file explorer
 
+Dired enhances file management in Emacs. Key configurations:
+
+- Set directory listing options
+- Enable detail hiding and line highlighting
+- Configure file operations behavior
+
 #+BEGIN_SRC elisp
 (after! dired
   (setq ls-lisp-dirs-first t)
