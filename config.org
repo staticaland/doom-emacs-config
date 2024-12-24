@@ -38,7 +38,11 @@ for more info).
 
 ** Projectile
 
-Projectile enhances project management in Emacs. Key settings:
+Projectile enhances project management in Emacs. Key configurations:
+
+- Enable workspace switching when changing projects
+- Define ignored projects
+- Custom function for project ignoring
 
 #+BEGIN_SRC elisp
 (after! projectile
