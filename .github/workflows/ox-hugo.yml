@@ -1,15 +1,17 @@
 name: Emacs
 
 on:
-
   workflow_dispatch: {}
-
-
 
 env:
   HUGO_VERSION: 0.101.0
   HUGO_ENV: production
   EMACS_VERSION: 28.1
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
 
@@ -24,29 +26,36 @@ jobs:
       with:
         submodules: recursive
 
+
     - name: Setup Hugo
       uses: peaceiris/actions-hugo@v3
       with:
         hugo-version: ${{ env.HUGO_VERSION }}
         extended: true
 
+
     - name: Setup emacs
       uses: purcell/setup-emacs@master
       with:
         version: ${{ env.EMACS_VERSION }}
 
+
     - name: Clone Org-mode exporter
       run: git clone https://github.com/kaushalmodi/ox-hugo.git ox-hugo
+
 
     - name: Clone Org-mode exporter
       run: git clone https://github.com/kaushalmodi/tomelr tomelr
 
+
     - name: Export Org file to Markdown
       run: emacs ./config.org --batch -L tomelr -L ox-hugo -l ox-hugo.el --eval='(org-hugo-export-wim-to-md t)' --kill
+
 
     - id: pages
       name: Setup Pages
       uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b
+
 
     - name: Build with Hugo
       run: |
@@ -55,24 +64,24 @@ jobs:
           --baseURL "${{ steps.pages.outputs.base_url }}"
       working-directory: ./docs
 
+
     - name: Upload artifact
       uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa
       with:
         path: ./docs/public
 
+
   deploy:
+
     name: Deploy to GitHub Pages
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     needs: build
+
     steps:
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
