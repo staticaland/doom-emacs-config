@@ -309,6 +309,22 @@ CONFIG-KEY is a string matching a key in `gptel-chat-configs'."
 #+end_src
 
 
+** Makefile
+
+Makefiles require TAB characters for recipe lines (commands under targets) - spaces will cause a "missing separator" error.
+
+#+begin_src text :tangle no
+Makefile:2: *** missing separator.  Stop.
+#+end_src
+
+Force tabs to avoid error:
+
+#+begin_src elisp
+(after! makefile-mode
+  (setq-hook! 'makefile-mode-hook indent-tabs-mode t))
+#+end_src
+
+
 ** Various
 
 There is nothing here yet.
