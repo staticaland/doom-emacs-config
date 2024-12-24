@@ -38,7 +38,11 @@ for more info).
 
 ** Projectile
 
-Projectile is my favourite way to work with projects.
+Projectile is a powerful project interaction library for Emacs. It provides a set of features that make working with projects more efficient and enjoyable. Here are some key configurations:
+
+- Enable workspace switching when changing projects
+- Define ignored projects to exclude from Projectile's scope
+- Custom function to determine if a project should be ignored
 
 #+BEGIN_SRC elisp
 (after! projectile
