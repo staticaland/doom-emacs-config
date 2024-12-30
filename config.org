@@ -348,27 +348,28 @@ Force tabs to avoid error:
 #+begin_src elisp
 (after! makefile-mode
   (setq-hook! 'makefile-mode-hook indent-tabs-mode t))
+#+end_src
 
 
 ** Ghostty
 
 #+begin_src elisp
-(defmacro +macos--open-with-ghostty (id &optional dir newwindow?)
-  `(defun ,(intern (format "+macos/%s" id)) ()
-     (interactive)
-     (+macos-open-with "Ghostty" ,dir)))
+(use-package! ghostty
+  :when (modulep! :os macos)
+  :commands (+macos/open-in-ghostty +macos/open-in-ghostty-new-window)
+  :init
+  (defmacro +macos--open-with-ghostty (id &optional dir)
+    `(defun ,(intern (format "+macos/%s" id)) ()
+       (interactive)
+       (+macos-open-with "Ghostty" ,dir)))
 
-;;;###autoload (autoload '+macos/open-in-ghostty "os/macos/autoload" nil t)
-(+macos--open-with-ghostty open-in-ghostty default-directory)
+  (+macos--open-with-ghostty open-in-ghostty default-directory)
+  (+macos--open-with-ghostty open-in-ghostty-new-window default-directory)
 
-;;;###autoload (autoload '+macos/open-in-ghostty-new-window "os/macos/autoload" nil t)
-(+macos--open-with-ghostty open-in-ghostty-new-window default-directory t)
-
-;; Bind the new commands
-(map! :leader
-      (:prefix-map ("o" . "open")
-       :desc "Open in Ghostty"              "i" #'+macos/open-in-ghostty
-       :desc "Open in new Ghostty window"   "I" #'+macos/open-in-ghostty-new-window))
+  (map! :leader
+        (:prefix-map ("o" . "open")
+         :desc "Open in Ghostty"            "i" #'+macos/open-in-ghostty
+         :desc "Open in new Ghostty window" "I" #'+macos/open-in-ghostty-new-window)))
 #+end_src
 
 

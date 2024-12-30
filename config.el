@@ -143,15 +143,18 @@ CONFIG-KEY is a string matching a key in `gptel-chat-configs'."
   :config
   (setq! gptel-default-mode 'org-mode)
   (setq! gptel-prompt-prefix-alist
-         '((markdown-mode . "**Prompt**: ")
-           (org-mode . "*Prompt*: ")
-           (text-mode . "Prompt: ")))
-  (setq! gptel-model 'gpt-4o)
-  (setq! gptel-log-level nil)
+      '((markdown-mode . "# Prompt\n\n")
+        (org-mode . "* Prompt\n\n")))
+
+  (setq! gptel-response-prefix-alist
+      '((markdown-mode . "# Response**\n\n")
+        (org-mode . "* Response\n\n")))
 
   (add-hook! 'gptel-mode-hook
     (when (eq major-mode 'org-mode)
       (+org-pretty-mode 1)))
+
+  (add-hook! 'gptel-post-response-functions 'gptel-end-of-response)
 
   (map! :map gptel-mode-map
         "C-c C-c" #'gptel-send))
@@ -187,3 +190,20 @@ CONFIG-KEY is a string matching a key in `gptel-chat-configs'."
 
 (after! makefile-mode
   (setq-hook! 'makefile-mode-hook indent-tabs-mode t))
+
+(use-package! ghostty
+  :when (modulep! :os macos)
+  :commands (+macos/open-in-ghostty +macos/open-in-ghostty-new-window)
+  :init
+  (defmacro +macos--open-with-ghostty (id &optional dir)
+    `(defun ,(intern (format "+macos/%s" id)) ()
+       (interactive)
+       (+macos-open-with "Ghostty" ,dir)))
+
+  (+macos--open-with-ghostty open-in-ghostty default-directory)
+  (+macos--open-with-ghostty open-in-ghostty-new-window default-directory)
+
+  (map! :leader
+        (:prefix-map ("o" . "open")
+         :desc "Open in Ghostty"            "i" #'+macos/open-in-ghostty
+         :desc "Open in new Ghostty window" "I" #'+macos/open-in-ghostty-new-window)))
