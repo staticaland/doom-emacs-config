@@ -207,3 +207,27 @@ CONFIG-KEY is a string matching a key in `gptel-chat-configs'."
         (:prefix-map ("o" . "open")
          :desc "Open in Ghostty"            "i" #'+macos/open-in-ghostty
          :desc "Open in new Ghostty window" "I" #'+macos/open-in-ghostty-new-window)))
+
+(use-package transient
+  :config
+  (transient-define-prefix smerge-menu ()
+    "Smerge commands menu."
+    [["Movement"
+      ("n" "Next" smerge-next)
+      ("p" "Previous" smerge-prev)]
+     ["Keep"
+      ("b" "Base" smerge-keep-base)
+      ("u" "Upper" smerge-keep-upper)
+      ("l" "Lower" smerge-keep-lower)
+      ("a" "All" smerge-keep-all)
+      ("RET" "Current" smerge-keep-current)]
+     ["Actions"
+      ("<" "Diff upper/base" smerge-diff-base-upper)
+      ("=" "Diff upper/lower" smerge-diff-upper-lower)
+      (">" "Diff base/lower" smerge-diff-base-lower)
+      ("r" "Resolve" smerge-resolve)
+      ("k" "Kill current" smerge-kill-current)]]))
+
+(map! :leader
+      (:prefix ("g" . "git")
+       :desc "Smerge menu" "d" #'smerge-menu))

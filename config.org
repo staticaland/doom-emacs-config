@@ -373,6 +373,37 @@ Force tabs to avoid error:
 #+end_src
 
 
+** Transient
+
+A transient menu for =smerge-mode=. See also [[https://www.youtube.com/watch?v=9S2pMZ6U5Tc][Prot's video about =smerge-mode= and =ediff=]].
+
+#+begin_src elisp
+(use-package transient
+  :config
+  (transient-define-prefix smerge-menu ()
+    "Smerge commands menu."
+    [["Movement"
+      ("n" "Next" smerge-next)
+      ("p" "Previous" smerge-prev)]
+     ["Keep"
+      ("b" "Base" smerge-keep-base)
+      ("u" "Upper" smerge-keep-upper)
+      ("l" "Lower" smerge-keep-lower)
+      ("a" "All" smerge-keep-all)
+      ("RET" "Current" smerge-keep-current)]
+     ["Actions"
+      ("<" "Diff upper/base" smerge-diff-base-upper)
+      ("=" "Diff upper/lower" smerge-diff-upper-lower)
+      (">" "Diff base/lower" smerge-diff-base-lower)
+      ("r" "Resolve" smerge-resolve)
+      ("k" "Kill current" smerge-kill-current)]]))
+
+(map! :leader
+      (:prefix ("g" . "git")
+       :desc "Smerge menu" "d" #'smerge-menu))
+#+end_src
+
+
 ** Various
 
 There is nothing here yet.
