@@ -217,8 +217,8 @@ CONFIG-KEY is a string matching a key in `gptel-chat-configs'."
      ["Keep"
       ("u" "Your changes (on current branch) (upper)" smerge-keep-mine)
       ("l" "Their changes (from incoming branch) (lower)" smerge-keep-other)
-      ("a" "All versions combined" smerge-keep-all)
       ("b" "Common ancestor (last shared commit) (base)" smerge-keep-base)
+      ("a" "All versions combined" smerge-keep-all)
       ("RET" "Version at cursor position" smerge-keep-current)]
      ["Compare"
       ("=" "Your changes vs their changes" smerge-diff-upper-lower)
