@@ -379,27 +379,28 @@ A transient menu for =smerge-mode=. See also [[https://www.youtube.com/watch?v=9
 
 #+begin_src elisp
 (after! transient
-  (transient-define-prefix smerge-menu ()
-    "Smerge commands menu."
+  (transient-define-prefix merge-conflict-menu ()
+    "Menu for resolving merge conflicts"
     [["Movement"
       ("n" "Next" smerge-next)
       ("p" "Previous" smerge-prev)]
      ["Keep"
-      ("b" "Base" smerge-keep-base)
-      ("u" "Upper" smerge-keep-upper)
-      ("l" "Lower" smerge-keep-lower)
-      ("a" "All" smerge-keep-all)
-      ("RET" "Current" smerge-keep-current)]
-     ["Actions"
-      ("<" "Diff upper/base" smerge-diff-base-upper)
-      ("=" "Diff upper/lower" smerge-diff-upper-lower)
-      (">" "Diff base/lower" smerge-diff-base-lower)
-      ("r" "Resolve" smerge-resolve)
-      ("k" "Kill current" smerge-kill-current)]]))
+      ("u" "Your changes (on current branch) (upper)" smerge-keep-mine)
+      ("l" "Their changes (from incoming branch) (lower)" smerge-keep-other)
+      ("a" "All versions combined" smerge-keep-all)
+      ("b" "Common ancestor (last shared commit) (base)" smerge-keep-base)
+      ("RET" "Version at cursor position" smerge-keep-current)]
+     ["Compare"
+      ("=" "Your changes vs their changes" smerge-diff-upper-lower)
+      ("<" "Common ancestor vs your changes" smerge-diff-base-upper)
+      (">" "Common ancestor vs their changes" smerge-diff-base-lower)]
+     ["Resolve"
+      ("r" "Auto-resolve if possible" smerge-resolve)
+      ("k" "Remove conflict markers" smerge-kill-current)]]))
 
 (map! :leader
       (:prefix ("g" . "git")
-       :desc "Smerge menu" "d" #'smerge-menu))
+       :desc "Merge conflict menu" "d" #'merge-conflict-menu))
 #+end_src
 
 
