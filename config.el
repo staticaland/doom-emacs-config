@@ -208,8 +208,7 @@ CONFIG-KEY is a string matching a key in `gptel-chat-configs'."
          :desc "Open in Ghostty"            "i" #'+macos/open-in-ghostty
          :desc "Open in new Ghostty window" "I" #'+macos/open-in-ghostty-new-window)))
 
-(use-package transient
-  :config
+(after! transient
   (transient-define-prefix smerge-menu ()
     "Smerge commands menu."
     [["Movement"

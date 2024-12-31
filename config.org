@@ -378,8 +378,7 @@ Force tabs to avoid error:
 A transient menu for =smerge-mode=. See also [[https://www.youtube.com/watch?v=9S2pMZ6U5Tc][Prot's video about =smerge-mode= and =ediff=]].
 
 #+begin_src elisp
-(use-package transient
-  :config
+(after! transient
   (transient-define-prefix smerge-menu ()
     "Smerge commands menu."
     [["Movement"
