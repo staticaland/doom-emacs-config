@@ -4,7 +4,7 @@
 (package! evil-cleverparens :pin "22aa03d0f50aa70ae08fbe8765a88f5020afa635")
 (package! ztree :pin "f05677f9696e573c8c607e8876fb4a0cccbc491f")
 
-(package! gptel :pin "0f173bace51c0f68d0dc3667a340355996b418f0")
+(package! gptel :pin "676503e88e7d26e862a74a6f3c9c3895b7870e1f")
 (package! aider :recipe (:host github :repo "tninja/aider.el" :files ("*.el")) :pin "515f5cbb505e614f400c21f99bdbebd47609c659")
 
 (package! copilot
