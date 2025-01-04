@@ -354,22 +354,33 @@ Force tabs to avoid error:
 ** Ghostty
 
 #+begin_src elisp
-(use-package! ghostty
-  :when (modulep! :os macos)
-  :commands (+macos/open-in-ghostty +macos/open-in-ghostty-new-window)
-  :init
-  (defmacro +macos--open-with-ghostty (id &optional dir)
-    `(defun ,(intern (format "+macos/%s" id)) ()
-       (interactive)
-       (+macos-open-with "Ghostty" ,dir)))
+;;;###autoload
+(defun my/open-in-ghostty (&optional path)
+  "Open PATH in Ghostty. If PATH is nil, open the current directory."
+  (interactive)
+  (let* ((path (expand-file-name
+                (or path default-directory)))
+         (quoted-path (shell-quote-argument path))
+         (command (format "open -a Ghostty %s" quoted-path)))
+    (message "Running: %s" command)
+    (shell-command command)))
 
-  (+macos--open-with-ghostty open-in-ghostty default-directory)
-  (+macos--open-with-ghostty open-in-ghostty-new-window default-directory)
+;;;###autoload
+(defun my/open-current-dir-in-ghostty ()
+  "Open current directory in Ghostty."
+  (interactive)
+  (my/open-in-ghostty default-directory))
 
-  (map! :leader
-        (:prefix-map ("o" . "open")
-         :desc "Open in Ghostty"            "i" #'+macos/open-in-ghostty
-         :desc "Open in new Ghostty window" "I" #'+macos/open-in-ghostty-new-window)))
+;;;###autoload
+(defun my/open-project-in-ghostty ()
+  "Open project root directory in Ghostty."
+  (interactive)
+  (my/open-in-ghostty (doom-project-root default-directory)))
+
+(map! :leader
+      (:prefix ("o" . "open")
+       :desc "Open dir in Ghostty" "i" #'my/open-current-dir-in-ghostty
+       :desc "Open project in Ghostty" "I" #'my/open-project-in-ghostty))
 #+end_src
 
 
