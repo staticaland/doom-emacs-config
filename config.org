@@ -44,6 +44,16 @@ for more info).
        doom-big-font (font-spec :family "MesloLGM Nerd Font Mono" :size 18))
 #+end_src
 
+To install the fonts:
+
+#+begin_src bash :tangle no
+brew tap homebrew/cask-fonts
+brew install --cask font-eb-garamond
+brew install --cask font-meslo-lg-nerd-font
+#+end_src
+
+Mixed pitch to display prose in EB Garamond font and code in Meslo font."
+
 #+begin_src elisp
 (use-package! mixed-pitch
   :hook
