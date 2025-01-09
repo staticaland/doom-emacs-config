@@ -3,6 +3,17 @@
 (setq user-full-name "Anders K. Pettersen"
       user-mail-address "staticaland@users.noreply.github.com")
 
+(setq! doom-font (font-spec :family "MesloLGM Nerd Font Mono" :size 15)
+       doom-variable-pitch-font (font-spec :family "EB Garamond" :size 22)
+       doom-big-font (font-spec :family "MesloLGM Nerd Font Mono" :size 18))
+
+(use-package! mixed-pitch
+  :hook
+  (org-mode . mixed-pitch-mode)
+  (markdown-mode . mixed-pitch-mode)
+  :config
+  (setq! mixed-pitch-set-height t))
+
 (after! projectile
   (setq +workspaces-on-switch-project-behavior t)
 

@@ -36,6 +36,24 @@ for more info).
 #+end_src
 
 
+** Fonts
+
+#+begin_src elisp
+(setq! doom-font (font-spec :family "MesloLGM Nerd Font Mono" :size 15)
+       doom-variable-pitch-font (font-spec :family "EB Garamond" :size 22)
+       doom-big-font (font-spec :family "MesloLGM Nerd Font Mono" :size 18))
+#+end_src
+
+#+begin_src elisp
+(use-package! mixed-pitch
+  :hook
+  (org-mode . mixed-pitch-mode)
+  (markdown-mode . mixed-pitch-mode)
+  :config
+  (setq! mixed-pitch-set-height t))
+#+end_src
+
+
 ** Projectile
 
 Key configurations:
