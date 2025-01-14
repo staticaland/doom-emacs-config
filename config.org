@@ -370,7 +370,7 @@ Force tabs to avoid error:
 
 ** Transient
 
-A transient menu for =smerge-mode=. See also [[https://www.youtube.com/watch?v=9S2pMZ6U5Tc][Prot's video about =smerge-mode= and =ediff=]].
+A transient menu for resolving Git conflicts using =smerge-mode=. See also [[https://www.youtube.com/watch?v=9S2pMZ6U5Tc][Prot's comparison of =smerge-mode= and =ediff=]].
 
 #+begin_src elisp
 (after! transient
