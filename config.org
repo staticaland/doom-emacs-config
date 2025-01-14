@@ -21,8 +21,7 @@ This is my [[https://github.com/doomemacs/doomemacs][Doom Emacs]] configuration 
 
 ** Lexical binding
 
-Make this file run (slightly) faster with lexical binding (see [[https://nullprogram.com/blog/2016/12/22/][this blog post]]
-for more info).
+Make this file run (slightly) faster with lexical binding (see [[https://nullprogram.com/blog/2016/12/22/][this blog post]] for more info).
 
 #+BEGIN_SRC elisp
 ;;; config.el -*- lexical-binding: t; -*-
@@ -39,9 +38,9 @@ for more info).
 ** Fonts
 
 #+begin_src elisp
-(setq! doom-font (font-spec :family "MesloLGM Nerd Font Mono" :size 15)
-       doom-variable-pitch-font (font-spec :family "EB Garamond" :size 22)
-       doom-big-font (font-spec :family "MesloLGM Nerd Font Mono" :size 18))
+(setq! doom-font (font-spec :family "RobotoMono Nerd Font Mono" :size 15)
+       doom-variable-pitch-font (font-spec :family "EB Garamond" :size 20)
+       doom-big-font (font-spec :family "RobotoMono Nerd Font Mono" :size 18))
 #+end_src
 
 To install the fonts:
@@ -50,9 +49,10 @@ To install the fonts:
 brew tap homebrew/cask-fonts
 brew install --cask font-eb-garamond
 brew install --cask font-meslo-lg-nerd-font
+brew install --cask font-roboto-mono-nerd-font
 #+end_src
 
-Mixed pitch to display prose in EB Garamond font and code in Meslo font."
+Mixed pitch to display prose in EB Garamond font and code in Roboto Mono font.
 
 #+begin_src elisp
 (use-package! mixed-pitch
@@ -62,6 +62,8 @@ Mixed pitch to display prose in EB Garamond font and code in Meslo font."
   :config
   (setq! mixed-pitch-set-height t))
 #+end_src
+
+The mixed fonts look ridiculous in most markdown README files, so I'll have to fix that.
 
 
 ** Projectile

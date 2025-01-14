@@ -3,9 +3,9 @@
 (setq user-full-name "Anders K. Pettersen"
       user-mail-address "staticaland@users.noreply.github.com")
 
-(setq! doom-font (font-spec :family "MesloLGM Nerd Font Mono" :size 15)
-       doom-variable-pitch-font (font-spec :family "EB Garamond" :size 22)
-       doom-big-font (font-spec :family "MesloLGM Nerd Font Mono" :size 18))
+(setq! doom-font (font-spec :family "RobotoMono Nerd Font Mono" :size 15)
+       doom-variable-pitch-font (font-spec :family "EB Garamond" :size 20)
+       doom-big-font (font-spec :family "RobotoMono Nerd Font Mono" :size 18))
 
 (use-package! mixed-pitch
   :hook
