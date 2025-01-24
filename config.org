@@ -238,9 +238,8 @@ I used this while making [[https://pkg.go.dev/html/template][Go HTTP templates]]
 ** Gptel
 
 #+begin_src elisp
-(use-package! auth-source
-  :no-require t
-  :config (setq! auth-sources '("~/.authinfo")))
+(after! auth-source
+  (setq! auth-sources '("~/.authinfo")))
 #+end_src
 
 #+begin_src elisp
@@ -255,6 +254,10 @@ I used this while making [[https://pkg.go.dev/html/template][Go HTTP templates]]
          :desc "Submit prompt" "j" #'gptel-send
          :desc "Submit prompt with prefix arg" "s" (cmd! (gptel-send t))))
   :config
+  (setq gptel-backend
+        (gptel-make-anthropic "Claude"
+          :key #'gptel-api-key-from-auth-source
+          :stream t))
   (setq! gptel-default-mode 'org-mode)
   (setq! gptel-prompt-prefix-alist
       '((markdown-mode . "# Prompt\n\n")
