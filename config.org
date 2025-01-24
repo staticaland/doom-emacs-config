@@ -248,27 +248,42 @@ I used this while making [[https://pkg.go.dev/html/template][Go HTTP templates]]
   :init
   (map! :leader
         (:prefix ("j" . "ai")
-         :desc "Open chat" "c" #'gptel
-         :desc "Add file/buffer to context" "a" #'gptel-add
-         :desc "Open menu" "m" #'gptel-menu
-         :desc "Submit prompt" "j" #'gptel-send
-         :desc "Submit prompt with prefix arg" "s" (cmd! (gptel-send t))))
+                :desc "Open chat" "c" #'gptel
+                :desc "Add file/buffer to context" "a" #'gptel-add
+                :desc "Open menu" "m" #'gptel-menu
+                :desc "Submit prompt" "j" #'gptel-send
+                :desc "Submit prompt with prefix arg" "s" (cmd! (gptel-send t))))
   :config
   (setq gptel-backend
         (gptel-make-anthropic "Claude"
-          :key #'gptel-api-key-from-auth-source
-          :stream t))
+                             :stream t
+                             :key #'gptel-api-key-from-auth-source))
+
+  (gptel-make-openai "OpenAI"
+                     :stream t
+                     :key #'gptel-api-key-from-auth-source)
+
+  (gptel-make-ollama "Ollama"
+                     :host "localhost:11434"
+                     :stream t
+                     :models '(mistral:latest codellama:latest))
+
   (setq! gptel-default-mode 'org-mode)
+
   (setq! gptel-prompt-prefix-alist
-      '((markdown-mode . "# Prompt\n\n")
-        (org-mode . "* Prompt\n\n")))
+         '((markdown-mode . "# Prompt\n\n")
+           (org-mode . "* Prompt\n\n")))
+
   (setq! gptel-response-prefix-alist
-      '((markdown-mode . "# Response**\n\n")
-        (org-mode . "* Response\n\n")))
+         '((markdown-mode . "# Response**\n\n")
+           (org-mode . "* Response\n\n")))
+
   (add-hook! 'gptel-mode-hook
-    (when (eq major-mode 'org-mode)
-      (+org-pretty-mode 1)))
+             (when (eq major-mode 'org-mode)
+               (+org-pretty-mode 1)))
+
   (add-hook! 'gptel-post-response-functions 'gptel-end-of-response)
+
   (map! :map gptel-mode-map
         "C-c C-c" #'gptel-send))
 #+end_src
