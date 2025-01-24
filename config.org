@@ -268,6 +268,20 @@ I used this while making [[https://pkg.go.dev/html/template][Go HTTP templates]]
                      :stream t
                      :models '(mistral:latest codellama:latest))
 
+  (gptel-make-openai "OpenRouter"
+                     :host "openrouter.ai"
+                     :endpoint "/api/v1/chat/completions"
+                     :stream t
+                     :key #'gptel-api-key-from-auth-source
+                     :models '(openai/gpt-3.5-turbo
+                             mistralai/mixtral-8x7b-instruct
+                             meta-llama/codellama-34b-instruct
+                             codellama/codellama-70b-instruct
+                             google/palm-2-codechat-bison-32k
+                             google/gemini-pro))
+
+  (setq! gptel-model 'claude-3-5-sonnet-20241022)
+
   (setq! gptel-default-mode 'org-mode)
 
   (setq! gptel-prompt-prefix-alist
