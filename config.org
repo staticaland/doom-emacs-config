@@ -265,11 +265,13 @@ This configuration sets up [[https://github.com/karthink/gptel][GPTel]] as a ver
   :init
   (map! :leader
         (:prefix ("j" . "ai")
-                :desc "Open chat" "c" #'gptel
-                :desc "Add file/buffer to context" "a" #'gptel-add
-                :desc "Open menu" "m" #'gptel-menu
-                :desc "Submit prompt" "j" #'gptel-send
-                :desc "Submit prompt with prefix arg" "s" (cmd! (gptel-send t))))
+         :desc "Open chat" "c" #'gptel
+         :desc "Add file/buffer to context" "a" #'gptel-add
+         :desc "Rewrite/Refactor" "r" #'my/gptel-code-query
+         :desc "Send region to chat buffer" "l" #'my/gptel-send-region-to-chat
+         :desc "Open menu" "m" #'gptel-menu
+         :desc "Submit prompt" "j" #'gptel-send
+         :desc "Submit prompt with prefix arg" "s" (cmd! (gptel-send t))))
   :config
   (setq gptel-backend
         (gptel-make-anthropic "Claude"
@@ -296,6 +298,31 @@ This configuration sets up [[https://github.com/karthink/gptel][GPTel]] as a ver
 
   (setq! gptel-model 'claude-3-5-sonnet-20241022)
 
+  (defun my/gptel-code-query ()
+    "Query GPT about selected code with a custom instruction."
+    (interactive)
+    (let ((gptel--rewrite-message
+           (read-string "Rewrite instructions: ")))
+      (call-interactively #'gptel-rewrite)))
+  (defun my/gptel-send-region-to-chat ()
+    "Send the selected region to a gptel chat buffer as an org source block or blockquote."
+    (interactive)
+    (if (not (use-region-p))
+        (message "No region selected")
+      (let* ((region-text (buffer-substring-no-properties
+                          (region-beginning) (region-end)))
+            (is-code (derived-mode-p 'prog-mode))
+            (formatted-block (if is-code
+                                  (format "#+begin_src %s\n%s#+end_src\n\n"
+                                          (gptel--strip-mode-suffix major-mode)
+                                          region-text)
+                                (format "#+BEGIN_quote\n%s#+END_quote\n\n"
+                                        region-text)))
+            (gptel-buffer (gptel "*ChatGPT*")))
+        (with-current-buffer gptel-buffer
+          (goto-char (point-max))
+          (insert formatted-block)
+          (display-buffer (current-buffer))))))
   (setq! gptel-default-mode 'org-mode)
 
   (setq! gptel-prompt-prefix-alist

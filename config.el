@@ -95,9 +95,8 @@
 (add-hook! web-mode
   (prettier-on-save-mode))
 
-(use-package! auth-source
-  :no-require t
-  :config (setq! auth-sources '("~/.authinfo")))
+(after! auth-source
+  (setq! auth-sources '("~/.authinfo")))
 
 (use-package! gptel
   :defer t
@@ -106,21 +105,78 @@
         (:prefix ("j" . "ai")
          :desc "Open chat" "c" #'gptel
          :desc "Add file/buffer to context" "a" #'gptel-add
+         :desc "Rewrite/Refactor" "r" #'my/gptel-code-query
+         :desc "Send region to chat buffer" "l" #'my/gptel-send-region-to-chat
          :desc "Open menu" "m" #'gptel-menu
          :desc "Submit prompt" "j" #'gptel-send
          :desc "Submit prompt with prefix arg" "s" (cmd! (gptel-send t))))
   :config
+  (setq gptel-backend
+        (gptel-make-anthropic "Claude"
+                             :stream t
+                             :key #'gptel-api-key-from-auth-source))
+
+  (gptel-make-openai "OpenAI"
+                     :stream t
+                     :key #'gptel-api-key-from-auth-source)
+
+  (gptel-make-ollama "Ollama"
+                     :host "localhost:11434"
+                     :stream t
+                     :models '(mistral:latest codestral:latest))
+
+  (gptel-make-openai "OpenRouter"
+                     :host "openrouter.ai"
+                     :endpoint "/api/v1/chat/completions"
+                     :stream t
+                     :key #'gptel-api-key-from-auth-source
+                     :models '(google/gemini-flash-1.5
+                             mistralai/codestral-2501
+                             deepseek/deepseek-r1))
+
+  (setq! gptel-model 'claude-3-5-sonnet-20241022)
+
+  (defun my/gptel-code-query ()
+    "Query GPT about selected code with a custom instruction."
+    (interactive)
+    (let ((gptel--rewrite-message
+           (read-string "Rewrite instructions: ")))
+      (call-interactively #'gptel-rewrite)))
+  (defun my/gptel-send-region-to-chat ()
+    "Send the selected region to a gptel chat buffer as an org source block or blockquote."
+    (interactive)
+    (if (not (use-region-p))
+        (message "No region selected")
+      (let* ((region-text (buffer-substring-no-properties
+                          (region-beginning) (region-end)))
+            (is-code (derived-mode-p 'prog-mode))
+            (formatted-block (if is-code
+                                  (format "#+begin_src %s\n%s#+end_src\n\n"
+                                          (gptel--strip-mode-suffix major-mode)
+                                          region-text)
+                                (format "#+BEGIN_quote\n%s#+END_quote\n\n"
+                                        region-text)))
+            (gptel-buffer (gptel "*ChatGPT*")))
+        (with-current-buffer gptel-buffer
+          (goto-char (point-max))
+          (insert formatted-block)
+          (display-buffer (current-buffer))))))
   (setq! gptel-default-mode 'org-mode)
+
   (setq! gptel-prompt-prefix-alist
-      '((markdown-mode . "# Prompt\n\n")
-        (org-mode . "* Prompt\n\n")))
+         '((markdown-mode . "# Prompt\n\n")
+           (org-mode . "* Prompt\n\n")))
+
   (setq! gptel-response-prefix-alist
-      '((markdown-mode . "# Response**\n\n")
-        (org-mode . "* Response\n\n")))
+         '((markdown-mode . "# Response\n\n")
+           (org-mode . "* Response\n\n")))
+
   (add-hook! 'gptel-mode-hook
-    (when (eq major-mode 'org-mode)
-      (+org-pretty-mode 1)))
+             (when (eq major-mode 'org-mode)
+               (+org-pretty-mode 1)))
+
   (add-hook! 'gptel-post-response-functions 'gptel-end-of-response)
+
   (map! :map gptel-mode-map
         "C-c C-c" #'gptel-send))
 
@@ -129,15 +185,17 @@
   :config
   ;; Securely retrieve API keys from auth-source
   (let ((openai-key (auth-source-pick-first-password :host "api.openai.com" :user "apikey"))
-        (anthropic-key (auth-source-pick-first-password :host "api.anthropic.com" :user "apikey")))
+        (anthropic-key (auth-source-pick-first-password :host "api.anthropic.com" :user "apikey"))
+        (openrouter-key (auth-source-pick-first-password :host "openrouter.ai" :user "apikey")))
     ;; Set environment variables for API access
     (when openai-key
       (setenv "OPENAI_API_KEY" openai-key))
     (when anthropic-key
-      (setenv "ANTHROPIC_API_KEY" anthropic-key)))
-  
-  ;; Use the Sonnet model for improved code generation
-  (setq! aider-args '("--sonnet"))
+      (setenv "ANTHROPIC_API_KEY" anthropic-key))
+    (when openrouter-key
+      (setenv "OPENROUTER_API_KEY" openrouter-key)))
+
+  (setq aider-args '("--architect" "--model" "openrouter/deepseek/deepseek-r1" "--editor-model" "openrouter/anthropic/claude-3.5-sonnet"))
 
   ;; Disable company-mode in aider buffers to prevent interference
   (add-hook! 'comint-mode-hook
