@@ -237,6 +237,30 @@ I used this while making [[https://pkg.go.dev/html/template][Go HTTP templates]]
 
 ** Gptel
 
+This configuration sets up [[https://github.com/karthink/gptel][GPTel]] as a versatile AI chat interface with support for multiple providers. Key features:
+
+- =Auth-source= integration for secure API key management (stores credentials in ~~/.authinfo)
+- Multi-provider support including Anthropic Claude, OpenAI, OpenRouter, and local Ollama instances
+- Org-mode optimized interface with:
+  - Pretty formatting for responses
+  - Custom heading prefixes for prompts/responses
+  - Semantic cursor positioning after responses
+- Streamlined keybindings under ~SPC j~ prefix:
+  - ~SPC j c~: Launch chat interface
+  - ~SPC j j~: Send prompt
+  - ~SPC j a~: Add file context to conversation
+- Model configuration hierarchy:
+  - Default: Claude 3.5 Sonnet (via Anthropic)
+  - Alternatives: OpenAI models, OpenRouter's Gemini Flash/Codestral/Deepseek variants
+  - Local options: Ollama's Mistral and Codestral
+  
+The setup enables efficient prompting with:
+
+- Response streaming for real-time interaction
+- Context-aware formatting (Markdown/Org auto-detection)
+- Model-specific endpoint configurations
+- Enterprise-grade LLM access via OpenRouter
+
 #+begin_src elisp
 (after! auth-source
   (setq! auth-sources '("~/.authinfo")))
