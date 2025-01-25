@@ -328,6 +328,8 @@ Key configurations:
 
 Comint-mode is a general purpose mode for command interpreters. It's used by Aider for its interactive buffer, providing features like command history and input editing.
 
+[[https://aider.chat/2025/01/24/r1-sonnet.html][R1 as architect with Sonnet as editor has set a new SOTA of 64.0% on the aider polyglot benchmark.]]. It's also cheaper than using Sonnet alone (at least without OpenRouter).
+
 #+begin_src elisp
 (use-package! aider
   :after doom auth-source
