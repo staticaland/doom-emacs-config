@@ -253,13 +253,6 @@ This configuration sets up [[https://github.com/karthink/gptel][GPTel]] as a ver
   - Default: Claude 3.5 Sonnet (via Anthropic)
   - Alternatives: OpenAI models, OpenRouter's Gemini Flash/Codestral/Deepseek variants
   - Local options: Ollama's Mistral and Codestral
-  
-The setup enables efficient prompting with:
-
-- Response streaming for real-time interaction
-- Context-aware formatting (Markdown/Org auto-detection)
-- Model-specific endpoint configurations
-- Enterprise-grade LLM access via OpenRouter
 
 #+begin_src elisp
 (after! auth-source
