@@ -14,6 +14,13 @@
   :config
   (setq! mixed-pitch-set-height t))
 
+(use-package! ultra-scroll
+  :init
+  (setq scroll-conservatively 101
+        scroll-margin 0)
+  :config
+  (ultra-scroll-mode 1))
+
 (after! projectile
   (setq +workspaces-on-switch-project-behavior t)
 
