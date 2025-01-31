@@ -256,9 +256,9 @@
       ("n" "Next" smerge-next)
       ("p" "Previous" smerge-prev)]
      ["Keep"
-      ("u" "Your changes (on current branch) (upper)" smerge-keep-mine)
-      ("l" "Their changes (from incoming branch) (lower)" smerge-keep-other)
-      ("b" "Common ancestor (last shared commit) (base)" smerge-keep-base)
+      ("k" "Your changes (on current branch) (upper)" smerge-keep-upper)
+      ("h" "Common ancestor (last shared commit) (base)" smerge-keep-base)
+      ("j" "Their changes (from incoming branch) (lower)" smerge-keep-lower)
       ("a" "All versions combined" smerge-keep-all)
       ("RET" "Version at cursor position" smerge-keep-current)]
      ["Compare"
