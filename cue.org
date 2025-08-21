@@ -1,0 +1,8 @@
+* CUE
+
+[[https://cuelang.org/][CUE]].
+
+#+begin_src elisp
+(add-hook! cue-mode
+  (cuefmt-on-save-mode))
+#+end_src

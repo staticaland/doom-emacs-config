@@ -19,3 +19,25 @@
 (package! ox-gfm :pin "46faa67dbb3fb0cd7a76c3fe518f16e4195c22c7")
 
 (package! ultra-scroll :recipe (:host github :repo "jdtsmith/ultra-scroll") :pin "2e3b9997ae1a469e878feaa0af23a23685a0fbed")
+
+(package! eat
+  :recipe (:host codeberg
+       :repo "akib/emacs-eat"
+       :files ("*.el" ("term" "term/*.el") "*.texi"
+               "*.ti" ("terminfo/e" "terminfo/e/*")
+               ("terminfo/65" "terminfo/65/*")
+               ("integration" "integration/*")
+               (:exclude ".dir-locals.el" "*-tests.el"))))
+
+
+(package! claude-code
+  :recipe (:host github :repo "stevemolitor/claude-code.el"
+           :branch "main"
+           :files ("*.el" (:exclude "images/*"))))
+
+(package! ws-butler
+  :recipe (:host github
+           :repo "emacsmirror/nongnu_elpa"
+           :branch "elpa/ws-butler"
+           :local-repo "ws-butler")
+  :pin "9ee5a7657a22e836618813c2e2b64a548d27d2ff")

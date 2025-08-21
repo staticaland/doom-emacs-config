@@ -1,0 +1,14 @@
+* Web Mode
+
+I used this while making [[https://pkg.go.dev/html/template][Go HTTP templates]] while reading [[https://lets-go.alexedwards.net/][Let's Go]].
+
+#+begin_src elisp
+(use-package! web-mode
+  :mode (("\\.html$" . web-mode)
+         ("\\.tmpl\\'" . web-mode)))
+#+end_src
+
+#+begin_src elisp
+(add-hook! web-mode
+  (prettier-on-save-mode))
+#+end_src

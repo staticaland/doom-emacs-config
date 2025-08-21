@@ -1,0 +1,7 @@
+* Outline
+
+#+begin_src elisp
+(use-package! outline
+  :config
+  (setq outline-blank-line t))
+#+end_src

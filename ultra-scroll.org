@@ -1,0 +1,10 @@
+* Ultra scroll
+
+#+begin_src elisp
+(use-package! ultra-scroll
+  :init
+  (setq scroll-conservatively 101
+        scroll-margin 0)
+  :config
+  (ultra-scroll-mode 1))
+#+end_src

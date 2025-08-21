@@ -1,0 +1,31 @@
+* Ghostty
+
+#+begin_src elisp
+;;;###autoload
+(defun my/open-in-ghostty (&optional path)
+  "Open PATH in Ghostty. If PATH is nil, open the current directory."
+  (interactive)
+  (let* ((path (expand-file-name
+                (or path default-directory)))
+         (quoted-path (shell-quote-argument path))
+         (command (format "open -a Ghostty %s" quoted-path)))
+    (message "Running: %s" command)
+    (shell-command command)))
+
+;;;###autoload
+(defun my/open-current-dir-in-ghostty ()
+  "Open current directory in Ghostty."
+  (interactive)
+  (my/open-in-ghostty default-directory))
+
+;;;###autoload
+(defun my/open-project-in-ghostty ()
+  "Open project root directory in Ghostty."
+  (interactive)
+  (my/open-in-ghostty (doom-project-root default-directory)))
+
+(map! :leader
+      (:prefix ("o" . "open")
+       :desc "Open dir in Ghostty" "i" #'my/open-current-dir-in-ghostty
+       :desc "Open project in Ghostty" "I" #'my/open-project-in-ghostty))
+#+end_src

@@ -1,0 +1,8 @@
+* Terraform
+
+[[https://www.terraform.io/][Terraform]].
+
+#+begin_src elisp
+(add-hook! terraform-mode
+  (terraform-format-on-save-mode))
+#+end_src

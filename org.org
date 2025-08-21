@@ -1,0 +1,25 @@
+* Org
+
+[[https://orgmode.org/][Org Mode]].
+
+#+begin_src elisp
+(after! org
+  (setq org-imenu-depth 7)
+  (setq org-ellipsis " ▾ ")
+  (setq org-superstar-headline-bullets-list '("⁖"))
+  (setq org-babel-python-command "python3")
+  (setq org-cycle-separator-lines 1)
+  (setq org-edit-src-content-indentation 0)
+  (setq org-export-initial-scope 'subtree)
+  (setq org-image-actual-width 400)
+  (setq org-src-window-setup 'current-window)
+  (setq org-startup-indented t))
+#+end_src
+
+Add =ox-gfm= to make it possible to export Org Mode documents to GitHub
+Flavoured Markdown.
+
+#+begin_src elisp
+(use-package! ox-gfm
+  :after org)
+#+end_src

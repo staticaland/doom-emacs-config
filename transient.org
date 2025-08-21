@@ -1,0 +1,33 @@
+* Transient
+
+A transient menu for resolving Git conflicts using =smerge-mode=. See also [[https://www.youtube.com/watch?v=9S2pMZ6U5Tc][Prot's comparison of =smerge-mode= and =ediff=]].
+
+#+begin_src elisp
+(after! transient
+  (transient-define-prefix merge-conflict-menu ()
+    "Menu for resolving merge conflicts"
+    [["Movement"
+      ("n" "Next" smerge-next)
+      ("p" "Previous" smerge-prev)]
+     ["Keep"
+      ("k" "Your changes (on current branch) (upper)" smerge-keep-upper)
+      ("h" "Common ancestor (last shared commit) (base)" smerge-keep-base)
+      ("j" "Their changes (from incoming branch) (lower)" smerge-keep-lower)
+      ("a" "All versions combined" smerge-keep-all)
+      ("RET" "Version at cursor position" smerge-keep-current)]
+     ["Compare"
+      ("=" "Your changes vs their changes" smerge-diff-upper-lower)
+      ("<" "Common ancestor vs your changes" smerge-diff-base-upper)
+      (">" "Common ancestor vs their changes" smerge-diff-base-lower)]
+     ["Resolve"
+      ("r" "Auto-resolve if possible" smerge-resolve)
+      ("k" "Remove conflict markers" smerge-kill-current)]]))
+
+(map! :leader
+      (:prefix ("g" . "git")
+       :desc "Merge conflict menu" "d" #'merge-conflict-menu))
+#+end_src
+
+#+begin_src elisp
+(setq claude-code-terminal-backend 'vterm)
+#+end_src

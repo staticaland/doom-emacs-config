@@ -1,0 +1,826 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2025-08-21 Thu 15:50 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>&lrm;</title>
+<meta name="author" content="Anders K. Pettersen" />
+<meta name="generator" content="Org Mode" />
+<style type="text/css">
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+</head>
+<body>
+<div id="content" class="content">
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orgd0e28e1">1. Hugo</a></li>
+<li><a href="#orgaa017dc">2. Doom Emacs config</a>
+<ul>
+<li><a href="#orgf0429ff">2.1. Doom Emacs</a></li>
+<li><a href="#org2ea687f">2.2. Lexical binding</a></li>
+<li><a href="#org1f84dea">2.3. General</a></li>
+<li><a href="#org7aad210">2.4. Fonts</a></li>
+<li><a href="#org3828805">2.5. Ultra scroll</a></li>
+<li><a href="#orgac0fcca">2.6. Projectile</a></li>
+<li><a href="#org29ba87a">2.7. Dired file explorer</a></li>
+<li><a href="#org9b784a5">2.8. CUE</a></li>
+<li><a href="#org8162e0f">2.9. Go</a></li>
+<li><a href="#org324bebb">2.10. Terraform</a></li>
+<li><a href="#org953c22f">2.11. Org</a></li>
+<li><a href="#org602a2a3">2.12. Treemacs file tree</a></li>
+<li><a href="#org6b9427a">2.13. Outline</a></li>
+<li><a href="#org2e29e8f">2.14. Occur</a></li>
+<li><a href="#orge90f447">2.15. JSON schema</a></li>
+<li><a href="#org709c4bb">2.16. Web Mode</a></li>
+<li><a href="#org8d7c402">2.17. Aider</a></li>
+<li><a href="#orgfad07a2">2.18. Copilot</a></li>
+<li><a href="#orge85c082">2.19. Makefile</a></li>
+<li><a href="#org84ff0c6">2.20. Ghostty</a></li>
+<li><a href="#orgf744df3">2.21. Transient</a></li>
+<li><a href="#orgf88433e">2.22. Gptel</a></li>
+<li><a href="#org84467c0">2.23. Various</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgd0e28e1" class="outline-2">
+<h2 id="orgd0e28e1"><span class="section-number-2">1.</span> Hugo</h2>
+<div class="outline-text-2" id="text-1">
+<ul class="org-ul">
+<li>If <code>HUGO_SECTION</code> is <code>blog</code> then the file is placed in
+<code>&lt;HUGO_BASE_DIR&gt;/content/blog</code>.</li>
+<li>If <code>HUGO_SECTION</code> is <code>./</code> then the file is placed in
+<code>&lt;HUGO_BASE_DIR&gt;/content/</code></li>
+<li>If <code>HUGO_SECTION</code> is unset then the file is placed in
+<code>&lt;HUGO_BASE_DIR&gt;/content/posts/</code>.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgaa017dc" class="outline-2">
+<h2 id="orgaa017dc"><span class="section-number-2">2.</span> Doom Emacs config</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+<div id="outline-container-orgf0429ff" class="outline-3">
+<h3 id="orgf0429ff"><span class="section-number-3">2.1.</span> Doom Emacs</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+This is my <a href="https://github.com/doomemacs/doomemacs">Doom Emacs</a> configuration (<a href="https://github.com/staticaland/doom-emacs-config">source</a>).
+</p>
+</div>
+</div>
+<div id="outline-container-org2ea687f" class="outline-3">
+<h3 id="org2ea687f"><span class="section-number-3">2.2.</span> Lexical binding</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+Make this file run (slightly) faster with lexical binding (see <a href="https://nullprogram.com/blog/2016/12/22/">this blog post</a> for more info).
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #5B6268;">;;; </span><span style="color: #5B6268;">config.el -*- lexical-binding: t; -*-</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org1f84dea" class="outline-3">
+<h3 id="org1f84dea"><span class="section-number-3">2.3.</span> General</h3>
+<div class="outline-text-3" id="text-2-3">
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #dcaeea;">user-full-name</span> <span style="color: #98be65;">"Anders K. Pettersen"</span>
+      <span style="color: #dcaeea;">user-mail-address</span> <span style="color: #98be65;">"staticaland@users.noreply.github.com"</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org7aad210" class="outline-3">
+<h3 id="org7aad210"><span class="section-number-3">2.4.</span> Fonts</h3>
+<div class="outline-text-3" id="text-2-4">
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq!</span> <span style="color: #dcaeea;">doom-font</span> <span style="color: #c678dd;">(</span><span style="color: #a9a1e1;">font-spec</span> <span style="color: #c678dd;">:family</span> <span style="color: #98be65;">"RobotoMono Nerd Font Mono"</span> <span style="color: #c678dd;">:size</span> <span style="color: #da8548; font-weight: bold;">15</span><span style="color: #c678dd;">)</span>
+       <span style="color: #dcaeea;">doom-variable-pitch-font</span> <span style="color: #c678dd;">(</span><span style="color: #a9a1e1;">font-spec</span> <span style="color: #c678dd;">:family</span> <span style="color: #98be65;">"EB Garamond"</span> <span style="color: #c678dd;">:size</span> <span style="color: #da8548; font-weight: bold;">20</span><span style="color: #c678dd;">)</span>
+       <span style="color: #dcaeea;">doom-big-font</span> <span style="color: #c678dd;">(</span><span style="color: #a9a1e1;">font-spec</span> <span style="color: #c678dd;">:family</span> <span style="color: #98be65;">"RobotoMono Nerd Font Mono"</span> <span style="color: #c678dd;">:size</span> <span style="color: #da8548; font-weight: bold;">18</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+
+<p>
+To install the fonts:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">brew tap homebrew/cask-fonts
+brew install --cask font-eb-garamond
+brew install --cask font-meslo-lg-nerd-font
+brew install --cask font-roboto-mono-nerd-font
+</pre>
+</div>
+
+<p>
+Mixed pitch to display prose in EB Garamond font and code in Roboto Mono font.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">use-package!</span> mixed-pitch
+  <span style="color: #c678dd;">:hook</span>
+  <span style="color: #c678dd;">(</span><span style="color: #c678dd;">org-mode</span> . <span style="color: #dcaeea;">mixed-pitch-mode</span><span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">(</span><span style="color: #c678dd;">markdown-mode</span> . <span style="color: #dcaeea;">mixed-pitch-mode</span><span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">:config</span>
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">setq!</span> <span style="color: #dcaeea;">mixed-pitch-set-height</span> t<span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+
+<p>
+The mixed fonts look ridiculous in most markdown README files, so I&rsquo;ll have to fix that.
+</p>
+</div>
+</div>
+<div id="outline-container-org3828805" class="outline-3">
+<h3 id="org3828805"><span class="section-number-3">2.5.</span> Ultra scroll</h3>
+<div class="outline-text-3" id="text-2-5">
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">use-package!</span> ultra-scroll
+  <span style="color: #c678dd;">:init</span>
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">setq</span> <span style="color: #dcaeea;">scroll-conservatively</span> <span style="color: #da8548; font-weight: bold;">101</span>
+        <span style="color: #dcaeea;">scroll-margin</span> <span style="color: #da8548; font-weight: bold;">0</span><span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">:config</span>
+  <span style="color: #c678dd;">(</span><span style="color: #dcaeea;">ultra-scroll-mode</span> <span style="color: #da8548; font-weight: bold;">1</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgac0fcca" class="outline-3">
+<h3 id="orgac0fcca"><span class="section-number-3">2.6.</span> Projectile</h3>
+<div class="outline-text-3" id="text-2-6">
+<p>
+Key configurations:
+</p>
+
+<ul class="org-ul">
+<li>Enable workspace switching when changing projects</li>
+<li>Define ignored projects</li>
+<li>Custom function for project ignoring</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> projectile
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">setq</span> <span style="color: #dcaeea;">+workspaces-on-switch-project-behavior</span> t<span style="color: #c678dd;">)</span>
+
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">setq</span> <span style="color: #dcaeea;">projectile-ignored-projects</span> <span style="color: #51afef;">'</span><span style="color: #98be65;">(</span><span style="color: #98be65;">"~/"</span> <span style="color: #98be65;">"/tmp"</span> <span style="color: #98be65;">"~/.emacs.d/.local/straight/repos/"</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span>
+
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">defun</span> <span style="color: #dcaeea;">projectile-ignored-project-function</span> <span style="color: #98be65;">(</span>filepath<span style="color: #98be65;">)</span>
+    <span style="color: #83898d;">"Return t if FILEPATH is within any of `</span><span style="color: #a9a1e1;">projectile-ignored-projects</span><span style="color: #83898d;">'"</span>
+    <span style="color: #98be65;">(</span><span style="color: #c678dd;">cl-some</span> <span style="color: #a9a1e1;">(</span><span style="color: #51afef;">lambda</span> <span style="color: #51afef;">(</span>p<span style="color: #51afef;">)</span> <span style="color: #51afef;">(</span><span style="color: #c678dd;">s-starts-with-p</span> p filepath<span style="color: #51afef;">)</span><span style="color: #a9a1e1;">)</span> <span style="color: #dcaeea;">projectile-ignored-projects</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org29ba87a" class="outline-3">
+<h3 id="org29ba87a"><span class="section-number-3">2.7.</span> Dired file explorer</h3>
+<div class="outline-text-3" id="text-2-7">
+<p>
+Key configurations:
+</p>
+
+<ul class="org-ul">
+<li>Set directory listing options</li>
+<li>Enable detail hiding and line highlighting</li>
+<li>Configure file operations behavior</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> dired
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">setq</span> ls-lisp-dirs-first t<span style="color: #c678dd;">)</span>
+
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">setq</span> <span style="color: #dcaeea;">dired-listing-switches</span>
+        <span style="color: #98be65;">(</span><span style="color: #51afef;">if</span> <span style="color: #a9a1e1;">(</span><span style="color: #c678dd;">executable-find</span> <span style="color: #98be65;">"gls"</span><span style="color: #a9a1e1;">)</span>
+            <span style="color: #98be65;">"-lFaGh1vt --group-directories-first"</span>  <span style="color: #5B6268;">; </span><span style="color: #5B6268;">gls version with all features</span>
+            <span style="color: #98be65;">"-lathlF"</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span>                            <span style="color: #5B6268;">; </span><span style="color: #5B6268;">standard ls version with all features</span>
+
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">add-hook!</span> <span style="color: #51afef;">'</span><span style="color: #dcaeea;">dired-mode-hook</span> <span style="color: #51afef;">'</span><span style="color: #dcaeea;">dired-hide-details-mode</span><span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">add-hook!</span> <span style="color: #51afef;">'</span><span style="color: #dcaeea;">dired-mode-hook</span> <span style="color: #51afef;">'</span><span style="color: #dcaeea;">hl-line-mode</span><span style="color: #c678dd;">)</span>
+
+  <span style="color: #c678dd;">(</span><span style="color: #a9a1e1;">put</span> <span style="color: #51afef;">'</span><span style="color: #ECBE7B;">dired-find-alternate-file</span> <span style="color: #51afef;">'</span><span style="color: #ECBE7B;">disabled</span> nil<span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">setq</span> <span style="color: #dcaeea;">delete-by-moving-to-trash</span> t<span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">setq</span> <span style="color: #dcaeea;">dired-dwim-target</span> t<span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">setq</span> <span style="color: #dcaeea;">dired-recursive-copies</span> <span style="color: #98be65;">(</span><span style="color: #51afef;">quote</span> always<span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">setq</span> <span style="color: #dcaeea;">dired-recursive-deletes</span> <span style="color: #98be65;">(</span><span style="color: #51afef;">quote</span> top<span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org9b784a5" class="outline-3">
+<h3 id="org9b784a5"><span class="section-number-3">2.8.</span> CUE</h3>
+<div class="outline-text-3" id="text-2-8">
+<p>
+<a href="https://cuelang.org/">CUE</a>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">add-hook!</span> cue-mode
+  <span style="color: #c678dd;">(</span><span style="color: #dcaeea;">cuefmt-on-save-mode</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org8162e0f" class="outline-3">
+<h3 id="org8162e0f"><span class="section-number-3">2.9.</span> Go</h3>
+<div class="outline-text-3" id="text-2-9">
+<p>
+<a href="https://go.dev/">Go</a>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">add-hook!</span> go-mode
+  <span style="color: #c678dd;">(</span><span style="color: #dcaeea;">gofmt-on-save-mode</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org324bebb" class="outline-3">
+<h3 id="org324bebb"><span class="section-number-3">2.10.</span> Terraform</h3>
+<div class="outline-text-3" id="text-2-10">
+<p>
+<a href="https://www.terraform.io/">Terraform</a>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">add-hook!</span> terraform-mode
+  <span style="color: #c678dd;">(</span><span style="color: #dcaeea;">terraform-format-on-save-mode</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org953c22f" class="outline-3">
+<h3 id="org953c22f"><span class="section-number-3">2.11.</span> Org</h3>
+<div class="outline-text-3" id="text-2-11">
+<p>
+<a href="https://orgmode.org/">Org Mode</a>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> org
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">setq</span> <span style="color: #dcaeea;">org-imenu-depth</span> <span style="color: #da8548; font-weight: bold;">7</span><span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">setq</span> <span style="color: #dcaeea;">org-ellipsis</span> <span style="color: #98be65;">" &#9662; "</span><span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">setq</span> <span style="color: #dcaeea;">org-superstar-headline-bullets-list</span> <span style="color: #51afef;">'</span><span style="color: #98be65;">(</span><span style="color: #98be65;">"&#8278;"</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">setq</span> <span style="color: #dcaeea;">org-babel-python-command</span> <span style="color: #98be65;">"python3"</span><span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">setq</span> <span style="color: #dcaeea;">org-cycle-separator-lines</span> <span style="color: #da8548; font-weight: bold;">1</span><span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">setq</span> <span style="color: #dcaeea;">org-edit-src-content-indentation</span> <span style="color: #da8548; font-weight: bold;">0</span><span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">setq</span> <span style="color: #dcaeea;">org-export-initial-scope</span> <span style="color: #51afef;">'</span><span style="color: #ECBE7B;">subtree</span><span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">setq</span> <span style="color: #dcaeea;">org-image-actual-width</span> <span style="color: #da8548; font-weight: bold;">400</span><span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">setq</span> <span style="color: #dcaeea;">org-src-window-setup</span> <span style="color: #51afef;">'</span><span style="color: #ECBE7B;">current-window</span><span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">setq</span> <span style="color: #dcaeea;">org-startup-indented</span> t<span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+
+<p>
+Add <code>ox-gfm</code> to make it possible to export Org Mode documents to GitHub
+Flavoured Markdown.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">use-package!</span> ox-gfm
+  <span style="color: #c678dd;">:after</span> org<span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org602a2a3" class="outline-3">
+<h3 id="org602a2a3"><span class="section-number-3">2.12.</span> Treemacs file tree</h3>
+<div class="outline-text-3" id="text-2-12">
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">use-package!</span> treemacs
+  <span style="color: #c678dd;">:commands</span> treemacs
+  <span style="color: #c678dd;">:init</span>
+    <span style="color: #c678dd;">(</span><span style="color: #51afef;">map!</span> <span style="color: #c678dd;">:leader</span>
+      <span style="color: #98be65;">(</span><span style="color: #c678dd;">:prefix</span> <span style="color: #a9a1e1;">(</span><span style="color: #98be65;">"f"</span> . <span style="color: #98be65;">"file"</span><span style="color: #a9a1e1;">)</span>
+        <span style="color: #c678dd;">:desc</span> <span style="color: #98be65;">"Open Treemacs"</span> <span style="color: #98be65;">"t"</span> <span style="color: #51afef;">#'</span><span style="color: #ECBE7B;">+treemacs/toggle</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">:config</span>
+  <span style="color: #c678dd;">(</span><span style="color: #dcaeea;">treemacs-git-mode</span> <span style="color: #51afef;">'</span><span style="color: #ECBE7B;">extended</span><span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">setq</span> <span style="color: #dcaeea;">treemacs-is-never-other-window</span> nil<span style="color: #c678dd;">)</span>
+    <span style="color: #c678dd;">(</span><span style="color: #c678dd;">add-to-list</span> <span style="color: #51afef;">'</span><span style="color: #dcaeea;">treemacs-pre-file-insert-predicates</span> <span style="color: #51afef;">#'</span><span style="color: #ECBE7B;">treemacs-is-file-git-ignored?</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org6b9427a" class="outline-3">
+<h3 id="org6b9427a"><span class="section-number-3">2.13.</span> Outline</h3>
+<div class="outline-text-3" id="text-2-13">
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">use-package!</span> outline
+  <span style="color: #c678dd;">:config</span>
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">setq</span> <span style="color: #dcaeea;">outline-blank-line</span> t<span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org2e29e8f" class="outline-3">
+<h3 id="org2e29e8f"><span class="section-number-3">2.14.</span> Occur</h3>
+<div class="outline-text-3" id="text-2-14">
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">use-package!</span> replace
+  <span style="color: #c678dd;">:init</span>
+    <span style="color: #c678dd;">(</span><span style="color: #51afef;">map!</span> <span style="color: #c678dd;">:map</span> <span style="color: #dcaeea;">occur-mode-map</span>
+      <span style="color: #c678dd;">:n</span>  <span style="color: #98be65;">"e"</span> <span style="color: #51afef;">'</span><span style="color: #ECBE7B;">occur-edit-mode</span><span style="color: #c678dd;">)</span>
+
+  <span style="color: #c678dd;">(</span><span style="color: #c678dd;">add-hook</span> <span style="color: #51afef;">'</span><span style="color: #dcaeea;">occur-hook</span>
+          <span style="color: #51afef;">'</span><span style="color: #98be65;">(</span>lambda <span style="color: #a9a1e1;">()</span>
+             <span style="color: #a9a1e1;">(</span><span style="color: #c678dd;">switch-to-buffer-other-window</span> <span style="color: #98be65;">"*Occur*"</span><span style="color: #a9a1e1;">)</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orge90f447" class="outline-3">
+<h3 id="orge90f447"><span class="section-number-3">2.15.</span> JSON schema</h3>
+<div class="outline-text-3" id="text-2-15">
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> <span style="color: #dcaeea;">lsp-mode</span>
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">setq</span> <span style="color: #dcaeea;">lsp-yaml-schemas</span> <span style="color: #98be65;">(</span><span style="color: #a9a1e1;">make-hash-table</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">(</span><span style="color: #a9a1e1;">puthash</span> <span style="color: #98be65;">"https://ecs-intellisense.s3-us-west-2.amazonaws.com/task-definition/schema.json"</span> <span style="color: #98be65;">[</span><span style="color: #98be65;">"*ecs-task-def.json"</span> <span style="color: #98be65;">"task-definition.json"</span><span style="color: #98be65;">]</span> <span style="color: #dcaeea;">lsp-yaml-schemas</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org709c4bb" class="outline-3">
+<h3 id="org709c4bb"><span class="section-number-3">2.16.</span> Web Mode</h3>
+<div class="outline-text-3" id="text-2-16">
+<p>
+I used this while making <a href="https://pkg.go.dev/html/template">Go HTTP templates</a> while reading <a href="https://lets-go.alexedwards.net/">Let&rsquo;s Go</a>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">use-package!</span> web-mode
+  <span style="color: #c678dd;">:mode</span> <span style="color: #c678dd;">(</span><span style="color: #98be65;">(</span><span style="color: #98be65;">"\\.html$"</span> . web-mode<span style="color: #98be65;">)</span>
+         <span style="color: #98be65;">(</span><span style="color: #98be65;">"\\.tmpl\\'"</span> . web-mode<span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">add-hook!</span> web-mode
+  <span style="color: #c678dd;">(</span><span style="color: #dcaeea;">prettier-on-save-mode</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org8d7c402" class="outline-3">
+<h3 id="org8d7c402"><span class="section-number-3">2.17.</span> Aider</h3>
+<div class="outline-text-3" id="text-2-17">
+<p>
+Key configurations:
+</p>
+
+<ul class="org-ul">
+<li>Securely retrieve API keys from auth-source</li>
+<li>Set environment variables for OpenAI and Anthropic</li>
+<li>Configure Aider to use the Sonnet model</li>
+<li>Disable company-mode in Aider buffers for better interaction</li>
+</ul>
+
+<p>
+Comint-mode is a general purpose mode for command interpreters. It&rsquo;s used by Aider for its interactive buffer, providing features like command history and input editing.
+</p>
+
+<p>
+<a href="https://aider.chat/2025/01/24/r1-sonnet.html">R1 as architect with Sonnet as editor has set a new SOTA of 64.0% on the aider polyglot benchmark</a>. It&rsquo;s also cheaper than using Sonnet alone (at least without OpenRouter).
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">use-package!</span> aider
+  <span style="color: #c678dd;">:after</span> doom auth-source
+  <span style="color: #c678dd;">:config</span>
+  <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">Securely retrieve API keys from auth-source</span>
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">let</span> <span style="color: #98be65;">(</span><span style="color: #a9a1e1;">(</span>openai-key <span style="color: #51afef;">(</span><span style="color: #c678dd;">auth-source-pick-first-password</span> <span style="color: #c678dd;">:host</span> <span style="color: #98be65;">"api.openai.com"</span> <span style="color: #c678dd;">:user</span> <span style="color: #98be65;">"apikey"</span><span style="color: #51afef;">)</span><span style="color: #a9a1e1;">)</span>
+        <span style="color: #a9a1e1;">(</span>anthropic-key <span style="color: #51afef;">(</span><span style="color: #c678dd;">auth-source-pick-first-password</span> <span style="color: #c678dd;">:host</span> <span style="color: #98be65;">"api.anthropic.com"</span> <span style="color: #c678dd;">:user</span> <span style="color: #98be65;">"apikey"</span><span style="color: #51afef;">)</span><span style="color: #a9a1e1;">)</span>
+        <span style="color: #a9a1e1;">(</span>openrouter-key <span style="color: #51afef;">(</span><span style="color: #c678dd;">auth-source-pick-first-password</span> <span style="color: #c678dd;">:host</span> <span style="color: #98be65;">"openrouter.ai"</span> <span style="color: #c678dd;">:user</span> <span style="color: #98be65;">"apikey"</span><span style="color: #51afef;">)</span><span style="color: #a9a1e1;">)</span><span style="color: #98be65;">)</span>
+    <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">Set environment variables for API access</span>
+    <span style="color: #98be65;">(</span><span style="color: #51afef;">when</span> openai-key
+      <span style="color: #a9a1e1;">(</span><span style="color: #c678dd;">setenv</span> <span style="color: #98be65;">"OPENAI_API_KEY"</span> openai-key<span style="color: #a9a1e1;">)</span><span style="color: #98be65;">)</span>
+    <span style="color: #98be65;">(</span><span style="color: #51afef;">when</span> anthropic-key
+      <span style="color: #a9a1e1;">(</span><span style="color: #c678dd;">setenv</span> <span style="color: #98be65;">"ANTHROPIC_API_KEY"</span> anthropic-key<span style="color: #a9a1e1;">)</span><span style="color: #98be65;">)</span>
+    <span style="color: #98be65;">(</span><span style="color: #51afef;">when</span> openrouter-key
+      <span style="color: #a9a1e1;">(</span><span style="color: #c678dd;">setenv</span> <span style="color: #98be65;">"OPENROUTER_API_KEY"</span> openrouter-key<span style="color: #a9a1e1;">)</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span>
+
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">setq</span> aider-args <span style="color: #51afef;">'</span><span style="color: #98be65;">(</span><span style="color: #98be65;">"--architect"</span> <span style="color: #98be65;">"--model"</span> <span style="color: #98be65;">"openrouter/deepseek/deepseek-r1"</span> <span style="color: #98be65;">"--editor-model"</span> <span style="color: #98be65;">"openrouter/anthropic/claude-3.5-sonnet"</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span>
+
+  <span style="color: #5B6268;">;; </span><span style="color: #5B6268;">Disable company-mode in aider buffers to prevent interference</span>
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">add-hook!</span> <span style="color: #51afef;">'</span><span style="color: #dcaeea;">comint-mode-hook</span>
+    <span style="color: #98be65;">(</span><span style="color: #51afef;">defun</span> <span style="color: #c678dd;">+aider-disable-company-h</span> <span style="color: #a9a1e1;">()</span>
+      <span style="color: #a9a1e1;">(</span><span style="color: #51afef;">when</span> <span style="color: #51afef;">(</span><span style="color: #c678dd;">string-match-p</span> <span style="color: #98be65;">"\\*aider:"</span> <span style="color: #c678dd;">(</span><span style="color: #a9a1e1;">buffer-name</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+        <span style="color: #51afef;">(</span><span style="color: #dcaeea;">company-mode</span> <span style="color: #da8548; font-weight: bold;">-1</span><span style="color: #51afef;">)</span><span style="color: #a9a1e1;">)</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgfad07a2" class="outline-3">
+<h3 id="orgfad07a2"><span class="section-number-3">2.18.</span> Copilot</h3>
+<div class="outline-text-3" id="text-2-18">
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">use-package!</span> copilot
+  <span style="color: #c678dd;">:hook</span> <span style="color: #c678dd;">(</span><span style="color: #c678dd;">prog-mode</span> . <span style="color: #dcaeea;">copilot-mode</span><span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">:bind</span> <span style="color: #c678dd;">(</span><span style="color: #c678dd;">:map</span> <span style="color: #dcaeea;">copilot-completion-map</span>
+              <span style="color: #98be65;">(</span><span style="color: #98be65;">"&lt;tab&gt;"</span> . <span style="color: #51afef;">'</span><span style="color: #ECBE7B;">copilot-accept-completion</span><span style="color: #98be65;">)</span>
+              <span style="color: #98be65;">(</span><span style="color: #98be65;">"TAB"</span> . <span style="color: #51afef;">'</span><span style="color: #ECBE7B;">copilot-accept-completion</span><span style="color: #98be65;">)</span>
+              <span style="color: #98be65;">(</span><span style="color: #98be65;">"C-TAB"</span> . <span style="color: #51afef;">'</span><span style="color: #ECBE7B;">copilot-accept-completion-by-word</span><span style="color: #98be65;">)</span>
+              <span style="color: #98be65;">(</span><span style="color: #98be65;">"C-&lt;tab&gt;"</span> . <span style="color: #51afef;">'</span><span style="color: #ECBE7B;">copilot-accept-completion-by-word</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orge85c082" class="outline-3">
+<h3 id="orge85c082"><span class="section-number-3">2.19.</span> Makefile</h3>
+<div class="outline-text-3" id="text-2-19">
+<p>
+Makefiles require TAB characters for recipe lines (commands under targets) - spaces will cause a &ldquo;missing separator&rdquo; error.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-text">Makefile:2: *** missing separator.  Stop.
+</pre>
+</div>
+
+<p>
+Force tabs to avoid error:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> makefile-mode
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">setq-hook!</span> <span style="color: #51afef;">'</span><span style="color: #ECBE7B;">makefile-mode-hook</span> <span style="color: #dcaeea;">indent-tabs-mode</span> t<span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org84ff0c6" class="outline-3">
+<h3 id="org84ff0c6"><span class="section-number-3">2.20.</span> Ghostty</h3>
+<div class="outline-text-3" id="text-2-20">
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #5B6268;">;;;</span><span style="color: #5B6268;">###</span><span style="color: #ECBE7B;">autoload</span>
+<span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #c678dd;">my/open-in-ghostty</span> <span style="color: #c678dd;">(</span><span style="color: #ECBE7B;">&amp;optional</span> path<span style="color: #c678dd;">)</span>
+  <span style="color: #83898d;">"Open PATH in Ghostty. If PATH is nil, open the current directory."</span>
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">interactive</span><span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">let*</span> <span style="color: #98be65;">(</span><span style="color: #a9a1e1;">(</span>path <span style="color: #51afef;">(</span><span style="color: #a9a1e1;">expand-file-name</span>
+                <span style="color: #c678dd;">(</span><span style="color: #51afef;">or</span> path <span style="color: #dcaeea;">default-directory</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span><span style="color: #a9a1e1;">)</span>
+         <span style="color: #a9a1e1;">(</span>quoted-path <span style="color: #51afef;">(</span><span style="color: #c678dd;">shell-quote-argument</span> path<span style="color: #51afef;">)</span><span style="color: #a9a1e1;">)</span>
+         <span style="color: #a9a1e1;">(</span>command <span style="color: #51afef;">(</span><span style="color: #a9a1e1;">format</span> <span style="color: #98be65;">"open -a Ghostty %s"</span> quoted-path<span style="color: #51afef;">)</span><span style="color: #a9a1e1;">)</span><span style="color: #98be65;">)</span>
+    <span style="color: #98be65;">(</span><span style="color: #a9a1e1;">message</span> <span style="color: #98be65;">"Running: %s"</span> command<span style="color: #98be65;">)</span>
+    <span style="color: #98be65;">(</span><span style="color: #c678dd;">shell-command</span> command<span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+
+<span style="color: #5B6268;">;;;</span><span style="color: #5B6268;">###</span><span style="color: #ECBE7B;">autoload</span>
+<span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #c678dd;">my/open-current-dir-in-ghostty</span> <span style="color: #c678dd;">()</span>
+  <span style="color: #83898d;">"Open current directory in Ghostty."</span>
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">interactive</span><span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">(</span><span style="color: #c678dd;">my/open-in-ghostty</span> <span style="color: #dcaeea;">default-directory</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+
+<span style="color: #5B6268;">;;;</span><span style="color: #5B6268;">###</span><span style="color: #ECBE7B;">autoload</span>
+<span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #c678dd;">my/open-project-in-ghostty</span> <span style="color: #c678dd;">()</span>
+  <span style="color: #83898d;">"Open project root directory in Ghostty."</span>
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">interactive</span><span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">(</span><span style="color: #c678dd;">my/open-in-ghostty</span> <span style="color: #98be65;">(</span><span style="color: #c678dd;">doom-project-root</span> <span style="color: #dcaeea;">default-directory</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+
+<span style="color: #51afef;">(</span><span style="color: #51afef;">map!</span> <span style="color: #c678dd;">:leader</span>
+      <span style="color: #c678dd;">(</span><span style="color: #c678dd;">:prefix</span> <span style="color: #98be65;">(</span><span style="color: #98be65;">"o"</span> . <span style="color: #98be65;">"open"</span><span style="color: #98be65;">)</span>
+       <span style="color: #c678dd;">:desc</span> <span style="color: #98be65;">"Open dir in Ghostty"</span> <span style="color: #98be65;">"i"</span> <span style="color: #51afef;">#'</span><span style="color: #ECBE7B;">my/open-current-dir-in-ghostty</span>
+       <span style="color: #c678dd;">:desc</span> <span style="color: #98be65;">"Open project in Ghostty"</span> <span style="color: #98be65;">"I"</span> <span style="color: #51afef;">#'</span><span style="color: #ECBE7B;">my/open-project-in-ghostty</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgf744df3" class="outline-3">
+<h3 id="orgf744df3"><span class="section-number-3">2.21.</span> Transient</h3>
+<div class="outline-text-3" id="text-2-21">
+<p>
+A transient menu for resolving Git conflicts using <code>smerge-mode</code>. See also <a href="https://www.youtube.com/watch?v=9S2pMZ6U5Tc">Prot&rsquo;s comparison of <code>smerge-mode</code> and <code>ediff</code></a>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> transient
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">transient-define-prefix</span> <span style="color: #c678dd;">merge-conflict-menu</span> <span style="color: #98be65;">()</span>
+    <span style="color: #83898d;">"Menu for resolving merge conflicts"</span>
+    <span style="color: #98be65;">[</span><span style="color: #a9a1e1;">[</span><span style="color: #98be65;">"Movement"</span>
+      <span style="color: #51afef;">(</span><span style="color: #98be65;">"n"</span> <span style="color: #98be65;">"Next"</span> smerge-next<span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #98be65;">"p"</span> <span style="color: #98be65;">"Previous"</span> smerge-prev<span style="color: #51afef;">)</span><span style="color: #a9a1e1;">]</span>
+     <span style="color: #a9a1e1;">[</span><span style="color: #98be65;">"Keep"</span>
+      <span style="color: #51afef;">(</span><span style="color: #98be65;">"k"</span> <span style="color: #98be65;">"Your changes (on current branch) (upper)"</span> smerge-keep-upper<span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #98be65;">"h"</span> <span style="color: #98be65;">"Common ancestor (last shared commit) (base)"</span> smerge-keep-base<span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #98be65;">"j"</span> <span style="color: #98be65;">"Their changes (from incoming branch) (lower)"</span> smerge-keep-lower<span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #98be65;">"a"</span> <span style="color: #98be65;">"All versions combined"</span> smerge-keep-all<span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #98be65;">"RET"</span> <span style="color: #98be65;">"Version at cursor position"</span> smerge-keep-current<span style="color: #51afef;">)</span><span style="color: #a9a1e1;">]</span>
+     <span style="color: #a9a1e1;">[</span><span style="color: #98be65;">"Compare"</span>
+      <span style="color: #51afef;">(</span><span style="color: #98be65;">"="</span> <span style="color: #98be65;">"Your changes vs their changes"</span> smerge-diff-upper-lower<span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #98be65;">"&lt;"</span> <span style="color: #98be65;">"Common ancestor vs your changes"</span> smerge-diff-base-upper<span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #98be65;">"&gt;"</span> <span style="color: #98be65;">"Common ancestor vs their changes"</span> smerge-diff-base-lower<span style="color: #51afef;">)</span><span style="color: #a9a1e1;">]</span>
+     <span style="color: #a9a1e1;">[</span><span style="color: #98be65;">"Resolve"</span>
+      <span style="color: #51afef;">(</span><span style="color: #98be65;">"r"</span> <span style="color: #98be65;">"Auto-resolve if possible"</span> smerge-resolve<span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #98be65;">"k"</span> <span style="color: #98be65;">"Remove conflict markers"</span> smerge-kill-current<span style="color: #51afef;">)</span><span style="color: #a9a1e1;">]</span><span style="color: #98be65;">]</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+
+<span style="color: #51afef;">(</span><span style="color: #51afef;">map!</span> <span style="color: #c678dd;">:leader</span>
+      <span style="color: #c678dd;">(</span><span style="color: #c678dd;">:prefix</span> <span style="color: #98be65;">(</span><span style="color: #98be65;">"g"</span> . <span style="color: #98be65;">"git"</span><span style="color: #98be65;">)</span>
+       <span style="color: #c678dd;">:desc</span> <span style="color: #98be65;">"Merge conflict menu"</span> <span style="color: #98be65;">"d"</span> <span style="color: #51afef;">#'</span><span style="color: #ECBE7B;">merge-conflict-menu</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #dcaeea;">claude-code-terminal-backend</span> <span style="color: #51afef;">'</span><span style="color: #ECBE7B;">vterm</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgf88433e" class="outline-3">
+<h3 id="orgf88433e"><span class="section-number-3">2.22.</span> Gptel</h3>
+<div class="outline-text-3" id="text-2-22">
+<p>
+This configuration sets up <a href="https://github.com/karthink/gptel">GPTel</a> as a versatile AI chat interface with support for multiple providers.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> auth-source
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">setq!</span> <span style="color: #dcaeea;">auth-sources</span> <span style="color: #51afef;">'</span><span style="color: #98be65;">(</span><span style="color: #98be65;">"~/.authinfo"</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">use-package!</span> gptel
+  <span style="color: #c678dd;">:defer</span> t
+  <span style="color: #c678dd;">:init</span>
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">map!</span> <span style="color: #c678dd;">:leader</span>
+        <span style="color: #98be65;">(</span><span style="color: #c678dd;">:prefix</span> <span style="color: #a9a1e1;">(</span><span style="color: #98be65;">"j"</span> . <span style="color: #98be65;">"ai"</span><span style="color: #a9a1e1;">)</span>
+         <span style="color: #c678dd;">:desc</span> <span style="color: #98be65;">"Open chat"</span> <span style="color: #98be65;">"c"</span> <span style="color: #51afef;">#'</span><span style="color: #ECBE7B;">gptel</span>
+         <span style="color: #c678dd;">:desc</span> <span style="color: #98be65;">"Add file/buffer to context"</span> <span style="color: #98be65;">"a"</span> <span style="color: #51afef;">#'</span><span style="color: #ECBE7B;">gptel-add</span>
+         <span style="color: #c678dd;">:desc</span> <span style="color: #98be65;">"Rewrite/Refactor"</span> <span style="color: #98be65;">"r"</span> <span style="color: #51afef;">#'</span><span style="color: #ECBE7B;">my/gptel-code-query</span>
+         <span style="color: #c678dd;">:desc</span> <span style="color: #98be65;">"Send region to chat buffer"</span> <span style="color: #98be65;">"l"</span> <span style="color: #51afef;">#'</span><span style="color: #ECBE7B;">my/gptel-send-region-to-chat</span>
+         <span style="color: #c678dd;">:desc</span> <span style="color: #98be65;">"Open menu"</span> <span style="color: #98be65;">"m"</span> <span style="color: #51afef;">#'</span><span style="color: #ECBE7B;">gptel-menu</span>
+         <span style="color: #c678dd;">:desc</span> <span style="color: #98be65;">"Submit prompt"</span> <span style="color: #98be65;">"j"</span> <span style="color: #51afef;">#'</span><span style="color: #ECBE7B;">gptel-send</span>
+         <span style="color: #c678dd;">:desc</span> <span style="color: #98be65;">"Submit prompt with prefix arg"</span> <span style="color: #98be65;">"s"</span> <span style="color: #a9a1e1;">(</span><span style="color: #51afef;">cmd!</span> <span style="color: #51afef;">(</span><span style="color: #c678dd;">gptel-send</span> t<span style="color: #51afef;">)</span><span style="color: #a9a1e1;">)</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">:config</span>
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">setq</span> <span style="color: #dcaeea;">gptel-backend</span>
+        <span style="color: #98be65;">(</span><span style="color: #c678dd;">gptel-make-anthropic</span> <span style="color: #98be65;">"Claude"</span>
+                             <span style="color: #c678dd;">:stream</span> t
+                             <span style="color: #c678dd;">:key</span> <span style="color: #51afef;">#'</span><span style="color: #ECBE7B;">gptel-api-key-from-auth-source</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span>
+
+  <span style="color: #c678dd;">(</span><span style="color: #c678dd;">gptel-make-openai</span> <span style="color: #98be65;">"OpenAI"</span>
+                     <span style="color: #c678dd;">:stream</span> t
+                     <span style="color: #c678dd;">:key</span> <span style="color: #51afef;">#'</span><span style="color: #ECBE7B;">gptel-api-key-from-auth-source</span><span style="color: #c678dd;">)</span>
+
+  <span style="color: #c678dd;">(</span><span style="color: #c678dd;">gptel-make-ollama</span> <span style="color: #98be65;">"Ollama"</span>
+                     <span style="color: #c678dd;">:host</span> <span style="color: #98be65;">"localhost:11434"</span>
+                     <span style="color: #c678dd;">:stream</span> t
+                     <span style="color: #c678dd;">:models</span> <span style="color: #51afef;">'</span><span style="color: #98be65;">(</span>mistral:latest codestral:latest<span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span>
+
+  <span style="color: #c678dd;">(</span><span style="color: #c678dd;">gptel-make-openai</span> <span style="color: #98be65;">"OpenRouter"</span>
+                     <span style="color: #c678dd;">:host</span> <span style="color: #98be65;">"openrouter.ai"</span>
+                     <span style="color: #c678dd;">:endpoint</span> <span style="color: #98be65;">"/api/v1/chat/completions"</span>
+                     <span style="color: #c678dd;">:stream</span> t
+                     <span style="color: #c678dd;">:key</span> <span style="color: #51afef;">#'</span><span style="color: #ECBE7B;">gptel-api-key-from-auth-source</span>
+                     <span style="color: #c678dd;">:models</span> <span style="color: #51afef;">'</span><span style="color: #98be65;">(</span>google/gemini-flash-1.5
+                             mistralai/codestral-2501
+                             deepseek/deepseek-r1<span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span>
+
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">setq!</span> <span style="color: #dcaeea;">gptel-model</span> <span style="color: #51afef;">'</span><span style="color: #ECBE7B;">claude-sonnet-4-20250514</span><span style="color: #c678dd;">)</span>
+
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">defun</span> <span style="color: #c678dd;">my/gptel-code-query</span> <span style="color: #98be65;">()</span>
+    <span style="color: #83898d;">"Query GPT about selected code with a custom instruction."</span>
+    <span style="color: #98be65;">(</span><span style="color: #51afef;">interactive</span><span style="color: #98be65;">)</span>
+    <span style="color: #98be65;">(</span><span style="color: #51afef;">let</span> <span style="color: #a9a1e1;">(</span><span style="color: #51afef;">(</span>gptel--rewrite-message
+           <span style="color: #c678dd;">(</span><span style="color: #a9a1e1;">read-string</span> <span style="color: #98be65;">"Rewrite instructions: "</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span><span style="color: #a9a1e1;">)</span>
+      <span style="color: #a9a1e1;">(</span><span style="color: #a9a1e1;">call-interactively</span> <span style="color: #51afef;">#'</span><span style="color: #ECBE7B;">gptel-rewrite</span><span style="color: #a9a1e1;">)</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">defun</span> <span style="color: #c678dd;">my/gptel-send-region-to-chat</span> <span style="color: #98be65;">()</span>
+    <span style="color: #83898d;">"Send the selected region to a gptel chat buffer as an org source block or blockquote."</span>
+    <span style="color: #98be65;">(</span><span style="color: #51afef;">interactive</span><span style="color: #98be65;">)</span>
+    <span style="color: #98be65;">(</span><span style="color: #51afef;">if</span> <span style="color: #a9a1e1;">(</span><span style="color: #a9a1e1;">not</span> <span style="color: #51afef;">(</span><span style="color: #c678dd;">use-region-p</span><span style="color: #51afef;">)</span><span style="color: #a9a1e1;">)</span>
+        <span style="color: #a9a1e1;">(</span><span style="color: #a9a1e1;">message</span> <span style="color: #98be65;">"No region selected"</span><span style="color: #a9a1e1;">)</span>
+      <span style="color: #a9a1e1;">(</span><span style="color: #51afef;">let*</span> <span style="color: #51afef;">(</span><span style="color: #c678dd;">(</span>region-text <span style="color: #98be65;">(</span><span style="color: #a9a1e1;">buffer-substring-no-properties</span>
+                          <span style="color: #a9a1e1;">(</span><span style="color: #a9a1e1;">region-beginning</span><span style="color: #a9a1e1;">)</span> <span style="color: #a9a1e1;">(</span><span style="color: #a9a1e1;">region-end</span><span style="color: #a9a1e1;">)</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span>
+            <span style="color: #c678dd;">(</span>is-code <span style="color: #98be65;">(</span><span style="color: #c678dd;">derived-mode-p</span> <span style="color: #51afef;">'</span><span style="color: #ECBE7B;">prog-mode</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span>
+            <span style="color: #c678dd;">(</span>formatted-block <span style="color: #98be65;">(</span><span style="color: #51afef;">if</span> is-code
+                                  <span style="color: #a9a1e1;">(</span><span style="color: #a9a1e1;">format</span> <span style="color: #98be65;">"#+begin_src %s\n%s#+end_src\n\n"</span>
+                                          <span style="color: #51afef;">(</span><span style="color: #c678dd;">gptel--strip-mode-suffix</span> <span style="color: #dcaeea;">major-mode</span><span style="color: #51afef;">)</span>
+                                          region-text<span style="color: #a9a1e1;">)</span>
+                                <span style="color: #a9a1e1;">(</span><span style="color: #a9a1e1;">format</span> <span style="color: #98be65;">"#+BEGIN_quote\n%s#+END_quote\n\n"</span>
+                                        region-text<span style="color: #a9a1e1;">)</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span>
+            <span style="color: #c678dd;">(</span>gptel-buffer <span style="color: #98be65;">(</span><span style="color: #c678dd;">gptel</span> <span style="color: #98be65;">"*ChatGPT*"</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+        <span style="color: #51afef;">(</span><span style="color: #51afef;">with-current-buffer</span> gptel-buffer
+          <span style="color: #c678dd;">(</span><span style="color: #a9a1e1;">goto-char</span> <span style="color: #98be65;">(</span><span style="color: #a9a1e1;">point-max</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span>
+          <span style="color: #c678dd;">(</span><span style="color: #a9a1e1;">insert</span> formatted-block<span style="color: #c678dd;">)</span>
+          <span style="color: #c678dd;">(</span><span style="color: #c678dd;">display-buffer</span> <span style="color: #98be65;">(</span><span style="color: #a9a1e1;">current-buffer</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span><span style="color: #a9a1e1;">)</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span>
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">setq!</span> <span style="color: #dcaeea;">gptel-default-mode</span> <span style="color: #51afef;">'</span><span style="color: #ECBE7B;">org-mode</span><span style="color: #c678dd;">)</span>
+
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">setq!</span> <span style="color: #dcaeea;">gptel-prompt-prefix-alist</span>
+         <span style="color: #51afef;">'</span><span style="color: #98be65;">(</span><span style="color: #a9a1e1;">(</span><span style="color: #c678dd;">markdown-mode</span> . <span style="color: #98be65;">"# Prompt\n\n"</span><span style="color: #a9a1e1;">)</span>
+           <span style="color: #a9a1e1;">(</span><span style="color: #c678dd;">org-mode</span> . <span style="color: #98be65;">"* Prompt\n\n"</span><span style="color: #a9a1e1;">)</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span>
+
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">setq!</span> <span style="color: #dcaeea;">gptel-response-prefix-alist</span>
+         <span style="color: #51afef;">'</span><span style="color: #98be65;">(</span><span style="color: #a9a1e1;">(</span><span style="color: #c678dd;">markdown-mode</span> . <span style="color: #98be65;">"# Response\n\n"</span><span style="color: #a9a1e1;">)</span>
+           <span style="color: #a9a1e1;">(</span><span style="color: #c678dd;">org-mode</span> . <span style="color: #98be65;">"* Response\n\n"</span><span style="color: #a9a1e1;">)</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span>
+
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">add-hook!</span> <span style="color: #51afef;">'</span><span style="color: #dcaeea;">gptel-mode-hook</span>
+             <span style="color: #98be65;">(</span><span style="color: #51afef;">when</span> <span style="color: #a9a1e1;">(</span><span style="color: #a9a1e1;">eq</span> <span style="color: #dcaeea;">major-mode</span> <span style="color: #51afef;">'</span><span style="color: #ECBE7B;">org-mode</span><span style="color: #a9a1e1;">)</span>
+               <span style="color: #a9a1e1;">(</span><span style="color: #dcaeea;">+org-pretty-mode</span> <span style="color: #da8548; font-weight: bold;">1</span><span style="color: #a9a1e1;">)</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span>
+
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">add-hook!</span> <span style="color: #51afef;">'</span><span style="color: #dcaeea;">gptel-post-response-functions</span> <span style="color: #51afef;">'</span><span style="color: #ECBE7B;">gptel-end-of-response</span><span style="color: #c678dd;">)</span>
+
+  <span style="color: #c678dd;">(</span><span style="color: #51afef;">map!</span> <span style="color: #c678dd;">:map</span> <span style="color: #dcaeea;">gptel-mode-map</span>
+        <span style="color: #98be65;">"C-c C-c"</span> <span style="color: #51afef;">#'</span><span style="color: #ECBE7B;">gptel-send</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org84467c0" class="outline-3">
+<h3 id="org84467c0"><span class="section-number-3">2.23.</span> Various</h3>
+<div class="outline-text-3" id="text-2-23">
+<p>
+There is nothing here yet.
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Anders K. Pettersen</p>
+<p class="date">Created: 2025-08-21 Thu 15:50</p>
+</div>
+</body>
+</html>

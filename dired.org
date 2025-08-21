@@ -1,0 +1,26 @@
+* Dired file explorer
+
+Key configurations:
+
+- Set directory listing options
+- Enable detail hiding and line highlighting
+- Configure file operations behavior
+
+#+BEGIN_SRC elisp
+(after! dired
+  (setq ls-lisp-dirs-first t)
+
+  (setq dired-listing-switches
+        (if (executable-find "gls")
+            "-lFaGh1vt --group-directories-first"  ; gls version with all features
+            "-lathlF"))                            ; standard ls version with all features
+
+  (add-hook! 'dired-mode-hook 'dired-hide-details-mode)
+  (add-hook! 'dired-mode-hook 'hl-line-mode)
+
+  (put 'dired-find-alternate-file 'disabled nil)
+  (setq delete-by-moving-to-trash t)
+  (setq dired-dwim-target t)
+  (setq dired-recursive-copies (quote always))
+  (setq dired-recursive-deletes (quote top)))
+#+END_SRC

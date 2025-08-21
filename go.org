@@ -1,0 +1,8 @@
+* Go
+
+[[https://go.dev/][Go]].
+
+#+begin_src elisp
+(add-hook! go-mode
+  (gofmt-on-save-mode))
+#+end_src

@@ -1,0 +1,18 @@
+* Projectile
+
+Key configurations:
+
+- Enable workspace switching when changing projects
+- Define ignored projects
+- Custom function for project ignoring
+
+#+BEGIN_SRC elisp
+(after! projectile
+  (setq +workspaces-on-switch-project-behavior t)
+
+  (setq projectile-ignored-projects '("~/" "/tmp" "~/.emacs.d/.local/straight/repos/"))
+
+  (defun projectile-ignored-project-function (filepath)
+    "Return t if FILEPATH is within any of `projectile-ignored-projects'"
+    (cl-some (lambda (p) (s-starts-with-p p filepath)) projectile-ignored-projects)))
+#+END_SRC

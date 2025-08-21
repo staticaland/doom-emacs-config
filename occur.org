@@ -1,0 +1,12 @@
+* Occur
+
+#+begin_src elisp
+(use-package! replace
+  :init
+    (map! :map occur-mode-map
+      :n  "e" 'occur-edit-mode)
+
+  (add-hook 'occur-hook
+          '(lambda ()
+             (switch-to-buffer-other-window "*Occur*"))))
+#+end_src

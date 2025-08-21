@@ -1,0 +1,29 @@
+* Fonts
+
+#+begin_src elisp
+(setq! doom-font (font-spec :family "RobotoMono Nerd Font Mono" :size 15)
+       doom-variable-pitch-font (font-spec :family "EB Garamond" :size 20)
+       doom-big-font (font-spec :family "RobotoMono Nerd Font Mono" :size 18))
+#+end_src
+
+To install the fonts:
+
+#+begin_src bash :tangle no
+brew tap homebrew/cask-fonts
+brew install --cask font-eb-garamond
+brew install --cask font-meslo-lg-nerd-font
+brew install --cask font-roboto-mono-nerd-font
+#+end_src
+
+Mixed pitch to display prose in EB Garamond font and code in Roboto Mono font.
+
+#+begin_src elisp
+(use-package! mixed-pitch
+  :hook
+  (org-mode . mixed-pitch-mode)
+  (markdown-mode . mixed-pitch-mode)
+  :config
+  (setq! mixed-pitch-set-height t))
+#+end_src
+
+The mixed fonts look ridiculous in most markdown README files, so I'll have to fix that.
