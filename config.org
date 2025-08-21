@@ -51,8 +51,6 @@ Make this file run (slightly) faster with lexical binding (see [[https://nullpro
 
 #+INCLUDE: "./web-mode.org" :minlevel 2
 
-#+INCLUDE: "./aider.org" :minlevel 2
-
 #+INCLUDE: "./copilot.org" :minlevel 2
 
 #+INCLUDE: "./makefile.org" :minlevel 2
