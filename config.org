@@ -1,15 +1,6 @@
 #+HUGO_BASE_DIR: ./docs
 #+HUGO_SECTION: ./
 
-* Hugo
-
-- If =HUGO_SECTION= is =blog= then the file is placed in
-  =<HUGO_BASE_DIR>/content/blog=.
-- If =HUGO_SECTION= is =./= then the file is placed in
-  =<HUGO_BASE_DIR>/content/=
-- If =HUGO_SECTION= is unset then the file is placed in
-  =<HUGO_BASE_DIR>/content/posts/=.
-
 * Doom Emacs config
 :PROPERTIES:
 :EXPORT_FILE_NAME: index
@@ -72,6 +63,3 @@ Make this file run (slightly) faster with lexical binding (see [[https://nullpro
 
 #+INCLUDE: "./gptel.org" :minlevel 2
 
-** Various
-
-There is nothing here yet.
