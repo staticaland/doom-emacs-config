@@ -23,41 +23,8 @@ Make this file run (slightly) faster with lexical binding (see [[https://nullpro
 #+begin_src elisp
 (setq user-full-name "Anders K. Pettersen"
       user-mail-address "staticaland@users.noreply.github.com")
+
+(org-babel-load-file (expand-file-name "fonts.org" doom-user-dir))
+(org-babel-load-file (expand-file-name "gptel.org" doom-user-dir))
 #+end_src
-
-#+INCLUDE: "./fonts.org" :minlevel 2
-
-#+INCLUDE: "./ultra-scroll.org" :minlevel 2
-
-#+INCLUDE: "./projectile.org" :minlevel 2
-
-#+INCLUDE: "./dired.org" :minlevel 2
-
-#+INCLUDE: "./cue.org" :minlevel 2
-
-#+INCLUDE: "./go.org" :minlevel 2
-
-#+INCLUDE: "./terraform.org" :minlevel 2
-
-#+INCLUDE: "./org.org" :minlevel 2
-
-#+INCLUDE: "./treemacs.org" :minlevel 2
-
-#+INCLUDE: "./outline.org" :minlevel 2
-
-#+INCLUDE: "./occur.org" :minlevel 2
-
-#+INCLUDE: "./lsp-mode.org" :minlevel 2
-
-#+INCLUDE: "./web-mode.org" :minlevel 2
-
-#+INCLUDE: "./copilot.org" :minlevel 2
-
-#+INCLUDE: "./makefile.org" :minlevel 2
-
-#+INCLUDE: "./ghostty.org" :minlevel 2
-
-#+INCLUDE: "./transient.org" :minlevel 2
-
-#+INCLUDE: "./gptel.org" :minlevel 2
 
