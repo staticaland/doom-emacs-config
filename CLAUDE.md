@@ -10,14 +10,6 @@ Use `emacsclient` commands to inspect live state.
 
 You can also add code blocks (with `tangle: no`). Then use `org-babel-execute-src-block` as described below.
 
-## Executing org-babel code blocks
-
-Execute specific code blocks by line number:
-
-```sh
-emacsclient --eval "(save-excursion (find-file \"path/to/file.org\") (goto-line LINE_NUMBER) (org-babel-execute-src-block))"
-```
-
 ## Common debug commands:
 
 ```sh
@@ -26,3 +18,20 @@ emacsclient --eval "doom-modules"
 emacsclient --eval "(with-current-buffer \"_Messages_\" (buffer-string))"
 emacsclient --eval "(key-binding (kbd \"SPC f f\"))"
 ```
+
+## Executing org-babel code blocks
+
+Execute specific code blocks by line number:
+
+```sh
+emacsclient --eval "(save-excursion (find-file \"path/to/file.org\") (goto-line LINE_NUMBER) (org-babel-execute-src-block))"
+```
+
+## Reloading config
+
+Reload the configuration after making changes:
+
+```sh
+emacsclient --eval "(doom/reload)"
+```
+

@@ -4,16 +4,9 @@ Simplified [[https://github.com/karthink/gptel][GPTel]] configuration with Anthr
 
 #+begin_src elisp
 (use-package! gptel
-  :defer t
+  :commands (gptel gptel-add gptel-rewrite gptel-menu gptel-send)
   :init
   (setq gptel-use-curl "/opt/homebrew/opt/curl/bin/curl")
-  (map! :leader
-        (:prefix ("j" . "ai")
-         :desc "Open chat" "c" #'gptel
-         :desc "Add file/buffer to context" "a" #'gptel-add
-         :desc "Rewrite/Refactor" "r" #'gptel-rewrite
-         :desc "Open menu" "m" #'gptel-menu
-         :desc "Submit prompt" "j" #'gptel-send))
   :config
   (gptel-make-anthropic "claude-thinking"
     :stream t
@@ -43,5 +36,13 @@ Simplified [[https://github.com/karthink/gptel][GPTel]] configuration with Anthr
 
   (map! :map gptel-mode-map
         "C-c C-c" #'gptel-send))
+
+(map! :leader
+      (:prefix ("j" . "ai")
+       :desc "Open chat" "c" #'gptel
+       :desc "Add file/buffer to context" "a" #'gptel-add
+       :desc "Rewrite/Refactor" "r" #'gptel-rewrite
+       :desc "Open menu" "m" #'gptel-menu
+       :desc "Submit prompt" "j" #'gptel-send))
 #+end_src
 
