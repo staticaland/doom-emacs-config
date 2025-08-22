@@ -2,9 +2,11 @@
 ;;; $DOOMDIR/packages.el
 
 (package! evil-cleverparens :pin "22aa03d0f50aa70ae08fbe8765a88f5020afa635")
+
 (package! ztree :pin "f05677f9696e573c8c607e8876fb4a0cccbc491f")
 
-(package! gptel :pin "c913e2a35a42509a9ea6086ab5abcdcfeb6ac7d5")
+(package! gptel :pin "0da503faa08ab2320d272e407f93e3a1bdf6ba01")
+
 (package! aider :recipe (:host github :repo "tninja/aider.el" :files ("*.el")) :pin "515f5cbb505e614f400c21f99bdbebd47609c659")
 
 (package! copilot
