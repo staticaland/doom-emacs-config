@@ -1,0 +1,10 @@
+* LSP Mode
+
+#+begin_src elisp
+(after! lsp-mode
+  (setq lsp-yaml-schemas (make-hash-table))
+  (puthash "https://ecs-intellisense.s3-us-west-2.amazonaws.com/task-definition/schema.json" ["*ecs-task-def.json" "task-definition.json"] lsp-yaml-schemas)
+  
+  ;; Disable semgrep notifications
+  (setq lsp-disabled-clients '(semgrep-ls)))
+#+end_src

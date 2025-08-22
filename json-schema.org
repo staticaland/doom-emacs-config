@@ -1,7 +1,0 @@
-* JSON schema
-
-#+begin_src elisp :tangle no
-(after! lsp-mode
-  (setq lsp-yaml-schemas (make-hash-table))
-  (puthash "https://ecs-intellisense.s3-us-west-2.amazonaws.com/task-definition/schema.json" ["*ecs-task-def.json" "task-definition.json"] lsp-yaml-schemas))
-#+end_src

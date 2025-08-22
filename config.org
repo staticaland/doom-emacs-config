@@ -47,7 +47,7 @@ Make this file run (slightly) faster with lexical binding (see [[https://nullpro
 
 #+INCLUDE: "./occur.org" :minlevel 2
 
-#+INCLUDE: "./json-schema.org" :minlevel 2
+#+INCLUDE: "./lsp-mode.org" :minlevel 2
 
 #+INCLUDE: "./web-mode.org" :minlevel 2
 
